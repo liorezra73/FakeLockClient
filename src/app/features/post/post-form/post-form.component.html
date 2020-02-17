@@ -1,0 +1,134 @@
+<form
+  [formGroup]="postForm"
+  (ngSubmit)="savePost()"
+  enctype="multipart/form-data"
+>
+  <fieldset>
+    <legend>Post Form</legend>
+    <div>
+      <label>Text:</label>
+      <div>
+        <textarea
+          formControlName="text"
+          rows="5"
+          placeholder="text..."
+        ></textarea>
+        <span
+          *ngIf="
+            postForm.get('text').errors?.required &&
+            (postForm.get('text').dirty || postForm.get('text').touched)
+          "
+          [style.color]="'red'"
+          >*</span
+        >
+        <span
+          *ngIf="
+            postForm.get('text').errors?.minlength ||
+            postForm.get('text').errors?.maxlength
+          "
+          [style.color]="'red'"
+          >3-200 letters! letters number:{{
+            postForm.get("text").value.length
+          }}</span
+        >
+      </div>
+    </div>
+    <div>
+      <label>Photo:</label>
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          formControlName="photo"
+          (change)="onPhotoChanged($event)"
+        />
+        <span
+          *ngIf="
+            postForm.get('photo').errors?.required &&
+            (postForm.get('photo').dirty || postForm.get('photo').touched)
+          "
+          [style.color]="'red'"
+          >*</span
+        >
+      </div>
+    </div>
+    <div>
+      <form formGroupName="location">
+        <div>
+          <label>Latitude:</label>
+          <div>
+            <input type="number" formControlName="latitude" />
+            <span
+              *ngIf="
+                postForm.get('location.latitude').errors?.required &&
+                (postForm.get('location.latitude').dirty ||
+                  postForm.get('location.latitude').touched)
+              "
+              [style.color]="'red'"
+              >*</span
+            >
+          </div>
+        </div>
+        <div>
+          <label>Longitude:</label>
+          <div>
+            <input type="number" formControlName="longtitude" />
+            <span
+              *ngIf="
+                postForm.get('location.longtitude').errors?.required &&
+                (postForm.get('location.longtitude').dirty ||
+                  postForm.get('location.longtitude').touched)
+              "
+              [style.color]="'red'"
+              >*</span
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <div>
+      <label>Tags:</label>
+      <div>
+        <input #tag type="text" placeholder="tag..." />
+        <button type="button" (click)="addTag(tag)">+</button>
+        <span
+          *ngFor="let tag of postTags; let i = index"
+          (click)="removeTag(i)"
+          >{{ tag.title }}</span
+        >
+      </div>
+    </div>
+
+    <div>
+      <label>UsersTags:</label>
+      <div>
+        <div class="ng-autocomplete">
+          <ng-autocomplete
+            [data]="users"
+            [searchKeyword]="'username'"
+            (selected)="selectEvent($event)"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.username"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+
+        <span
+          *ngFor="let tagged of postUserTags; let i = index"
+          (click)="removeUserTag(i)"
+          >{{ tagged.username }}</span
+        >
+      </div>
+    </div>
+
+    <button type="submit">Save</button>
+  </fieldset>
+</form>

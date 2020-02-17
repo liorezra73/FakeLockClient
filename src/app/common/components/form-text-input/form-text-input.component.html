@@ -1,0 +1,37 @@
+<div>
+  <label>{{ label }}</label>
+  <div>
+    <!-- <input formControlName="formGroup.fullName" placeholder={{placeholder}}/> -->
+
+    <!-- [fxFlex]="fxFlex" -->
+
+    <input
+      (change)="onModelChange($event.target.value);"
+      type="text"
+      (blur)="onModelTouched()"
+      [value]="value"
+      placeholder={{placeholder}}
+    />
+    <!-- <span *ngIf="errors?.required && ">*</span> -->
+
+    <!-- <span
+          *ngIf="
+          formGroup.get('fullName').errors?.required &&
+            (formGroup.get('fullName').dirty ||
+            formGroup.get('fullName').touched)
+          "
+          [style.color]="'red'"
+          >*</span
+        >
+        <span
+          *ngIf="
+            formGroup.get('fullName').errors?.minlength ||
+            formGroup.get('fullName').errors?.maxlength
+          "
+          [style.color]="'red'"
+          >3-200 letters! letters number:{{
+            formGroup.get("fullName").value.length
+          }}</span
+        > -->
+  </div>
+</div>

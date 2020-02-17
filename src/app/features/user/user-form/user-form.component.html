@@ -1,0 +1,33 @@
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+  <fieldset>
+    <legend>Register:</legend>
+    <app-form-text-input
+      label="Username:"
+      placeholder="username..."
+      formControlName="username"
+      [errors]="registerForm.get('username').errors"
+    ></app-form-text-input>
+    <span
+      *ngIf="
+        registerForm.get('username').errors?.required &&
+        (registerForm.get('username').dirty ||
+          registerForm.get('username').touched)
+      "
+      [style.color]="'red'"
+      >*</span
+    >
+    <span
+      *ngIf="
+        registerForm.get('username').errors?.minlength ||
+        registerForm.get('username').errors?.maxlength
+      "
+      [style.color]="'red'"
+      >3-200 letters! letters number:{{
+        registerForm.get("username").value.length
+      }}</span
+    >
+
+    <button type="submit" [disabled]="registerForm.untouched">save</button>
+    <button type="reset">reset</button>
+  </fieldset>
+</form>
