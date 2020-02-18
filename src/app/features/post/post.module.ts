@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AutocompleteLibModule } from "angular-ng-autocomplete";
 import { PostLayoutComponent } from "./post-layout/post-layout.component";
 import { PostRoutingModule } from "src/app/shared/routes/post-routing.module";
+import { AppCommonModule } from 'src/app/common/common.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PostRoutingModule } from "src/app/shared/routes/post-routing.module";
     FormsModule,
     PostRoutingModule,
     ReactiveFormsModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    AppCommonModule
   ],
   exports: [
     PostFormComponent,

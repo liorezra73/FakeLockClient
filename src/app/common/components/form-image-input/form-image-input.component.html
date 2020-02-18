@@ -1,0 +1,11 @@
+<div>
+  <label>{{ label }}</label>
+  <div>
+    <input
+      type="file"
+      accept="image/*"
+      (blur)="onModelTouched()"
+      (input)="onPhotoChanged($event)"
+    />
+  </div>
+</div>

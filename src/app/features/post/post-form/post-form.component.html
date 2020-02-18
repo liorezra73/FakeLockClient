@@ -33,7 +33,7 @@
         >
       </div>
     </div>
-    <div>
+    <!-- <div>
       <label>Photo:</label>
       <div>
         <input
@@ -51,7 +51,7 @@
           >*</span
         >
       </div>
-    </div>
+    </div> -->
     <div>
       <form formGroupName="location">
         <div>
@@ -69,7 +69,6 @@
             >
           </div>
         </div>
-
 
         <div>
           <label>Longitude:</label>
@@ -130,6 +129,11 @@
         >
       </div>
     </div>
+
+    <app-form-image-input
+      label="Photo:"
+      formControlName="photo"
+    ></app-form-image-input>
 
     <button type="submit">Save</button>
   </fieldset>

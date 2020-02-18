@@ -26,9 +26,7 @@ import {
 export class FormTextInputComponent implements ControlValueAccessor {
   onModelChange: Function = (value: any) => {};
   onModelTouched: Function = () => {};
-  @Input() placeholder: string;
   @Input() label: string;
-  @Input() required: boolean;
   value = null;
 
   constructor() {}

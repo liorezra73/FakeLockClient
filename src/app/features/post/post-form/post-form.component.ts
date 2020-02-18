@@ -43,6 +43,7 @@ export class PostFormComponent implements OnInit {
         latitude: 0,
         longtitude: 0
       },
+      photo: null,
       usersTags: this.postUserTags,
       tags: this.postTags
     };
@@ -62,7 +63,7 @@ export class PostFormComponent implements OnInit {
           Validators.compose([Validators.required])
         )
       }),
-      photo: new FormControl(this.postPhoto, Validators.required)
+      photo: new FormControl(this.post.photo, Validators.required)
     });
   }
 
@@ -97,20 +98,25 @@ export class PostFormComponent implements OnInit {
   }
 
   savePost() {
-    if (this.postPhoto && this.postPhoto.size > 0 && this.postForm.valid) {
-      this.post = {
-        ...this.postForm.value,
-        tags: this.postTags,
-        usersTags: this.postUserTags
-      };
-      delete this.post.photo;
-      this.postService.createPost({ ...this.post }, this.postPhoto);
-      this.postPhoto = null;
-      this.initializePost();
-      this.initializePostForm();
-      console.log(this.postPhoto);
-    } else {
-      alert("form not valid!");
+    if (this.postPhoto && this.postPhoto.size > 0){
+      
+      this.postForm.controls.photo.patchValue(this.postPhoto);
     }
+    console.log(this.postForm.value);
+    // if (this.postPhoto && this.postPhoto.size > 0 && this.postForm.valid) {
+    //   this.post = {
+    //     ...this.postForm.value,
+    //     tags: this.postTags,
+    //     usersTags: this.postUserTags
+    //   };
+    //   delete this.post.photo;
+    //   this.postService.createPost({ ...this.post }, this.postPhoto);
+    //   this.postPhoto = null;
+    //   this.initializePost();
+    //   this.initializePostForm();
+    //   console.log(this.postPhoto);
+    // } else {
+    //   alert("form not valid!");
+    // }
   }
 }
