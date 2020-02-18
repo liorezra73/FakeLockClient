@@ -28,16 +28,13 @@ export class FormTextInputComponent implements ControlValueAccessor {
   onModelTouched: Function = () => {};
   @Input() placeholder: string;
   @Input() label: string;
-  @Input() errors: any[];
+  @Input() required: boolean;
   value = null;
 
-  constructor() {
-    console.log(this.errors)
-  }
+  constructor() {}
 
   writeValue(value: string) {
     this.value = value;
-    console.log('written value');
   }
 
   registerOnChange(fn: Function) {

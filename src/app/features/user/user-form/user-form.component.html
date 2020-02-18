@@ -1,4 +1,5 @@
 <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+<<<<<<< HEAD
 <div>
   <app-form-password-input
     formControlName="password"
@@ -16,5 +17,33 @@
   ></app-form-password-input>
   <button type="button" (click)="onRegister()"></button>
 </div>
+=======
+  <fieldset>
+    <legend>Register:</legend>
+    <app-form-text-input
+      label="Username:"
+      placeholder="username..."
+      formControlName="username"
+    ></app-form-text-input>
+    <span
+      *ngIf="
+        registerForm.get('username').errors?.required &&
+        (registerForm.get('username').dirty ||
+          registerForm.get('username').touched)
+      "
+      [style.color]="'red'"
+      >*</span
+    >
+    <span
+      *ngIf="
+        registerForm.get('username').errors?.minlength ||
+        registerForm.get('username').errors?.maxlength
+      "
+      [style.color]="'red'"
+      >3-200 letters! letters number:{{
+        registerForm.get("username").value.length
+      }}</span
+    >
+>>>>>>> formTextInputFix
 
 </form>

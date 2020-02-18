@@ -39,12 +39,13 @@ export class UserLoginComponent implements OnInit {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      this.login = this.loginForm.value;
-      const islogged = this.authService.onLogin(this.login);
-      if (islogged) {
-        this.initializeLogin();
-        this.initializeLoginForm();
-      }
+      console.log(this.loginForm.value)
+      // this.login = this.loginForm.value;
+      // const islogged = this.authService.onLogin(this.login);
+      // if (islogged) {
+      //   this.initializeLogin();
+      //   this.initializeLoginForm();
+      // }
     }
   }
 }
