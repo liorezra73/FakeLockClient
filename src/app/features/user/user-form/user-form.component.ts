@@ -5,6 +5,7 @@ import { Register } from "src/app/common/models/Register";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { MustMatch } from "src/app/common/validations/formGroup.mustMatch.validation";
 
+
 @Component({
   selector: "app-user-form",
   templateUrl: "./user-form.component.html",
@@ -44,11 +45,11 @@ export class UserFormComponent implements OnInit {
         ),
         password: new FormControl(
           this.register.password,
-          stringValidation(3, 200)
+          (stringValidation(3, 200),[Validators.required]),
         ),
         repeatPassword: new FormControl(
           this.register.repeatPassword,
-          stringValidation(3, 200)
+          (stringValidation(3, 200))
         ),
         address: new FormControl(
           this.register.address,
@@ -69,6 +70,8 @@ export class UserFormComponent implements OnInit {
   // { validator: MustMatch("password", "repeatPassword") }
 
   onRegister() {
-    console.log(this.registerForm.value)
+    this.register = this.registerForm.value;
+    console.log(this.register)
   }
+
 }
