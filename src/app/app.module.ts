@@ -15,7 +15,8 @@ import { CommentModule } from "./features/comment/comment.module";
 import { IdGuard } from "./shared/guards/id.guard";
 import { AuthenticationService } from "./common/services/authentication.service";
 import { AuthGuard } from "./shared/guards/auth.guard";
-import { AppCommonModule } from './common/common.module';
+import { AppCommonModule } from "./common/common.module";
+import { AppSharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,9 +30,8 @@ import { AppCommonModule } from './common/common.module';
     AutocompleteLibModule,
     UserModule,
     CommentModule,
-    AppCommonModule
-    
-    
+    AppCommonModule,
+    AppSharedModule
   ],
   providers: [
     { provide: PostService, useClass: PostService },

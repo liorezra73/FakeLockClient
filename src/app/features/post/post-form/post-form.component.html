@@ -5,7 +5,7 @@
 >
   <fieldset>
     <legend>Post Form</legend>
-    <div>
+    <!-- <div>
       <label>Text:</label>
       <div>
         <textarea
@@ -32,82 +32,32 @@
           }}</span
         >
       </div>
-    </div>
-    <!-- <div>
-      <label>Photo:</label>
-      <div>
-        <input
-          type="file"
-          accept="image/*"
-          formControlName="photo"
-          (change)="onPhotoChanged($event)"
-        />
-        <span
-          *ngIf="
-            postForm.get('photo').errors?.required &&
-            (postForm.get('photo').dirty || postForm.get('photo').touched)
-          "
-          [style.color]="'red'"
-          >*</span
-        >
-      </div>
     </div> -->
+
     <div>
       <form formGroupName="location">
-        <div>
-          <label>Latitude:</label>
-          <div>
-            <input type="number" formControlName="latitude" />
-            <span
-              *ngIf="
-                postForm.get('location.latitude').errors?.required &&
-                (postForm.get('location.latitude').dirty ||
-                  postForm.get('location.latitude').touched)
-              "
-              [style.color]="'red'"
-              >*</span
-            >
-          </div>
-        </div>
-
-        <div>
-          <label>Longitude:</label>
-          <div>
-            <input type="number" formControlName="longtitude" />
-            <span
-              *ngIf="
-                postForm.get('location.longtitude').errors?.required &&
-                (postForm.get('location.longtitude').dirty ||
-                  postForm.get('location.longtitude').touched)
-              "
-              [style.color]="'red'"
-              >*</span
-            >
-          </div>
-        </div>
+        <app-form-number-input
+          formControlName="latitude"
+          label="Latitude:"
+          placeholder="latitude..."
+        ></app-form-number-input>
+        <app-form-number-input
+          formControlName="longtitude"
+          label="Longtitude:"
+          placeholder="longtitude..."
+        ></app-form-number-input>
       </form>
-    </div>
-    <div>
-      <label>Tags:</label>
-      <div>
-        <input #tag type="text" placeholder="tag..." />
-        <button type="button" (click)="addTag(tag)">+</button>
-        <span
-          *ngFor="let tag of postTags; let i = index"
-          (click)="removeTag(i)"
-          >{{ tag.title }}</span
-        >
-      </div>
     </div>
 
     <div>
       <label>UsersTags:</label>
       <div>
-        <div class="ng-autocomplete">
+        <div>
           <ng-autocomplete
+            #usertag
             [data]="users"
             [searchKeyword]="'username'"
-            (selected)="selectEvent($event)"
+            (selected)="selectEvent(usertag)"
             [itemTemplate]="itemTemplate"
             [notFoundTemplate]="notFoundTemplate"
           >
@@ -134,6 +84,18 @@
       label="Photo:"
       formControlName="photo"
     ></app-form-image-input>
+
+    <app-tag-input
+      label="Tags:"
+      placeholder="tag..."
+      formControlName="tags"
+    ></app-tag-input>
+
+    <app-usertag-input
+      label="Userstags:"
+      placeholder="username..."
+      formControlName="usersTags"
+    ></app-usertag-input>
 
     <button type="submit">Save</button>
   </fieldset>

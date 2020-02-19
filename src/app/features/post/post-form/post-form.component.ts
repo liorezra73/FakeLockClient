@@ -17,7 +17,6 @@ import { stringValidation } from "src/app/common/validations/formControl.string.
 export class PostFormComponent implements OnInit {
   postService: IPostService;
   userService: IUserService;
-  postPhoto: File;
   post: Post;
   postTags: Tag[] = [];
   //need to get users to search in tage users input;
@@ -44,8 +43,8 @@ export class PostFormComponent implements OnInit {
         longtitude: 0
       },
       photo: null,
-      usersTags: this.postUserTags,
-      tags: this.postTags
+      usersTags: [],
+      tags: []
     };
   }
   //need to write custom validate for location min max and num
@@ -63,17 +62,17 @@ export class PostFormComponent implements OnInit {
           Validators.compose([Validators.required])
         )
       }),
-      photo: new FormControl(this.post.photo, Validators.required)
+      photo: new FormControl(this.post.photo, Validators.required),
+      tags: new FormControl(this.post.tags),
+      usersTags: new FormControl(this.post.usersTags)
     });
-  }
-
-  onPhotoChanged(event) {
-    this.postPhoto = (event.target as HTMLInputElement).files[0];
   }
 
   addTag(tag: HTMLInputElement) {
     if (/\S/.test(tag.value)) {
-      this.postTags.push({ title: tag.value });
+      const { tags } = this.postForm.controls;
+      tags.patchValue([...tags.value, { title: tag.value }]);
+      console.log(this.postForm.controls.tags.value);
       tag.value = "";
     } else {
       alert("cant be empty");
@@ -92,17 +91,13 @@ export class PostFormComponent implements OnInit {
   }
 
   selectEvent(item) {
-    this.postUserTags.push({ ...item });
-    console.log(this.postUserTags);
-    item = null;
+   item.query = null
+    console.log(item)
   }
 
   savePost() {
-    if (this.postPhoto && this.postPhoto.size > 0){
-      
-      this.postForm.controls.photo.patchValue(this.postPhoto);
-    }
     console.log(this.postForm.value);
+    console.log(this.postForm);
     // if (this.postPhoto && this.postPhoto.size > 0 && this.postForm.valid) {
     //   this.post = {
     //     ...this.postForm.value,

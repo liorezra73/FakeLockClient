@@ -1,0 +1,10 @@
+<div>
+  <label>{{ label }}</label>
+  <div>
+    <input #tag type="text" placeholder="{{ placeholder }}" />
+    <button type="button" (click)="onAddTag(tag)">+</button>
+    <span *ngFor="let tag of ngControl.value; let i = index" (click)="onDeleteTag(i)">
+      {{ tag.title }}
+    </span>
+  </div>
+</div>

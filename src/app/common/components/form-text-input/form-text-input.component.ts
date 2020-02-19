@@ -1,15 +1,5 @@
-import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  forwardRef
-} from "@angular/core";
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  FormControl
-} from "@angular/forms";
+import { Component, Input, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "app-form-text-input",
@@ -27,6 +17,7 @@ export class FormTextInputComponent implements ControlValueAccessor {
   onModelChange: Function = (value: any) => {};
   onModelTouched: Function = () => {};
   @Input() label: string;
+  @Input() placeholder: string;
   value = null;
 
   constructor() {}
