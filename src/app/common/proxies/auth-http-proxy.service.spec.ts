@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LikeService } from './like.service';
+import { AuthHttpProxyService } from './auth-http-proxy.service';
 
-describe('LikeService', () => {
+describe('AuthHttpProxyService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: LikeService = TestBed.get(LikeService);
+    const service: AuthHttpProxyService = TestBed.get(AuthHttpProxyService);
     expect(service).toBeTruthy();
   });
 });

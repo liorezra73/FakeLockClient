@@ -24,5 +24,13 @@ export class PostDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.getPostById(10013).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
+    this.service.getPostsOrderByDates().subscribe(
+      res=> console.log(res),
+      err => console.log(err)
+    )
   }
 }

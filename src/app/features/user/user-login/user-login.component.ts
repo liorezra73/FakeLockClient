@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
 import { Login } from "src/app/common/models/Login";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { Router } from "@angular/router";
 
@@ -32,20 +32,19 @@ export class UserLoginComponent implements OnInit {
   }
   initializeLoginForm() {
     this.loginForm = new FormGroup({
-      username: new FormControl(this.login.username, stringValidation(3, 200)),
-      password: new FormControl(this.login.password, stringValidation(3, 200))
+      username: new FormControl(this.login.username, Validators.required),
+      password: new FormControl(this.login.password, Validators.required)
     });
   }
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
-      // this.login = this.loginForm.value;
-      // const islogged = this.authService.onLogin(this.login);
-      // if (islogged) {
-      //   this.initializeLogin();
-      //   this.initializeLoginForm();
-      // }
+      this.login = this.loginForm.value;
+      const islogged = this.authService.onLogin(this.login);
+      if (islogged) {
+        this.initializeLogin();
+        this.initializeLoginForm();
+      }
     }
   }
 }

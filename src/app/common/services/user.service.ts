@@ -21,16 +21,8 @@ export class UserService implements IUserService {
       .get<User[]>(this.usersUrl)
       .pipe(map(data => data.map(res => this.dataPipe(res))));
   }
-  onLogin(login: import("../models/Login").Login): void {
-    throw new Error("Method not implemented.");
-  }
-  onLogout(): void {
-    throw new Error("Method not implemented.");
-  }
+
   onRegister(register: import("../models/Register").Register): void {
-    throw new Error("Method not implemented.");
-  }
-  checkIfLogged(): boolean {
     throw new Error("Method not implemented.");
   }
 

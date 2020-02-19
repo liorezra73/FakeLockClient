@@ -2,12 +2,12 @@ import { User } from './User';
 
 export interface Post {
     id?: number;
-    text: string;
+    text?: string;
     location: Location;
-    photo?: File;
-    PublishDate?: Date;
-    usersTags: User[] | number[];
-    tags: Tag[] | string[];
+    photo?: File|string;
+    publishDate?: Date;
+    usersTags?: User[] | number[];
+    tags?: Tag[] | string[];
     likes?: Number;
     user?: User;
   }

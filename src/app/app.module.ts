@@ -17,6 +17,8 @@ import { AuthenticationService } from "./common/services/authentication.service"
 import { AuthGuard } from "./shared/guards/auth.guard";
 import { AppCommonModule } from "./common/common.module";
 import { AppSharedModule } from "./shared/shared.module";
+import { AuthHttpProxyService } from "./common/proxies/auth-http-proxy.service";
+import { CommentService } from './common/services/comment.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,8 +38,10 @@ import { AppSharedModule } from "./shared/shared.module";
   providers: [
     { provide: PostService, useClass: PostService },
     { provide: UserService, useClass: UserService },
+    { provide: CommentService, useClass: CommentService },
     { provide: AuthenticationService, useClass: AuthenticationService },
     { provide: APP_CONFIG, useValue: CONFIG },
+    { provide: AuthHttpProxyService, useClass: AuthHttpProxyService },
     IdGuard,
     AuthGuard
   ],

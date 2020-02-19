@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map } from "rxjs/operators";
+import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
 
 @Injectable({
   providedIn: "root"
@@ -12,21 +13,30 @@ import { map } from "rxjs/operators";
 export class PostService implements IPostService {
   postUrl: string;
 
-  constructor(private http: HttpClient, @Inject(APP_CONFIG) config: any) {
+  constructor(
+    private http: AuthHttpProxyService,
+    @Inject(APP_CONFIG) config: any
+  ) {
     this.postUrl = `${config.baseApiURL}/posts`;
   }
 
-  getPosts(): Observable<Post[]> {
-    throw new Error("Method not implemented.");
+  getPostsOrderByDates(): any {
+    return this.http
+      .get<Observable<Post[]>>(`${this.postUrl}?orderBy=date`)
+      .pipe(
+        map((res: Observable<Post[]>) => {
+          return res;
+        })
+      );
   }
   getPostById(id: number): Observable<Post> {
     return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
       map(res => {
-        return this.dataPipe(res);
+        return this.postsDataPipe(res);
       })
     );
   }
-  createPost(post: Post, photo: File): boolean | Error {
+  createPost(post: Post, photo: File): Observable<any> {
     const tags: string[] = [],
       usersTags: number[] = [];
     post.tags.forEach(x => tags.push(x.title));
@@ -37,22 +47,12 @@ export class PostService implements IPostService {
     const postJson = JSON.stringify(post);
     formData.append("post", postJson);
     formData.append("photo", photo);
-    this.http.post<any>(this.postUrl, formData).subscribe(
-      res => {
-        return true;
-      },
-      err => err
-    );
-    return true;
+    return this.http.post<FormData>(this.postUrl, formData);
   }
-  deletePost(id: number): void {
-    this.http.delete(`${this.postUrl}/${id}`).subscribe(
-      res => {},
-      err => {}
-    );
+  deletePost(id: number): Observable<any> {
+    return this.http.delete(`${this.postUrl}/${id}`);
   }
-
-  private dataPipe(i): Post {
+  private postsDataPipe(i): Post {
     return {
       id: i.Id,
       text: i.Text,
@@ -60,7 +60,7 @@ export class PostService implements IPostService {
         latitude: i.Location.latitude,
         longtitude: i.Location.longtitude
       },
-      PublishDate: i.PublishDate,
+      publishDate: i.PublishDate,
       user: {
         id: i.user.Id,
         username: i.user.Username
@@ -70,5 +70,8 @@ export class PostService implements IPostService {
       likes: i.likes,
       photo: null
     };
+  }
+  switchLike(id: number): Observable<any> {
+    throw new Error("Method not implemented.");
   }
 }
