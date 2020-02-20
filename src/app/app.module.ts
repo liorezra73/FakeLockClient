@@ -9,7 +9,6 @@ import { PostModule } from "./features/post/post.module";
 import { PostService } from "./common/services/post-service.service";
 import CONFIG, { APP_CONFIG } from "./common/services/config.service";
 import { UserService } from "./common/services/user.service";
-import { AutocompleteLibModule } from "angular-ng-autocomplete";
 import { UserModule } from "./features/user/user.module";
 import { CommentModule } from "./features/comment/comment.module";
 import { IdGuard } from "./shared/guards/id.guard";
@@ -29,7 +28,6 @@ import { CommentService } from './common/services/comment.service';
     ReactiveFormsModule,
     HttpClientModule,
     PostModule,
-    AutocompleteLibModule,
     UserModule,
     CommentModule,
     AppCommonModule,

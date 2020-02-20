@@ -1,7 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { Post } from "../models/post";
-import { HttpClient } from "@angular/common/http";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map } from "rxjs/operators";
@@ -31,8 +30,8 @@ export class PostService implements IPostService {
   }
   getPostById(id: number): Observable<Post> {
     return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
-      map(res => {
-        return this.postsDataPipe(res);
+      map((res: Post) => {
+        return res;
       })
     );
   }
@@ -52,6 +51,11 @@ export class PostService implements IPostService {
   deletePost(id: number): Observable<any> {
     return this.http.delete(`${this.postUrl}/${id}`);
   }
+
+  switchLike(id: number): Observable<any> {
+    throw new Error("Method not implemented.");
+  }
+
   private postsDataPipe(i): Post {
     return {
       id: i.Id,
@@ -70,8 +74,5 @@ export class PostService implements IPostService {
       likes: i.likes,
       photo: null
     };
-  }
-  switchLike(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
   }
 }

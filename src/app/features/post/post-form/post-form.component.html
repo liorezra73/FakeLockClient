@@ -48,37 +48,7 @@
         ></app-form-number-input>
       </form>
     </div>
-
-    <div>
-      <label>UsersTags:</label>
-      <div>
-        <div>
-          <ng-autocomplete
-            #usertag
-            [data]="users"
-            [searchKeyword]="'username'"
-            (selected)="selectEvent(usertag)"
-            [itemTemplate]="itemTemplate"
-            [notFoundTemplate]="notFoundTemplate"
-          >
-          </ng-autocomplete>
-
-          <ng-template #itemTemplate let-item>
-            <a [innerHTML]="item.username"></a>
-          </ng-template>
-
-          <ng-template #notFoundTemplate let-notFound>
-            <div [innerHTML]="notFound"></div>
-          </ng-template>
-        </div>
-
-        <span
-          *ngFor="let tagged of postUserTags; let i = index"
-          (click)="removeUserTag(i)"
-          >{{ tagged.username }}</span
-        >
-      </div>
-    </div>
+ 
 
     <app-form-image-input
       label="Photo:"

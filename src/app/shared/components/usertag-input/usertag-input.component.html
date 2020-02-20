@@ -5,9 +5,9 @@
       #userTag
       type="text"
       placeholder="{{ placeholder }}"
-      (change)="onSearch($event)">
+      (change)="onSearch($event)"
     />
-    
+
     <button type="button" (click)="onDeleteTagged(userTag)">+</button>
     <!-- <span *ngFor="let tag of ngControl.value; let i = index" (click)="onDeleteTag(i)">
         {{ tag.title }}
