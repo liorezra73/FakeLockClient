@@ -23,15 +23,15 @@ export class PostService implements IPostService {
     return this.http
       .get<Observable<Post[]>>(`${this.postUrl}?orderBy=date`)
       .pipe(
-        map((res: Observable<Post[]>) => {
-          return res;
+        map((res: Post[]) => {
+          return res.map((post: Post) => this.postsDataPipe(post));
         })
       );
   }
   getPostById(id: number): Observable<Post> {
     return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
       map((res: Post) => {
-        return this.postsDataPipe(res);
+        return this.postDataPipe(res);
       })
     );
   }
@@ -57,6 +57,16 @@ export class PostService implements IPostService {
   }
 
   private postsDataPipe(i): Post {
+    return {
+      id: i.postId,
+      photo: i.photo,
+      location: i.location,
+      publishDate: i.publishDate,
+      likes: i.likes
+    };
+  }
+
+  private postDataPipe(i): Post {
     return {
       id: i.Id,
       text: i.Text,
