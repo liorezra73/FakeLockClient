@@ -84,7 +84,8 @@ export class PostService implements IPostService {
       usersTags: i.usersTags,
       likes: i.likes,
       photo: i.Photo,
-      isLikedByUser: i.isLikedByUser
+      isLikedByUser: i.isLikedByUser,
+      commentsCount: i.commentsCount
     };
   }
 }

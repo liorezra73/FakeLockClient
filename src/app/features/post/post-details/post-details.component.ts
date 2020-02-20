@@ -32,10 +32,10 @@ export class PostDetailsComponent implements OnInit {
   }
 
   like() {
-    this.postService.deletePost(20018).subscribe(res => console.log(res),err => console.log(err));
+    this.postService.deletePost(10013).subscribe(res => console.log(res),err => console.log(err));
   }
   ngOnInit() {
-    this.postService.getPostById(20018).subscribe(res => {
+    this.postService.getPostById(10013).subscribe(res => {
       this.post = res;
       console.log(this.post);
     });

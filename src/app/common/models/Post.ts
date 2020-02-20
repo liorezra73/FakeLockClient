@@ -11,6 +11,7 @@ export interface Post {
     likes?: Number;
     user?: User;
     isLikedByUser?:boolean;
+    commentsCount?:number;
   }
   
   export interface Location {
