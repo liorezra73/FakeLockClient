@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./shared/routes/app-routing.module";
 import { PostModule } from "./features/post/post.module";
@@ -31,7 +31,8 @@ import { CommentService } from './common/services/comment.service';
     UserModule,
     CommentModule,
     AppCommonModule,
-    AppSharedModule
+    AppSharedModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: PostService, useClass: PostService },

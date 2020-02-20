@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { Post } from "src/app/common/models/post";
 
 @Component({
-  selector: 'app-post-card',
-  templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.css']
+  selector: "app-post-card",
+  templateUrl: "./post-card.component.html",
+  styleUrls: ["./post-card.component.css"]
 })
 export class PostCardComponent implements OnInit {
-
-  constructor() { }
+  @Input()
+  post: Post;
+  constructor() {}
 
   ngOnInit() {
+    console.log(this.post);
   }
-
 }

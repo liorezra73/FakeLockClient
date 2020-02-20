@@ -1,0 +1,10 @@
+.post-card-display {
+  height: 250px;
+  width: 220px;
+  margin: 4pt;
+}
+
+.container {
+  display: flex;
+
+}

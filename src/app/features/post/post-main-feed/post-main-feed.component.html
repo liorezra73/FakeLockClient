@@ -1,1 +1,5 @@
-<p>post-main-feed works!</p>
+<div class="container">
+<div class="post-card-display" *ngFor="let post of posts" (click)="onPostSelect(post.id)">
+    <app-post-card [post]="post"></app-post-card>
+</div>
+</div>

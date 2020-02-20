@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Post } from 'src/app/common/models/post';
 
 @Component({
   selector: "app-post-details",
@@ -10,27 +11,51 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class PostDetailsComponent implements OnInit {
   postId: number;
-  service: IPostService;
+  post: Post;
+  postService: IPostService;
 
   constructor(
     service: PostService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.service = service;
+    this.postService = service;
     this.activatedRoute.params.subscribe(
       res => (this.postId = parseInt(res.postId))
     );
   }
 
   ngOnInit() {
-    this.service.getPostById(10013).subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    );
-    this.service.getPostsOrderByDates().subscribe(
-      res=> console.log(res),
-      err => console.log(err)
-    )
+   
   }
+
+  getPostById(){
+    this.postService.getPostById(this.postId).subscribe(post=> this.post = post);
+  }
+  
+  
+  handleError(error): void {
+    switch (error.status) {
+      case 0:
+        alert("Connection error!  Redirect to main page.");
+        this.navigateMainByTimer(3000);
+        break;
+      case 404:
+        alert("No posts to display, please try again.");
+        break;
+      case 500:
+        alert("Connection error! please try again.");
+      default:
+        alert("Connection error! Redirect to main page");
+        this.navigateMainByTimer(3000);
+        break;
+    }
+  }
+
+  navigateMainByTimer(time: number): void {
+    setTimeout(() => {
+      this.router.navigate(["posts/feed/main"]);
+    }, time);
+  }
+
 }
