@@ -19,6 +19,7 @@ import { AppSharedModule } from "./shared/shared.module";
 import { AuthHttpProxyService } from "./common/proxies/auth-http-proxy.service";
 import { CommentService } from "./common/services/comment.service";
 import { PhotoService } from "./common/services/photo.service";
+import { ModalModule } from "ngx-bootstrap";
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,8 @@ import { PhotoService } from "./common/services/photo.service";
     AppCommonModule,
     AppSharedModule,
     BrowserAnimationsModule,
+    ModalModule
+
   ],
   providers: [
     { provide: PostService, useClass: PostService },

@@ -4,13 +4,17 @@ import { CommentLayoutComponent } from "./comment-layout/comment-layout.componen
 import { CommentFormComponent } from "./comment-form/comment-form.component";
 import { CommentListComponent } from "./comment-list/comment-list.component";
 import { CommentRoutingModule } from "src/app/shared/routes/comment-routing.module";
+import { CommentModalComponent } from './comment-modal/comment-modal.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
     CommentLayoutComponent,
     CommentFormComponent,
-    CommentListComponent
+    CommentListComponent,
+    CommentModalComponent
   ],
-  imports: [CommonModule, CommentRoutingModule]
+  imports: [CommonModule, CommentRoutingModule, ModalModule.forRoot()],
+  exports: [CommentModalComponent]
 })
 export class CommentModule {}

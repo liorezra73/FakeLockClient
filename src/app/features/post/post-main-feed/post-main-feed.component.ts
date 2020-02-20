@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { PostService } from "src/app/common/services/post-service.service";
-import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Post } from "src/app/common/models/post";
 import { Router } from "@angular/router";
+import { IPostService } from 'src/app/common/intefaces/post-service.inteface';
+import { PostService } from 'src/app/common/services/post-service.service';
+import { OrderBy } from 'src/app/common/enums/orderBy';
 
 @Component({
   selector: "app-post-main-feed",
@@ -21,7 +22,7 @@ export class PostMainFeedComponent implements OnInit {
   }
 
   getPosts(): void {
-    this.postService.getPostsOrderByDates().subscribe(
+    this.postService.getPosts(OrderBy.date).subscribe(
       posts => (this.posts = posts),
       err => this.handleError(err)
     );

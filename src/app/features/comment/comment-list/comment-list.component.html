@@ -1,1 +1,14 @@
-<p>comment-list works!</p>
+<div *ngIf="postId">
+  <div *ngFor="let comment of comments">
+    <div class="date-likes-displayer">
+      <span class="date-display">{{
+        comment.PublishDate | date: "short"
+      }}</span>
+    </div>
+    <div>{{ comment.Content }}</div>
+    <span class="likes-display"
+      ><i class="fas fa-heart"></i> {{ comment.likes }}</span
+    >
+  </div>
+</div>
+<hr />

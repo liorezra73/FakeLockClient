@@ -1,0 +1,18 @@
+<a (click)="openModal(template)"> <u>comments</u></a>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">comments</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-comment-list [postId]="postId"></app-comment-list>
+  </div>
+</ng-template>

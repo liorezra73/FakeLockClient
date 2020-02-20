@@ -25,25 +25,28 @@ export class PostDetailsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPostById(this.postId);
+  }
 
-  getPostById() {
+  getPostById(postId: number) {
     this.postService
-      .getPostById(this.postId)
-      .subscribe(post => (this.post = post));
+      .getPostById(postId)
+      .subscribe(post => {this.post = post; console.log(this.post) }, err=> this.handleError(err));
   }
 
   handleError(error): void {
     switch (error.status) {
       case 0:
-        alert("Connection error!  Redirect to main page.");
+        alert("Connection error! Redirect to main page.");
         this.navigateMainByTimer(3000);
         break;
       case 404:
-        alert("No posts to display.");
+        alert("No post found! Redirect to main page. ");
+        this.navigateMainByTimer(2000);
         break;
       case 500:
-        alert("Connection error! please try again.");
+        alert("Connection error! please try again later.");
       default:
         alert("Connection error! Redirect to main page");
         this.navigateMainByTimer(3000);

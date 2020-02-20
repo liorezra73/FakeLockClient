@@ -12,6 +12,7 @@ import { PostLayoutComponent } from "./post-layout/post-layout.component";
 import { PostRoutingModule } from "src/app/shared/routes/post-routing.module";
 import { AppCommonModule } from 'src/app/common/common.module';
 import { AppSharedModule } from 'src/app/shared/shared.module';
+import { CommentModule } from '../comment/comment.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AppSharedModule } from 'src/app/shared/shared.module';
     PostRoutingModule,
     ReactiveFormsModule,
     AppCommonModule,
-    AppSharedModule
+    AppSharedModule,
+    CommentModule
   ],
   exports: [
     PostFormComponent,
