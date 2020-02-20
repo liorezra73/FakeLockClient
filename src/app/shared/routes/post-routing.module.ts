@@ -34,15 +34,15 @@ const routes: Routes = [
         path: ":postId",
         component: PostDetailsComponent,
         canActivate: [IdGuard],
-        children: [
-          {
-            path: "comments",
-            loadChildren: () =>
-              import("../../features/comment/comment.module").then(
-                m => m.CommentModule
-              )
-          }
-        ]
+        // children: [
+        //   {
+        //     path: "comments",
+        //     loadChildren: () =>
+        //       import("../../features/comment/comment.module").then(
+        //         m => m.CommentModule
+        //       )
+        //   }
+        // ]
       }
     ]
   }
