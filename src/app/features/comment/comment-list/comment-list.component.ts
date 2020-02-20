@@ -23,7 +23,7 @@ export class CommentListComponent implements OnInit {
 
   getCommentsByPostId(postId): void {
     this.commentService.getCommentsByPostId(postId).subscribe(comments => {
-      (this.comments = comments), console.log(this.comments);
+      this.comments = comments;
     });
   }
 }

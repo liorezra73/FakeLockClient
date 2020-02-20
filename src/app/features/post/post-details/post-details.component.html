@@ -8,7 +8,7 @@
 <div class="tags-display" *ngFor="let tag of post.tags">
 #{{tag.Title}}
 </div>
-<span class="like-display">{{post.likes.likes}} Likes</span>
+<span class="like-display"><i class="fas fa-heart"></i> {{post.likes}}</span>
 </div>
 <span>
     <app-comment-modal [postId]="postId"></app-comment-modal>

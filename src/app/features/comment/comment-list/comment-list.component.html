@@ -1,14 +1,15 @@
 <div *ngIf="postId">
   <div *ngFor="let comment of comments">
-    <div class="date-likes-displayer">
+  <div class="username-display">{{comment.username}} </div>
       <span class="date-display">{{
         comment.PublishDate | date: "short"
       }}</span>
+    <div class="date-likes-displayer">
     </div>
     <div>{{ comment.Content }}</div>
     <span class="likes-display"
       ><i class="fas fa-heart"></i> {{ comment.likes }}</span
     >
+    <hr />
   </div>
 </div>
-<hr />

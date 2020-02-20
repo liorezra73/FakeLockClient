@@ -1,8 +1,8 @@
 .post-details-display{
     margin: auto;
     display: table;
-    height: 35%;
-    width: 35%;
+    height: 25%;
+    width: 25%;
 }
 
 img{
@@ -27,4 +27,8 @@ img{
 
 .tag-likes-display{
     justify-content: space-between;
+}
+
+i{
+    cursor: pointer;
 }

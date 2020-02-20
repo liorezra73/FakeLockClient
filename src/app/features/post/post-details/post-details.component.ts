@@ -3,6 +3,8 @@ import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Post } from "src/app/common/models/post";
+import { IPhotoService } from "src/app/common/intefaces/photo.service.interface";
+import { PhotoService } from "src/app/common/services/photo.service";
 
 @Component({
   selector: "app-post-details",
@@ -13,13 +15,16 @@ export class PostDetailsComponent implements OnInit {
   postId: number;
   post: Post;
   postService: IPostService;
+  photoService: IPhotoService;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    postService: PostService
+    postService: PostService,
+    photoSerice: PhotoService
   ) {
     this.postService = postService;
+    this.photoService = photoSerice;
     this.activatedRoute.params.subscribe(
       res => (this.postId = parseInt(res.postId))
     );
@@ -30,9 +35,16 @@ export class PostDetailsComponent implements OnInit {
   }
 
   getPostById(postId: number) {
-    this.postService
-      .getPostById(postId)
-      .subscribe(post => {this.post = post; console.log(this.post) }, err=> this.handleError(err));
+    this.postService.getPostById(postId).subscribe(
+      post => {
+        this.post = post;
+        this.post.photo = this.photoService.getPhotoByPhotoId(
+          this.post.photo as string
+        );
+        console.log(this.post);
+      },
+      err => this.handleError(err)
+    );
   }
 
   handleError(error): void {
