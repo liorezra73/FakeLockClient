@@ -19,5 +19,4 @@ export class PhotoService implements IPhotoService {
     return `${this.photoUrl}/${photoId}`;
   }
 
-  constru;
 }

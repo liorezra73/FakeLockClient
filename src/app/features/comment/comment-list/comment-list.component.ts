@@ -26,4 +26,5 @@ export class CommentListComponent implements OnInit {
       this.comments = comments;
     });
   }
+
 }
