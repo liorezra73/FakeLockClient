@@ -5,34 +5,17 @@
 >
   <fieldset>
     <legend>Post Form</legend>
-    <!-- <div>
-      <label>Text:</label>
-      <div>
-        <textarea
-          formControlName="text"
-          rows="5"
-          placeholder="text..."
-        ></textarea>
-        <span
-          *ngIf="
-            postForm.get('text').errors?.required &&
-            (postForm.get('text').dirty || postForm.get('text').touched)
-          "
-          [style.color]="'red'"
-          >*</span
-        >
-        <span
-          *ngIf="
-            postForm.get('text').errors?.minlength ||
-            postForm.get('text').errors?.maxlength
-          "
-          [style.color]="'red'"
-          >3-200 letters! letters number:{{
-            postForm.get("text").value.length
-          }}</span
-        >
-      </div>
-    </div> -->
+    <app-form-text-area-input
+      placeholder="text..."
+      formControlName="text"
+      rows="5"
+      label="Text:"
+    ></app-form-text-area-input>
+
+    <app-form-control-error-show
+      *ngIf="formControlTouchOrDirty(postForm.get('text'))"
+      [errors]="postForm.get('text').errors"
+    ></app-form-control-error-show>
 
     <div>
       <form formGroupName="location">
@@ -41,19 +24,38 @@
           label="Latitude:"
           placeholder="latitude..."
         ></app-form-number-input>
+
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(postForm.get('location').get('latitude'))
+          "
+          [errors]="postForm.get('location').get('latitude').errors"
+        ></app-form-control-error-show>
+
         <app-form-number-input
           formControlName="longtitude"
           label="Longtitude:"
           placeholder="longtitude..."
         ></app-form-number-input>
+
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(postForm.get('location').get('longtitude'))
+          "
+          [errors]="postForm.get('location').get('longtitude').errors"
+        ></app-form-control-error-show>
       </form>
     </div>
- 
 
     <app-form-image-input
       label="Photo:"
       formControlName="photo"
     ></app-form-image-input>
+
+    <app-form-control-error-show
+      *ngIf="formControlTouchOrDirty(postForm.get('photo'))"
+      [errors]="postForm.get('photo').errors"
+    ></app-form-control-error-show>
 
     <app-tag-input
       label="Tags:"
@@ -67,6 +69,6 @@
       formControlName="usersTags"
     ></app-usertag-input>
 
-    <button type="submit">Save</button>
+    <button type="submit" [disabled]='!postForm.valid'>Save</button>
   </fieldset>
 </form>

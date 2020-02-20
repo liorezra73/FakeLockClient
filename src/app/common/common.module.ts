@@ -6,6 +6,7 @@ import { FormInputErrorComponent } from "./components/form-input-error/form-inpu
 import { FormImageInputComponent } from "./components/form-image-input/form-image-input.component";
 import { FormNumberInputComponent } from './components/form-number-input/form-number-input.component';
 import { FormTextAreaInputComponent } from './components/form-text-area-input/form-text-area-input.component';
+import { FormControlErrorShowComponent } from './components/form-control-error-show/form-control-error-show.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { FormTextAreaInputComponent } from './components/form-text-area-input/fo
     FormInputErrorComponent,
     FormImageInputComponent,
     FormNumberInputComponent,
-    FormTextAreaInputComponent
+    FormTextAreaInputComponent,
+    FormControlErrorShowComponent
   ],
   imports: [CommonModule],
   exports: [
@@ -23,7 +25,8 @@ import { FormTextAreaInputComponent } from './components/form-text-area-input/fo
     FormInputErrorComponent,
     FormImageInputComponent,
     FormNumberInputComponent,
-    FormTextAreaInputComponent
+    FormTextAreaInputComponent,
+    FormControlErrorShowComponent
   ]
 })
 export class AppCommonModule {}

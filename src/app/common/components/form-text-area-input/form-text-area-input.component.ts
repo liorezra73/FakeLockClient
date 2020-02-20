@@ -33,4 +33,7 @@ export class FormTextAreaInputComponent implements ControlValueAccessor {
   registerOnTouched(fn: Function) {
     this.onModelTouched = fn;
   }
+  onChange(event) {
+    this.onModelChange(event.target.value);
+  }
 }

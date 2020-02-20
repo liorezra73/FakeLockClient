@@ -49,14 +49,22 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   }
 
   onSearch(event: any) {
-    console.log(event.target.value);
-    // if (/\S/.test(userTag)) {
-    //   ///const usersTags = [...this.ngControl.value, { title: userTag.value }];
-    //   //.onModelChange(usersTags);
-    //   userTag.value = null;
-    // } else {
-    //   alert("cant be empty");
-    // }
+    let { value } = event.target;
+    if (/\S/.test(value) && value.length > 2) {
+    
+      value = null;
+    } else {
+      alert("cant be empty");
+    }
+  }
+  onAddUserTag(userTag:HTMLInputElement){
+    if (/\S/.test(userTag.value)) {
+      const tags = [...this.ngControl.value, { title: userTag.value }];
+      this.onModelChange(tags);
+      userTag.value = null;
+    } else {
+      alert("cant be empty");
+    }
   }
   onDeleteTagged(index: number) {
     const { value } = this.ngControl;
