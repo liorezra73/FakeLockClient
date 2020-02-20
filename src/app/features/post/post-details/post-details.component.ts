@@ -4,7 +4,8 @@ import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Router, ActivatedRoute } from "@angular/router";
 import { IPhotoService } from "src/app/common/intefaces/photo.service.interface";
 import { PhotoService } from "src/app/common/services/photo.service";
-import { OrderBy } from 'src/app/common/enums/orderBy';
+import { OrderBy } from "src/app/common/enums/orderBy";
+import { Post } from "src/app/common/models/post";
 
 @Component({
   selector: "app-post-details",
@@ -15,6 +16,7 @@ export class PostDetailsComponent implements OnInit {
   postId: number;
   postService: IPostService;
   photoService: IPhotoService;
+  post: Post;
 
   constructor(
     postService: PostService,
@@ -29,12 +31,14 @@ export class PostDetailsComponent implements OnInit {
     );
   }
 
+  like() {
+    this.postService.deletePost(20018).subscribe(res => console.log(res),err => console.log(err));
+  }
   ngOnInit() {
-    this.postService
-      .getPostById(20018)
-      .subscribe(res =>
-       console.log(this.photoService.getPhotoByPhotoId(res.photo as string)) 
-      );
+    this.postService.getPostById(20018).subscribe(res => {
+      this.post = res;
+      console.log(this.post);
+    });
     this.postService.getPosts(OrderBy.likes).subscribe(
       res => console.log(res),
       err => console.log(err)

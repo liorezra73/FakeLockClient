@@ -26,17 +26,35 @@ export class CommentService implements ICommentService {
       )
       .pipe(
         map((res: PostComment[]) => {
-          return res;
+          return res.map(com => this.getCommentsPipe(com));
         })
       );
   }
   createComment(postId: number, comment: PostComment): Observable<any> {
     throw new Error("Method not implemented.");
   }
-  deleteComment(id: number): Observable<any> {
+  deleteComment(postId: number, id: number): Observable<any> {
+    this.postId = postId;
     return this.http.delete(`${this.commentUrl}/${this.postId}/comments/${id}`);
   }
-  switchLike(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
+  switchLike(postId: number, id: number): Observable<any> {
+    this.postId = postId;
+    return this.http.post(
+      `${this.commentUrl}/${this.postId}/comments/${id}/likes`,
+      null
+    );
+  }
+
+  private getCommentsPipe(i): PostComment {
+    return {
+      id: i.Id,
+      content: i.Content,
+      publishDate: i.PublishDate,
+      tags: i.tags,
+      usersTags: i.usersTags,
+      likes: i.likes,
+      userLiked: i.userLiked,
+      username: i.username
+    };
   }
 }

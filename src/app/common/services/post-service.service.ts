@@ -5,7 +5,7 @@ import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map } from "rxjs/operators";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
-import { OrderBy } from '../enums/orderBy';
+import { OrderBy } from "../enums/orderBy";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +20,7 @@ export class PostService implements IPostService {
     this.postUrl = `${config.baseApiURL}/posts`;
   }
 
-  getPosts(orderBy:OrderBy): Observable<Post[]> {
+  getPosts(orderBy: OrderBy): Observable<Post[]> {
     return this.http
       .get<Observable<Post[]>>(`${this.postUrl}?orderBy=${orderBy}`)
       .pipe(
@@ -54,7 +54,7 @@ export class PostService implements IPostService {
   }
 
   switchLike(id: number): Observable<any> {
-    throw new Error("Method not implemented.");
+    return this.http.post(`${this.postUrl}/${id}/likes`, null);
   }
 
   private postsDataPipe(i): Post {
@@ -83,7 +83,8 @@ export class PostService implements IPostService {
       tags: i.tags,
       usersTags: i.usersTags,
       likes: i.likes,
-      photo: i.Photo
+      photo: i.Photo,
+      isLikedByUser: i.isLikedByUser
     };
   }
 }

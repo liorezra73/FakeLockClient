@@ -10,6 +10,7 @@ export interface Post {
     tags?: Tag[] | string[];
     likes?: Number;
     user?: User;
+    isLikedByUser?:boolean;
   }
   
   export interface Location {
