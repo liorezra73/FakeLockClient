@@ -31,7 +31,7 @@ export class PostService implements IPostService {
   getPostById(id: number): Observable<Post> {
     return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
       map((res: Post) => {
-        return res;
+        return this.postsDataPipe(res);
       })
     );
   }
@@ -72,7 +72,7 @@ export class PostService implements IPostService {
       tags: i.tags,
       usersTags: i.usersTags,
       likes: i.likes,
-      photo: null
+      photo: i.Photo
     };
   }
 }
