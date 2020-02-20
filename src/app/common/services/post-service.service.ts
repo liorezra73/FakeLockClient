@@ -11,6 +11,7 @@ import { OrderBy } from "../enums/orderBy";
   providedIn: "root"
 })
 export class PostService implements IPostService {
+
   postUrl: string;
 
   constructor(

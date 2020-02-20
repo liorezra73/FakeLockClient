@@ -1,0 +1,34 @@
+.post-details-display{
+    margin: auto;
+    display: table;
+    height: 25%;
+    width: 25%;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}
+
+.username-display{
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.date-display{
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.tags-display{
+    display: inline;
+    font-weight: bold;
+}
+
+.tag-likes-display{
+    justify-content: space-between;
+}
+
+i{
+    cursor: pointer;
+}

@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./shared/routes/app-routing.module";
 import { PostModule } from "./features/post/post.module";
@@ -19,6 +19,7 @@ import { AppSharedModule } from "./shared/shared.module";
 import { AuthHttpProxyService } from "./common/proxies/auth-http-proxy.service";
 import { CommentService } from "./common/services/comment.service";
 import { PhotoService } from "./common/services/photo.service";
+import { ModalModule } from "ngx-bootstrap";
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,10 @@ import { PhotoService } from "./common/services/photo.service";
     UserModule,
     CommentModule,
     AppCommonModule,
-    AppSharedModule
+    AppSharedModule,
+    BrowserAnimationsModule,
+    ModalModule
+
   ],
   providers: [
     { provide: PostService, useClass: PostService },

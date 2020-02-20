@@ -1,0 +1,23 @@
+.date-display{
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.date-likes-displayer{
+    display: inline;
+}
+
+.likes-display{
+    font-weight: bold;
+    font-size: x-small;
+}
+
+i{
+    cursor: pointer;
+}
+
+.username-display{
+    font-weight: bold;
+    font-size: large;
+    display: inline;
+}
