@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { IPostService } from 'src/app/common/intefaces/post-service.inteface';
 import { PostService } from 'src/app/common/services/post-service.service';
 import { OrderBy } from 'src/app/common/enums/orderBy';
+import { NavigateService } from 'src/app/shared/services/navigate.service';
+import { INavigateService } from 'src/app/shared/interfaces/navigate.service.interface';
 
 @Component({
   selector: "app-post-main-feed",
@@ -12,9 +14,11 @@ import { OrderBy } from 'src/app/common/enums/orderBy';
 })
 export class PostMainFeedComponent implements OnInit {
   postService: IPostService;
+  navgiateService: INavigateService;
   posts: Post[];
-  constructor(service: PostService, private router: Router) {
+  constructor(service: PostService, navigateService: NavigateService) {
     this.postService = service;
+    this.navgiateService = navigateService;
   }
 
   ngOnInit() {
@@ -29,7 +33,7 @@ export class PostMainFeedComponent implements OnInit {
   }
 
   onPostSelect(postId: number) {
-    this.router.navigate(["/posts",postId]);
+    this.navgiateService.navigate(`/posts/${postId}`);
   }
 
   handleError(error): void {
@@ -52,7 +56,7 @@ export class PostMainFeedComponent implements OnInit {
 
   navigateHomeByTimer(time: number): void {
     setTimeout(() => {
-      this.router.navigate(["home"]);
+      this.navgiateService.navigate("home");
     }, time);
   }
 }
