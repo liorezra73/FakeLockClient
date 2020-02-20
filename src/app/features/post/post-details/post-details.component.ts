@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Post } from 'src/app/common/models/post';
+import { Post } from "src/app/common/models/post";
 
 @Component({
   selector: "app-post-details",
@@ -15,25 +15,24 @@ export class PostDetailsComponent implements OnInit {
   postService: IPostService;
 
   constructor(
-    service: PostService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    postService: PostService
   ) {
-    this.postService = service;
+    this.postService = postService;
     this.activatedRoute.params.subscribe(
       res => (this.postId = parseInt(res.postId))
     );
   }
 
-  ngOnInit() {
-   
+  ngOnInit() {}
+
+  getPostById() {
+    this.postService
+      .getPostById(this.postId)
+      .subscribe(post => (this.post = post));
   }
 
-  getPostById(){
-    this.postService.getPostById(this.postId).subscribe(post=> this.post = post);
-  }
-  
-  
   handleError(error): void {
     switch (error.status) {
       case 0:
@@ -41,7 +40,7 @@ export class PostDetailsComponent implements OnInit {
         this.navigateMainByTimer(3000);
         break;
       case 404:
-        alert("No posts to display, please try again.");
+        alert("No posts to display.");
         break;
       case 500:
         alert("Connection error! please try again.");
@@ -57,5 +56,4 @@ export class PostDetailsComponent implements OnInit {
       this.router.navigate(["posts/feed/main"]);
     }, time);
   }
-
 }

@@ -5,11 +5,13 @@ import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map } from "rxjs/operators";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
+import { OrderBy } from '../enums/orderBy';
 
 @Injectable({
   providedIn: "root"
 })
 export class PostService implements IPostService {
+
   postUrl: string;
 
   constructor(
@@ -19,9 +21,9 @@ export class PostService implements IPostService {
     this.postUrl = `${config.baseApiURL}/posts`;
   }
 
-  getPostsOrderByDates(): any {
+  getPosts(orderBy:OrderBy): Observable<Post[]> {
     return this.http
-      .get<Observable<Post[]>>(`${this.postUrl}?orderBy=date`)
+      .get<Observable<Post[]>>(`${this.postUrl}?orderBy=${orderBy}`)
       .pipe(
         map((res: Post[]) => {
           return res.map((post: Post) => this.postsDataPipe(post));

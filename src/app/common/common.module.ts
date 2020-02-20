@@ -22,7 +22,8 @@ import { FormTextAreaInputComponent } from './components/form-text-area-input/fo
     FormPasswordInputComponent,
     FormInputErrorComponent,
     FormImageInputComponent,
-    FormNumberInputComponent
+    FormNumberInputComponent,
+    FormTextAreaInputComponent
   ]
 })
 export class AppCommonModule {}
