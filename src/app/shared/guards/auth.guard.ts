@@ -9,18 +9,25 @@ import {
 import { Observable } from "rxjs";
 import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
+import { INavigateService } from "../interfaces/navigate.service.interface";
+import { NavigateService } from "../services/navigate.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthGuard implements CanActivate {
   authService: IAuthService;
-  constructor(private router: Router, authService: AuthenticationService) {
+  navigateService: INavigateService;
+  constructor(
+    authService: AuthenticationService,
+    navigateService: NavigateService
+  ) {
     this.authService = authService;
+    this.navigateService = navigateService;
   }
 
   defaultNavigation(route: string) {
-    this.router.navigate([route]);
+    this.navigateService.navigate(route);
     return false;
   }
 
@@ -36,7 +43,7 @@ export class AuthGuard implements CanActivate {
     if (!res) {
       return this.defaultNavigation("/home/login");
     } else {
-      return true;
+      true;
     }
   }
 }

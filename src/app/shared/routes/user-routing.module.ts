@@ -3,13 +3,14 @@ import { Routes, RouterModule } from "@angular/router";
 import { UserHomePageComponent } from "src/app/features/user/user-home-page/user-home-page.component";
 import { UserLoginComponent } from "src/app/features/user/user-login/user-login.component";
 import { UserFormComponent } from "src/app/features/user/user-form/user-form.component";
+import { UserLoggedGuard } from '../guards/user-logged.guard';
 
 const routes: Routes = [
   {
     path: "",
     component: UserHomePageComponent,
     children: [
-      { path: "login", component: UserLoginComponent },
+      { path: "login", component: UserLoginComponent},
       { path: "register", component: UserFormComponent }
     ]
   }
