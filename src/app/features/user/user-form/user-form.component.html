@@ -1,45 +1,97 @@
-<form [formGroup]="registerForm">
-  <app-form-text-input
-    formControlName="fullName"
-    label="Full name:"
-    placeholer="Enter full name.."
-  ></app-form-text-input>
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+  <fieldset>
+    <legend>Register:</legend>
+    <div>
+      <app-form-text-input
+        formControlName="fullName"
+        label="Full name:"
+        placeholer="Enter full name.."
+      ></app-form-text-input>
 
-  <app-form-text-input
-    formControlName="username"
-    label="Username:"
-    placeholer="Enter username"
-  ></app-form-text-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('fullName'))"
+        [errors]="registerForm.get('fullName').errors"
+      ></app-form-control-error-show>
+    </div>
 
-  <app-form-password-input
-    formControlName="password"
-    [placeholder]="'Enter password..'"
-    [label]="'Password:'"
-  ></app-form-password-input>
+    <div>
+      <app-form-text-input
+        formControlName="username"
+        label="Username:"
+        placeholer="Enter username"
+      ></app-form-text-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('username'))"
+        [errors]="registerForm.get('username').errors"
+      ></app-form-control-error-show>
+    </div>
 
-  <app-form-password-input
-    formControlName="repeatPassword"
-    [placeholder]="'Repeat password..'"
-    [label]="'Repeat password:'"
-  ></app-form-password-input>
+    <div>
+      <app-form-password-input
+        formControlName="password"
+        [placeholder]="'Enter password..'"
+        [label]="'Password:'"
+      ></app-form-password-input>
 
-  <app-form-input-date
-    formControlName="birthDate"
-    label="Birthdate:"
-  ></app-form-input-date>
-  <button type="button" (click)="onRegister()"></button>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('password'))"
+        [errors]="registerForm.get('password').errors"
+      ></app-form-control-error-show>
+    </div>
 
-  <app-form-text-input
-    formControlName="address"
-    label="Address:"
-    placeholer="Enter address"
-  ></app-form-text-input>
+    <div>
+      <app-form-password-input
+        formControlName="repeatPassword"
+        [placeholder]="'Repeat password..'"
+        [label]="'Repeat password:'"
+      ></app-form-password-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('repeatPassword'))"
+        [errors]="registerForm.get('repeatPassword').errors"
+      ></app-form-control-error-show>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('repeatPassword'))"
+        [errors]="registerForm.errors"
+        message="password and repeatPassword must be equals"
+      ></app-form-control-error-show>
+    </div>
 
-  <app-form-text-input
-    formControlName="jobAddress"
-    label="Job address:"
-    placeholer="Enter job address"
-  ></app-form-text-input>
+    <div>
+      <app-form-input-date
+        formControlName="birthDate"
+        label="Birthdate:"
+      ></app-form-input-date>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('birthDate'))"
+        [errors]="registerForm.get('birthDate').errors"
+        message="must be 18 years old"
+      ></app-form-control-error-show>
+    </div>
+    
+    <div>
+      <app-form-text-input
+        formControlName="address"
+        label="Address:"
+        placeholer="Enter address"
+      ></app-form-text-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('address'))"
+        [errors]="registerForm.get('address').errors"
+      ></app-form-control-error-show>
+    </div>
 
-  <button type="button" (click)="onRegister()">Register</button>
+    <div>
+      <app-form-text-input
+        formControlName="jobAddress"
+        label="Job address:"
+        placeholer="Enter job address"
+      ></app-form-text-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(registerForm.get('jobAddress'))"
+        [errors]="registerForm.get('jobAddress').errors"
+      ></app-form-control-error-show>
+    </div>
+
+    <button type="submit" [disabled]="!registerForm.valid">Register</button>
+  </fieldset>
 </form>

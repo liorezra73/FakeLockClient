@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FormControlErrorShowComponent implements OnInit {
 
   @Input() errors: string[];
+  @Input() message: string = "";
   constructor() { }
 
   ngOnInit() {

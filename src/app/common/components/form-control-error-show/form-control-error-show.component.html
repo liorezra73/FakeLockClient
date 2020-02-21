@@ -6,9 +6,14 @@
   >max {{ errors?.maxlength.requiredLength }} letters</span
 >
 
-<span *ngIf="errors?.max" [class]="error"
-  >max {{ errors?.max.max }}</span
+<span *ngIf="errors?.max" [class]="error">max {{ errors?.max.max }}</span>
+<span *ngIf="errors?.min" [class]="error">min {{ errors?.min.min }}</span>
+
+<span *ngIf="errors?.noEqual" [class]="error"> {{ message }}</span>
+
+<span *ngIf="errors?.minAge" [class]="error"> {{ message }}</span>
+
+<span *ngIf="errors?.usernameExists" [class]="error">
+  username already exists</span
 >
-<span *ngIf="errors?.min" [class]="error"
-  >min {{ errors?.min.min }}</span
->
+
