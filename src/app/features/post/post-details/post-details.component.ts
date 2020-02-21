@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Post } from "src/app/common/models/post";
 import { IPhotoService } from "src/app/common/intefaces/photo.service.interface";
 import { PhotoService } from "src/app/common/services/photo.service";
+import { OrderBy } from "src/app/common/enums/orderBy";
 
 @Component({
   selector: "app-post-details",
@@ -31,10 +32,14 @@ export class PostDetailsComponent implements OnInit {
   }
 
   like() {
-    this.postService.deletePost(10013).subscribe(res => console.log(res),err => console.log(err));
+    this.postService.deletePost(10013).subscribe(
+      res => {},
+      err => console.log(err)
+    );
   }
   ngOnInit() {
     this.getPostById(this.postId);
+   
   }
 
   getPostById(postId: number) {

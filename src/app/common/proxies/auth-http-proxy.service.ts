@@ -2,20 +2,29 @@ import { Injectable } from "@angular/core";
 import {
   HttpClient,
   HttpHeaders,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse,
+  HttpParams
 } from "@angular/common/http";
-import { catchError } from "rxjs/operators";
+import { catchError, tap, map } from "rxjs/operators";
 import { Observable, ObservableInput } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthHttpProxyService {
+
   headers: HttpHeaders;
+  httpOptions;
+
   constructor(private http: HttpClient) {
     const token = localStorage.getItem("token");
-    this.headers = new HttpHeaders().set("x-auth-token", token);
+    this.headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    }).set("x-auth-token", token);
   }
+
+ 
 
   get<T>(url: string) {
     return this.http
