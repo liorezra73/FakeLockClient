@@ -13,6 +13,7 @@ export class CommentListComponent implements OnInit {
   commentService: ICommentService;
   @Input()
   postId: number;
+
   constructor(commentService: CommentService) {
     this.commentService = commentService;
   }
@@ -22,9 +23,30 @@ export class CommentListComponent implements OnInit {
   }
 
   getCommentsByPostId(postId): void {
-    this.commentService.getCommentsByPostId(postId).subscribe(comments => {
-      this.comments = comments;
-    });
+    this.commentService.getCommentsByPostId(postId).subscribe(
+      comments => {
+        this.comments = comments;
+      },
+      err => this.handleError(err)
+    );
   }
 
+  handleError(error): void {
+    switch (error.status) {
+      case 0:
+        alert("Connection error! please try again.");
+        break;
+      case 400:
+        alert("No comments.");
+        break;
+      case 404:
+        alert("No comments.");
+        break;
+      case 500:
+        alert("Connection error! please try again.");
+      default:
+        alert("Connection error! Redirect to home page");
+        break;
+    }
+  }
 }

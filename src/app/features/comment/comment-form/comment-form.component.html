@@ -1,1 +1,5 @@
-<p>comment-form works!</p>
+<form [formGroup]="commentForm">
+  <app-form-text-input formControlName="content"></app-form-text-input>
+  <button type="button" class="btn btn-outline-secondary" (click)="onSend()">Send</button>
+</form>
+

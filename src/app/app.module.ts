@@ -20,6 +20,7 @@ import { AuthHttpProxyService } from "./common/proxies/auth-http-proxy.service";
 import { CommentService } from "./common/services/comment.service";
 import { PhotoService } from "./common/services/photo.service";
 import { ModalModule } from "ngx-bootstrap";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +36,8 @@ import { ModalModule } from "ngx-bootstrap";
     AppCommonModule,
     AppSharedModule,
     BrowserAnimationsModule,
-    ModalModule
+    ModalModule,
+    CommonModule
 
   ],
   providers: [

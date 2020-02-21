@@ -4,8 +4,10 @@ import { CommentLayoutComponent } from "./comment-layout/comment-layout.componen
 import { CommentFormComponent } from "./comment-form/comment-form.component";
 import { CommentListComponent } from "./comment-list/comment-list.component";
 import { CommentRoutingModule } from "src/app/shared/routes/comment-routing.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import { ModalModule } from 'ngx-bootstrap';
+import { AppCommonModule } from 'src/app/common/common.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,7 @@ import { ModalModule } from 'ngx-bootstrap';
     CommentListComponent,
     CommentModalComponent
   ],
-  imports: [CommonModule, CommentRoutingModule, ModalModule.forRoot()],
+  imports: [CommonModule, CommentRoutingModule, ModalModule.forRoot(),AppCommonModule, ReactiveFormsModule, FormsModule],
   exports: [CommentModalComponent]
 })
 export class CommentModule {}

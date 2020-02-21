@@ -7,6 +7,7 @@ import {
   Input
 } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { PostComment } from 'src/app/common/models/PostComment';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 })
 export class CommentModalComponent implements OnInit {
   @Input()
-  comments: Comment[];
+  comments: PostComment[];
   @Input()
   postId: number;
   modalRef: BsModalRef;
@@ -31,7 +32,7 @@ export class CommentModalComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  onCommentCreate(comment: Comment) {
-    this.onCreateComment.emit({ ...comment });
-  }
+  // onCommentCreate(comment: PostComment) {
+  //   this.onCreateComment.emit({ ...comment });
+  // }
 }
