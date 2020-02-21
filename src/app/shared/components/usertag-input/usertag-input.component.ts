@@ -60,7 +60,9 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   onAddUserTag(userTag: HTMLInputElement) {
     
     if (/\S/.test(userTag.value)) {
+      console.log(userTag.value)
       const usersTags = [...this.ngControl.value, { title: userTag.value }];
+      console.log(usersTags)
       this.onModelChange(usersTags);
       userTag.value = null;
     } else {
@@ -78,8 +80,10 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     debounceTime(200),
     distinctUntilChanged(),
     map(term => term.length < 2 ? []
-      : this.users.filter(u => u.username.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+      : this.users.slice(0, 10))
   )
 
-  formatter = (user: { username }) => user.username;
+  formatter = (user: User) =>
+   user.username;
+
 }
