@@ -11,7 +11,6 @@ import { OrderBy } from "../enums/orderBy";
   providedIn: "root"
 })
 export class PostService implements IPostService {
-
   postUrl: string;
 
   constructor(
@@ -34,10 +33,10 @@ export class PostService implements IPostService {
     return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
       map((res: Post) => {
         return this.postDataPipe(res);
-      })
+      }),
     );
   }
-  createPost(post: Post, photo: File): Observable<any> {
+  createPost(post: Post): Observable<any> {
     const tags: string[] = [],
       usersTags: number[] = [];
     post.tags.forEach(x => tags.push(x.title));
@@ -45,9 +44,11 @@ export class PostService implements IPostService {
     post.tags = tags;
     post.usersTags = usersTags;
     const formData = new FormData();
+    const { photo } = post;
+    formData.append("photo", photo);
+    delete post.photo;
     const postJson = JSON.stringify(post);
     formData.append("post", postJson);
-    formData.append("photo", photo);
     return this.http.post<FormData>(this.postUrl, formData);
   }
   deletePost(id: number): Observable<any> {

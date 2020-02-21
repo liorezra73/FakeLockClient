@@ -6,7 +6,7 @@ export interface IPostService {
   postUrl: string;
   getPosts(orderBy: OrderBy): Observable<Post[]>;
   getPostById(id: number): Observable<Post>;
-  createPost(post: Post, photo: File): Observable<any>;
+  createPost(post: Post): Observable<any>;
   deletePost(id: number): Observable<any>;
   switchLike(id: number): Observable<any>;
 }

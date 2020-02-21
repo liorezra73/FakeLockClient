@@ -1,1 +1,6 @@
-<p>form-text-area-input works!</p>
+<div>
+  <label>{{ label }}</label>
+  <div>
+    <textarea placeholder="{{ placeholder }}" (change)="onChange($event)" rows={{rows}}></textarea>
+  </div>
+</div>

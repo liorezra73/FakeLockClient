@@ -1,39 +1,38 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, DoCheck } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
-import { Post, Tag } from "src/app/common/models/post";
-import { FormGroup, Validators, FormControl } from "@angular/forms";
-import { IUserService } from "src/app/common/intefaces/user-service.inteface";
+import { Post } from "src/app/common/models/post";
+import {
+  FormGroup,
+  Validators,
+  FormControl,
+  AbstractControl
+} from "@angular/forms";
 import { UserService } from "src/app/common/services/user.service";
-import { Observable } from "rxjs";
-import { User } from "src/app/common/models/User";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
+import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
 
 @Component({
   selector: "app-post-form",
   templateUrl: "./post-form.component.html",
   styleUrls: ["./post-form.component.css"]
 })
-export class PostFormComponent implements OnInit {
+export class PostFormComponent implements OnInit, DoCheck {
   postService: IPostService;
-  userService: IUserService;
   post: Post;
-  postTags: Tag[] = [];
-  //need to get users to search in tage users input;
-  postUserTags: User[] = [];
   postForm: FormGroup;
-  users: User[];
 
-  constructor(postService: PostService, userService: UserService) {
+  constructor(postService: PostService) {
     this.postService = postService;
-    this.userService = userService;
   }
 
   ngOnInit() {
     this.initializePost();
+    this.getCurrentLocation();
+  }
+
+  ngDoCheck(): void {
     this.initializePostForm();
-    this.userService.getUsers().subscribe(data => (this.users = data));
-    // this.userService.getUsers().subscribe(res=>console.log(res));
   }
   initializePost() {
     this.post = {
@@ -47,7 +46,6 @@ export class PostFormComponent implements OnInit {
       tags: []
     };
   }
-  //need to write custom validate for location min max and num
   //need to sepraet code that repeats himself
   initializePostForm() {
     this.postForm = new FormGroup({
@@ -55,11 +53,19 @@ export class PostFormComponent implements OnInit {
       location: new FormGroup({
         latitude: new FormControl(
           this.post.location.latitude,
-          Validators.compose([Validators.required])
+          Validators.compose([
+            Validators.required,
+            Validators.min(-90),
+            Validators.max(90)
+          ])
         ),
         longtitude: new FormControl(
           this.post.location.latitude,
-          Validators.compose([Validators.required])
+          Validators.compose([
+            Validators.required,
+            Validators.min(-180),
+            Validators.max(180)
+          ])
         )
       }),
       photo: new FormControl(this.post.photo, Validators.required),
@@ -68,50 +74,38 @@ export class PostFormComponent implements OnInit {
     });
   }
 
-  addTag(tag: HTMLInputElement) {
-    if (/\S/.test(tag.value)) {
-      const { tags } = this.postForm.controls;
-      tags.patchValue([...tags.value, { title: tag.value }]);
-      console.log(this.postForm.controls.tags.value);
-      tag.value = "";
-    } else {
-      alert("cant be empty");
-    }
-  }
-  removeTag(index: number) {
-    this.postTags = this.postTags.filter(
-      p => this.postTags.indexOf(p) !== index
-    );
-  }
-
-  removeUserTag(index: number) {
-    this.postUserTags = this.postUserTags.filter(
-      p => this.postUserTags.indexOf(p) !== index
-    );
-  }
-
-  selectEvent(item) {
-   item.query = null
-    console.log(item)
+  formControlTouchOrDirty(formControl: AbstractControl) {
+    return formControlTouchOrDirty(formControl);
   }
 
   savePost() {
-    console.log(this.postForm.value);
-    console.log(this.postForm);
-    // if (this.postPhoto && this.postPhoto.size > 0 && this.postForm.valid) {
-    //   this.post = {
-    //     ...this.postForm.value,
-    //     tags: this.postTags,
-    //     usersTags: this.postUserTags
-    //   };
-    //   delete this.post.photo;
-    //   this.postService.createPost({ ...this.post }, this.postPhoto);
-    //   this.postPhoto = null;
-    //   this.initializePost();
-    //   this.initializePostForm();
-    //   console.log(this.postPhoto);
-    // } else {
-    //   alert("form not valid!");
-    // }
+    if (this.postForm.valid) {
+      this.post = this.postForm.value;
+      this.postService.createPost({ ...this.post }).subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
+      this.initializePost();
+      this.initializePostForm();
+    } else {
+      alert("form not valid!");
+    }
+  }
+
+  getCurrentLocation(): void {
+    navigator.geolocation.getCurrentPosition(
+      res => {
+        this.post.location = {
+          latitude: res.coords.latitude,
+          longtitude: res.coords.longitude
+        };
+      },
+      err => {
+        this.post.location = {
+          latitude: 32.0970604,
+          longtitude: 34.826543799999996
+        };
+      }
+    );
   }
 }
