@@ -6,6 +6,7 @@ import { FormInputErrorComponent } from "./components/form-input-error/form-inpu
 import { FormImageInputComponent } from "./components/form-image-input/form-image-input.component";
 import { FormNumberInputComponent } from "./components/form-number-input/form-number-input.component";
 import { FormTextAreaInputComponent } from "./components/form-text-area-input/form-text-area-input.component";
+import { AppSharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { FormTextAreaInputComponent } from "./components/form-text-area-input/fo
     FormNumberInputComponent,
     FormTextAreaInputComponent
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, AppSharedModule],
   exports: [
     FormTextInputComponent,
     FormPasswordInputComponent,

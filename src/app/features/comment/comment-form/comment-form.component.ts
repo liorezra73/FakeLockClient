@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { PostComment } from "src/app/common/models/PostComment";
 import { FormGroup, FormControl } from "@angular/forms";
-
 
 @Component({
   selector: "app-comment-form",
@@ -9,31 +8,34 @@ import { FormGroup, FormControl } from "@angular/forms";
   styleUrls: ["./comment-form.component.css"]
 })
 export class CommentFormComponent implements OnInit {
+  @Output()
+  onSendComment = new EventEmitter<PostComment>();
   commentForm: FormGroup;
   newComment: PostComment;
+
   constructor() {}
   ngOnInit() {
     this.initializeComment();
     this.initializeCommentForm();
   }
 
-  onSend() {
+  onSend(): void {
     this.newComment = this.commentForm.value;
-    console.log(this.newComment);
+    this.onSendComment.emit(this.newComment);
   }
 
-  initializeComment() {
+  initializeComment(): void {
     this.newComment = {
       content: "",
       usersTags: [],
       tags: []
     };
   }
-  initializeCommentForm() {
+  initializeCommentForm(): void {
     this.commentForm = new FormGroup({
       content: new FormControl(this.newComment.content),
       tags: new FormControl(this.newComment.tags),
-      userTags: new FormControl(this.newComment.usersTags)
+      usersTags: new FormControl(this.newComment.usersTags)
     });
   }
 }

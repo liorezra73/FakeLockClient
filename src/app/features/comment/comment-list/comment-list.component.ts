@@ -31,6 +31,10 @@ export class CommentListComponent implements OnInit {
     );
   }
 
+  createComment(comment: PostComment) {
+    this.commentService.createComment(this.postId, comment).subscribe();
+  }
+
   handleError(error): void {
     switch (error.status) {
       case 0:

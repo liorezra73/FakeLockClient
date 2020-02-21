@@ -30,8 +30,8 @@ export class CommentService implements ICommentService {
         })
       );
   }
-  createComment(postId: number, comment: PostComment): Observable<any> {
-    throw new Error("Method not implemented.");
+  createComment(postId: number, comment: PostComment): any {
+    return this.http.post(`${this.commentUrl}/${postId}/comments`, comment)
   }
   deleteComment(postId: number, id: number): Observable<any> {
     this.postId = postId;

@@ -4,6 +4,11 @@ import {
   ControlValueAccessor,
   NgControl
 } from "@angular/forms";
+import { Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { UserService } from "src/app/common/services/user.service";
+import { IUserService } from "src/app/common/intefaces/user-service.inteface";
+import { User } from "src/app/common/models/User";
 
 @Component({
   selector: "app-usertag-input",
@@ -22,21 +27,25 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   onModelTouched: Function = () => {};
   @Input() label: string;
   @Input() placeholder: string;
+  users$: Observable<User[]>;
+  users: User[];
   ngControl: NgControl;
+  userService: IUserService;
 
-  users = [
-    { username: "kkk" },
-    { username: "ddd" },
-    { username: "uuu" },
-    { username: "ttt" },
-    { username: "udasduu" },
-    { username: "dasdvcx" },
-    { username: "ioik7" }
-  ];
-  constructor(private inj: Injector) {}
+  constructor(private inj: Injector, userSerivce: UserService) {
+    this.userService = userSerivce;
+  }
 
   ngOnInit(): void {
+    this.getUsers();
     this.ngControl = this.inj.get(NgControl);
+  }
+
+  getUsers() {
+    this.users$ = this.userService.getUsers();
+    this.users$.subscribe(users => {
+      (this.users = users), console.log(this.users);
+    });
   }
 
   writeValue(obj: any): void {}
@@ -48,19 +57,29 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelTouched = fn;
   }
 
-  onSearch(event: any) {
-    console.log(event.target.value);
-    // if (/\S/.test(userTag)) {
-    //   ///const usersTags = [...this.ngControl.value, { title: userTag.value }];
-    //   //.onModelChange(usersTags);
-    //   userTag.value = null;
-    // } else {
-    //   alert("cant be empty");
-    // }
+  onAddUserTag(userTag: HTMLInputElement) {
+    
+    if (/\S/.test(userTag.value)) {
+      const usersTags = [...this.ngControl.value, { title: userTag.value }];
+      this.onModelChange(usersTags);
+      userTag.value = null;
+    } else {
+      alert("cant be empty");
+    }
   }
-  onDeleteTagged(index: number) {
+  onDeleteUserTagged(index: number) {
     const { value } = this.ngControl;
-    const tags = value.filter(t => value.indexOf(t) !== index);
-    this.onModelChange(tags);
+    const userTags = value.filter(t => value.indexOf(t) !== index);
+    this.onModelChange(userTags);
   }
+
+  search = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map(term => term.length < 2 ? []
+      : this.users.filter(u => u.username.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+  )
+
+  formatter = (user: { username }) => user.username;
 }

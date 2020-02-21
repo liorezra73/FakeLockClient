@@ -21,6 +21,7 @@ import { CommentService } from "./common/services/comment.service";
 import { PhotoService } from "./common/services/photo.service";
 import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,8 @@ import { CommonModule } from '@angular/common';
     AppSharedModule,
     BrowserAnimationsModule,
     ModalModule,
-    CommonModule
+    CommonModule,
+    NgbModule
 
   ],
   providers: [

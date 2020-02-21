@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { AppCommonModule } from 'src/app/common/common.module';
+import { AppSharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { AppCommonModule } from 'src/app/common/common.module';
     CommentListComponent,
     CommentModalComponent
   ],
-  imports: [CommonModule, CommentRoutingModule, ModalModule.forRoot(),AppCommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, CommentRoutingModule, ModalModule.forRoot(),AppCommonModule, ReactiveFormsModule, FormsModule,AppSharedModule],
   exports: [CommentModalComponent]
 })
 export class CommentModule {}

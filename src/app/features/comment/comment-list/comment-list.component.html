@@ -1,6 +1,6 @@
 <div *ngIf="postId">
   <div *ngFor="let comment of comments">
-    <div class="username-display">{{ comment.username }}</div>
+    <div class="username-display">{{ comment.username }} </div>
     <span class="date-display">{{ comment.publishDate | date: "short" }}</span>
     <div class="date-likes-displayer"></div>
     <div>{{ comment.content }}</div>
@@ -9,5 +9,5 @@
     >
     <hr />
   </div>
-   <app-comment-form ></app-comment-form>
+   <app-comment-form (onSendComment)="createComment($event)"></app-comment-form>
 </div>
