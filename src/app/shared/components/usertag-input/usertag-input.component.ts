@@ -44,7 +44,7 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   }
 
   getUsers() {
-    this.users$ = this.userService.getUsers();
+    this.users$ = this.userService.getUsersByUsername("dasd");
     this.users$.subscribe(users => {
       (this.users = users), console.log(this.users);
     });

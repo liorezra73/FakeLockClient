@@ -5,6 +5,7 @@ import { APP_CONFIG } from "./config.service";
 import { User } from "../models/User";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { Register } from "../models/Register";
 
 @Injectable({
   providedIn: "root"
@@ -16,14 +17,14 @@ export class UserService implements IUserService {
     this.usersUrl = `${config.baseApiURL}/users`;
   }
 
-  getUsers(): Observable<User[]> {
+  getUsersByUsername(username: string): Observable<User[]> {
     return this.http
-      .get<User[]>(this.usersUrl)
+      .get<User[]>(`${this.usersUrl}?username=${username}`)
       .pipe(map(data => data.map(res => this.dataPipe(res))));
   }
 
-  onRegister(register: import("../models/Register").Register): void {
-    throw new Error("Method not implemented.");
+  onRegister(register: Register): Observable<number> {
+    return this.http.post<number>(this.usersUrl, register);
   }
 
   private dataPipe(i): User {
