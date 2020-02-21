@@ -21,27 +21,32 @@ export class CommentService implements ICommentService {
   getCommentsByPostId(postId: number): Observable<PostComment[]> {
     this.postId = postId;
     return this.http
-      .get<Observable<PostComment[]>>(
-        `${this.commentUrl}/${this.postId}/comments`
-      )
+      .get<PostComment[]>(`${this.commentUrl}/${this.postId}/comments`)
       .pipe(
         map((res: PostComment[]) => {
           return res.map(com => this.getCommentsPipe(com));
         })
       );
   }
-  createComment(postId: number, comment: PostComment): any {
-    return this.http.post(`${this.commentUrl}/${postId}/comments`, comment)
+  createComment(postId: number, comment: PostComment): Observable<any> {
+    return this.http.post(`${this.commentUrl}/${postId}/comments`, comment);
   }
   deleteComment(postId: number, id: number): Observable<any> {
     this.postId = postId;
     return this.http.delete(`${this.commentUrl}/${this.postId}/comments/${id}`);
   }
-  switchLike(postId: number, id: number): Observable<any> {
+  doLike(postId: number, id: number): Observable<any> {
     this.postId = postId;
     return this.http.post(
       `${this.commentUrl}/${this.postId}/comments/${id}/likes`,
       null
+    );
+  }
+
+  unLike(postId: number, id: number): Observable<any> {
+    this.postId = postId;
+    return this.http.delete(
+      `${this.commentUrl}/${this.postId}/comments/${id}/likes`
     );
   }
 
