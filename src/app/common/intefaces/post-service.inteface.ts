@@ -8,5 +8,6 @@ export interface IPostService {
   getPostById(id: number): Observable<Post>;
   createPost(post: Post): Observable<any>;
   deletePost(id: number): Observable<any>;
-  switchLike(id: number): Observable<any>;
+  doLike(id: number): Observable<any>;
+  unLike(id: number): Observable<any>;
 }

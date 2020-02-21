@@ -21,22 +21,20 @@ export class PostService implements IPostService {
   }
 
   getPosts(orderBy: OrderBy): Observable<Post[]> {
-    return this.http
-      .get<Observable<Post[]>>(`${this.postUrl}?orderBy=${orderBy}`)
-      .pipe(
-        map((res: Post[]) => {
-          return res.map((post: Post) => this.postsDataPipe(post));
-        })
-      );
-  }
-  getPostById(id: number): Observable<Post> {
-    return this.http.get<Observable<Post>>(`${this.postUrl}/${id}`).pipe(
-      map((res: Post) => {
-        return this.postDataPipe(res);
-      }),
+    return this.http.get<Post[]>(`${this.postUrl}?orderBy=${orderBy}`).pipe(
+      map((res: Post[]) => {
+        return res.map((post: Post) => this.postsDataPipe(post));
+      })
     );
   }
-  createPost(post: Post): Observable<any> {
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.postUrl}/${id}`).pipe(
+      map((res: Post) => {
+        return this.postDataPipe(res);
+      })
+    );
+  }
+  createPost(post: Post): Observable<number> {
     const tags: string[] = [],
       usersTags: number[] = [];
     post.tags.forEach(x => tags.push(x.title));
@@ -55,8 +53,12 @@ export class PostService implements IPostService {
     return this.http.delete(`${this.postUrl}/${id}`);
   }
 
-  switchLike(id: number): Observable<any> {
+  doLike(id: number): Observable<any> {
     return this.http.post(`${this.postUrl}/${id}/likes`, null);
+  }
+
+  unLike(id: number): Observable<any> {
+    return this.http.delete(`${this.postUrl}/${id}/likes`);
   }
 
   private postsDataPipe(i): Post {
