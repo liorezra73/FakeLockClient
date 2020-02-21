@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
+import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { NavigateService } from "src/app/shared/services/navigate.service";
 
 @Component({
   selector: "app-post-layout",
@@ -8,14 +10,19 @@ import { AuthenticationService } from "src/app/common/services/authentication.se
   styleUrls: ["./post-layout.component.css"]
 })
 export class PostLayoutComponent implements OnInit {
-  x: IAuthService;
-  constructor(x: AuthenticationService) {
-    this.x = x;
+  authService: IAuthService;
+  navigateService: INavigateService;
+  constructor(
+    authService: AuthenticationService,
+    navigateService: NavigateService
+  ) {
+    this.authService = authService;
+    this.navigateService = navigateService;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   logout() {
-    this.x.onLogout();
+    this.authService.onLogout();
+    this.navigateService.navigate('/home');
   }
 }

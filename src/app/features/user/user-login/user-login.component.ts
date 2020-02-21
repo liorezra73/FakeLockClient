@@ -2,9 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
 import { Login } from "src/app/common/models/Login";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, AbstractControl } from "@angular/forms";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { Router } from "@angular/router";
+import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { NavigateService } from "src/app/shared/services/navigate.service";
+import { formControlTouchOrDirty } from 'src/app/common/validations/formControlTouchOrDirty';
 
 @Component({
   selector: "app-user-login",
@@ -13,10 +16,15 @@ import { Router } from "@angular/router";
 })
 export class UserLoginComponent implements OnInit {
   authService: IAuthService;
+  navigateService: INavigateService;
   login: Login;
   loginForm: FormGroup;
-  constructor(authenticationService: AuthenticationService) {
+  constructor(
+    authenticationService: AuthenticationService,
+    navigateService: NavigateService
+  ) {
     this.authService = authenticationService;
+    this.navigateService = navigateService;
   }
 
   ngOnInit() {
@@ -37,14 +45,32 @@ export class UserLoginComponent implements OnInit {
     });
   }
 
+  formControlTouchOrDirty(formControl: AbstractControl) {
+    return formControlTouchOrDirty(formControl);
+  }
+
   onLogin(): void {
     if (this.loginForm.valid) {
       this.login = this.loginForm.value;
-      const islogged = this.authService.onLogin(this.login);
-      if (islogged) {
-        this.initializeLogin();
-        this.initializeLoginForm();
-      }
+      this.authService.onLogin(this.login).subscribe(
+        res => {
+          const tokenSaved = this.authService.saveToken(res);
+          if (tokenSaved) {
+            this.navigateService.navigate("/posts");
+          } else {
+            throw new Error("token not saved");
+          }
+        },
+        err => {
+          if (err.status < 500) {
+            alert("username/password incorrect!");
+          } else {
+            alert("feild to login!");
+          }
+        }
+      );
+      this.initializeLogin();
+      this.initializeLoginForm();
     }
   }
 }

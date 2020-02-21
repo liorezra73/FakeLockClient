@@ -2,19 +2,30 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
   <fieldset>
     <legend>Login:</legend>
+    <div>
+      <app-form-text-input
+        label="Username:"
+        placeholder="username..."
+        formControlName="username"
+      ></app-form-text-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(loginForm.get('username'))"
+        [errors]="loginForm.get('username').errors"
+      ></app-form-control-error-show>
+    </div>
 
-    <app-form-text-input
-      label="Username:"
-      placeholder="username..."
-      formControlName="username"
-    ></app-form-text-input>
-    
-    <app-form-password-input
-      label="Password:"
-      placeholder="password..."
-      formControlName="password"
-    >
-    </app-form-password-input>
+    <div>
+      <app-form-password-input
+        label="Password:"
+        placeholder="password..."
+        formControlName="password"
+      >
+      </app-form-password-input>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(loginForm.get('password'))"
+        [errors]="loginForm.get('password').errors"
+      ></app-form-control-error-show>
+    </div>
 
     <button type="submit">Login</button>
   </fieldset>

@@ -3,7 +3,8 @@ import { Login } from "../models/Login";
 
 export interface IAuthService {
   authUrl: string;
-  onLogin(login: Login): boolean; //Observable<any>;
+  onLogin(login: Login): Observable<string>;
   onLogout(): void;
   isLoggedIn(): boolean;
+  saveToken(token: string): boolean;
 }

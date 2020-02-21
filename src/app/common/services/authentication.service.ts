@@ -5,6 +5,7 @@ import { Login } from "../models/Login";
 import { IAuthService } from "../intefaces/auth-service.interface";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -19,28 +20,21 @@ export class AuthenticationService implements IAuthService {
   ) {
     this.authUrl = `${config.baseApiURL}/auth`;
   }
-  onLogin(login: Login): boolean {
-    this.http.post(this.authUrl, login).subscribe(
-      res => {
-        localStorage.setItem("token", res.toString());
-        this.router.navigate(["/posts"]);
-        return true;
-      },
-      err => {
-        if (err.status < 500) {
-          alert("username/password incorrect!");
-        } else {
-          alert("feild to login!");
-        }
-        return false;
-      }
-    );
-    return false;
+  onLogin(login: Login): Observable<string> {
+    return this.http.post<string>(this.authUrl, login);
+  }
+
+  saveToken(token: string): boolean {
+    if (token.length > 0) {
+      localStorage.setItem("token", token);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onLogout(): void {
     localStorage.removeItem("token");
-    this.router.navigate(["/home/login"]);
   }
   isLoggedIn(): boolean {
     const token = localStorage.getItem("token");
