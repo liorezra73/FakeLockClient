@@ -21,8 +21,15 @@ export class PostLayoutComponent implements OnInit {
   }
 
   ngOnInit() {}
-  logout() {
+  onLogout() {
     this.authService.onLogout();
     this.navigateService.navigate('/home');
   }
+  onGoPostForm(){
+    this.navigateService.navigate('/posts/form');
+  }
+  onGoFeed(){
+    this.navigateService.navigate('/posts/feed/main');
+  }
+
 }

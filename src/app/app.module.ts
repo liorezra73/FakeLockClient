@@ -22,7 +22,6 @@ import { PhotoService } from "./common/services/photo.service";
 import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserLoggedGuard } from './shared/guards/user-logged.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,7 +52,7 @@ import { UserLoggedGuard } from './shared/guards/user-logged.guard';
     { provide: AuthHttpProxyService, useClass: AuthHttpProxyService },
     IdGuard,
     AuthGuard,
-    UserLoggedGuard
+    
     
   ],
   bootstrap: [AppComponent],

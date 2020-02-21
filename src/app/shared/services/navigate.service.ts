@@ -9,6 +9,7 @@ export class NavigateService implements INavigateService {
   constructor(private router: Router) {}
 
   navigate(path: string): void {
+    console.log("dasds")
     this.router.navigate([path]);
   }
 }

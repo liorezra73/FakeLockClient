@@ -39,11 +39,13 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const res = this.authService.isLoggedIn();
+     const res = this.authService.isLoggedIn();
+     console.log(res)
     if (!res) {
       return this.defaultNavigation("/home/login");
     } else {
-      true;
+     return true;
     }
+    return true;
   }
 }
