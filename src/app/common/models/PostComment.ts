@@ -1,13 +1,13 @@
-import { User } from './User';
+import { User } from "./User";
+import { Tag } from "./post";
 
 export interface PostComment {
   id?: number;
-  publishDate?:Date;
+  publishDate?: Date;
   likes?: number;
   content?: string;
-  tags?: string[];
-  usersTags?: User[];
+  tags?: string[]| Tag[];
+  usersTags?: User[] |number[];
   userLiked?: boolean;
   username?: string;
-
 }

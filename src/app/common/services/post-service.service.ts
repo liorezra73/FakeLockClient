@@ -41,13 +41,14 @@ export class PostService implements IPostService {
     post.usersTags.forEach(x => usersTags.push(x.id));
     post.tags = tags;
     post.usersTags = usersTags;
+    const { photo } = { ...post };
+
     const formData = new FormData();
-    const { photo } = post;
     formData.append("photo", photo);
     delete post.photo;
     const postJson = JSON.stringify(post);
     formData.append("post", postJson);
-    return this.http.post<FormData>(this.postUrl, formData);
+    return this.http.post(this.postUrl, formData);
   }
   deletePost(id: number): Observable<any> {
     return this.http.delete(`${this.postUrl}/${id}`);

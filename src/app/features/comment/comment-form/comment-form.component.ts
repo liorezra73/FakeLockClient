@@ -32,10 +32,26 @@ export class CommentFormComponent implements OnInit {
     };
   }
   initializeCommentForm(): void {
-    this.commentForm = new FormGroup({
-      content: new FormControl(this.newComment.content),
-      tags: new FormControl(this.newComment.tags),
-      usersTags: new FormControl(this.newComment.usersTags)
-    });
+    this.commentForm = new FormGroup(
+      {
+        content: new FormControl(this.newComment.content),
+        tags: new FormControl(this.newComment.tags),
+        usersTags: new FormControl(this.newComment.usersTags)
+      },
+      { validators: this.atLeastOneRequired }
+    );
+  }
+
+  atLeastOneRequired(formGroup: FormGroup) {
+    let theOne = Object.keys(formGroup.controls).findIndex(
+      key => formGroup.controls[key].value !== ""
+    );
+    if (theOne === -1) {
+      return {
+        atLeastOneRequired: true
+      };
+    } else {
+      return null;
+    }
   }
 }
