@@ -29,6 +29,8 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder: string;
   users$: Observable<User[]>;
   users: User[];
+  taggedUsers: User[]=[];
+  taggedUser: User;
   ngControl: NgControl;
   userService: IUserService;
 
@@ -57,33 +59,37 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelTouched = fn;
   }
 
-  onAddUserTag(userTag: HTMLInputElement) {
-    
+ 
+    onAddUserTag(userTag: HTMLInputElement) {
     if (/\S/.test(userTag.value)) {
-      console.log(userTag.value)
-      const usersTags = [...this.ngControl.value, { title: userTag.value }];
-      console.log(usersTags)
-      this.onModelChange(usersTags);
+      const usersTags = [...this.ngControl.value, this.taggedUser.username];
+      this.taggedUsers.push(this.taggedUser);
+      console.log(this.taggedUsers);
+      this.onModelChange(this.taggedUsers);
       userTag.value = null;
     } else {
       alert("cant be empty");
     }
   }
+
+  
   onDeleteUserTagged(index: number) {
-    const { value } = this.ngControl;
-    const userTags = value.filter(t => value.indexOf(t) !== index);
-    this.onModelChange(userTags);
+ 
+    this.taggedUsers = this.taggedUsers.filter(t => this.taggedUsers.indexOf(t) !== index);
+    console.log(this.taggedUsers)
+    this.onModelChange(this.taggedUsers);
   }
 
   search = (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    map(term => term.length < 2 ? []
-      : this.users.slice(0, 10))
-  )
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => (term.length < 2 ? [] : this.users.slice(0, 10)))
+    );
 
-  formatter = (user: User) =>
-   user.username;
+  formatter = (user: User) => user.username;
 
+  onSelectUser(user) {
+    this.taggedUser = user.item as User;
+  }
 }

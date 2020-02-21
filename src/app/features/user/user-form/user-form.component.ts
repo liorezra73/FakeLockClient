@@ -60,7 +60,7 @@ export class UserFormComponent implements OnInit {
           stringValidation(3, 200)
         ),
         birthDate: new FormControl(
-          this.register.jobAddress,
+          this.register.birthDate,
           Validators.required
         )
       }

@@ -7,6 +7,7 @@
     type="text"
     [ngbTypeahead]="search"
     [resultTemplate]="rt"
+    (selectItem)="onSelectUser($event)"
     [inputFormatter]="formatter"/>
 
     <ng-template #rt let-r="result" let-t="term">
@@ -15,8 +16,8 @@
 
 
     <button type="button" (click)="onAddUserTag(userTag)">+</button>
-    <span *ngFor="let tag of ngControl.value; let i = index" (click)="onDeleteUserTagged(i)">
-        {{ tag.title }}
+    <span *ngFor="let userTag of this.taggedUsers; let i = index" (click)="onDeleteUserTagged(i)">
+        {{ userTag.username }}
       </span>
   </div>
 </div>

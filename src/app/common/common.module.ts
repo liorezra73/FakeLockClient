@@ -8,6 +8,7 @@ import { FormNumberInputComponent } from './components/form-number-input/form-nu
 import { FormTextAreaInputComponent } from './components/form-text-area-input/form-text-area-input.component';
 import { FormControlErrorShowComponent } from './components/form-control-error-show/form-control-error-show.component';
 import { AppSharedModule } from '../shared/shared.module';
+import { FormInputDateComponent } from './components/form-input-date/form-input-date.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppSharedModule } from '../shared/shared.module';
     FormImageInputComponent,
     FormNumberInputComponent,
     FormTextAreaInputComponent,
-    FormControlErrorShowComponent
+    FormControlErrorShowComponent,
+    FormInputDateComponent
   ],
   imports: [CommonModule, AppSharedModule],
   exports: [
@@ -27,7 +29,8 @@ import { AppSharedModule } from '../shared/shared.module';
     FormImageInputComponent,
     FormNumberInputComponent,
     FormTextAreaInputComponent,
-    FormControlErrorShowComponent
+    FormControlErrorShowComponent,
+    FormInputDateComponent
   ]
 })
 export class AppCommonModule {}

@@ -1,0 +1,13 @@
+<div>
+    <label>{{ label }}</label>
+    <div>
+      <input
+        (change)="onModelChange($event.target.value);"
+        type="date"
+        (blur)="onModelTouched()"
+        [value]="value"
+        placeholder={{placeholder}}
+        [disabled]="disable"
+      />
+    </div>
+  </div>

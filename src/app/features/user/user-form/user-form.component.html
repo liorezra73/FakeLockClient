@@ -1,20 +1,45 @@
-<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-<div>
+<form [formGroup]="registerForm">
+  <app-form-text-input
+    formControlName="fullName"
+    label="Full name:"
+    placeholer="Enter full name.."
+  ></app-form-text-input>
+
+  <app-form-text-input
+    formControlName="username"
+    label="Username:"
+    placeholer="Enter username"
+  ></app-form-text-input>
+
   <app-form-password-input
     formControlName="password"
     [placeholder]="'Enter password..'"
     [label]="'Password:'"
   ></app-form-password-input>
 
-</div>
-
-<div>
   <app-form-password-input
     formControlName="repeatPassword"
     [placeholder]="'Repeat password..'"
     [label]="'Repeat password:'"
   ></app-form-password-input>
-  <button type="button" (click)="onRegister()"></button>
-</div>
 
+  <app-form-input-date
+    formControlName="birthDate"
+    label="Birthdate:"
+  ></app-form-input-date>
+  <button type="button" (click)="onRegister()"></button>
+
+  <app-form-text-input
+    formControlName="address"
+    label="Address:"
+    placeholer="Enter address"
+  ></app-form-text-input>
+
+  <app-form-text-input
+    formControlName="jobAddress"
+    label="Job address:"
+    placeholer="Enter job address"
+  ></app-form-text-input>
+
+  <button type="button" (click)="onRegister()">Register</button>
 </form>
