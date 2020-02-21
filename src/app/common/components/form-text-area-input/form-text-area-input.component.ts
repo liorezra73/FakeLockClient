@@ -18,6 +18,7 @@ export class FormTextAreaInputComponent implements ControlValueAccessor {
   onModelTouched: Function = () => {};
   @Input() label: string;
   @Input() placeholder: string;
+  @Input() rows:number;
   value = null;
 
   constructor() {}

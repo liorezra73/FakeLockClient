@@ -14,7 +14,6 @@ export class PostLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.x.isLoggedIn());
   }
   logout() {
     this.x.onLogout();

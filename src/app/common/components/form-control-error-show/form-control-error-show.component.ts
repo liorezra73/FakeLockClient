@@ -11,7 +11,6 @@ export class FormControlErrorShowComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    setTimeout(() => {console.log(this.errors)},5000)
   }
 
 }

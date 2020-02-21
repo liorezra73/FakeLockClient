@@ -13,12 +13,14 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
     }
   ]
 })
-export class FormNumberInputComponent implements ControlValueAccessor {
+export class FormNumberInputComponent implements ControlValueAccessor, OnInit {
+  ngOnInit(): void {}
 
   onModelChange: Function = (value: any) => {};
   onModelTouched: Function = () => {};
   @Input() label: string;
   @Input() placeholder: string;
+  @Input() disable: boolean = false;
   value = null;
 
   constructor() {}

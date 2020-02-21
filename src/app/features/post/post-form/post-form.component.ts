@@ -1,17 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, DoCheck } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
-import { Post, Tag } from "src/app/common/models/post";
+import { Post } from "src/app/common/models/post";
 import {
   FormGroup,
   Validators,
   FormControl,
   AbstractControl
 } from "@angular/forms";
-import { IUserService } from "src/app/common/intefaces/user-service.inteface";
 import { UserService } from "src/app/common/services/user.service";
-import { Observable } from "rxjs";
-import { User } from "src/app/common/models/User";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
 
@@ -20,26 +17,22 @@ import { formControlTouchOrDirty } from "src/app/common/validations/formControlT
   templateUrl: "./post-form.component.html",
   styleUrls: ["./post-form.component.css"]
 })
-export class PostFormComponent implements OnInit {
+export class PostFormComponent implements OnInit, DoCheck {
   postService: IPostService;
-  userService: IUserService;
   post: Post;
-  postTags: Tag[] = [];
-  //need to get users to search in tage users input;
-  postUserTags: User[] = [];
   postForm: FormGroup;
-  users: User[];
 
-  constructor(postService: PostService, userService: UserService) {
+  constructor(postService: PostService) {
     this.postService = postService;
-    this.userService = userService;
   }
 
   ngOnInit() {
     this.initializePost();
+    this.getCurrentLocation();
+  }
+
+  ngDoCheck(): void {
     this.initializePostForm();
-    this.userService.getUsers().subscribe(data => (this.users = data));
-    // this.userService.getUsers().subscribe(res=>console.log(res));
   }
   initializePost() {
     this.post = {
@@ -87,11 +80,32 @@ export class PostFormComponent implements OnInit {
 
   savePost() {
     if (this.postForm.valid) {
-      this.postService.createPost({ ...this.post });
+      this.post = this.postForm.value;
+      this.postService.createPost({ ...this.post }).subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
       this.initializePost();
       this.initializePostForm();
     } else {
       alert("form not valid!");
     }
+  }
+
+  getCurrentLocation(): void {
+    navigator.geolocation.getCurrentPosition(
+      res => {
+        this.post.location = {
+          latitude: res.coords.latitude,
+          longtitude: res.coords.longitude
+        };
+      },
+      err => {
+        this.post.location = {
+          latitude: 32.0970604,
+          longtitude: 34.826543799999996
+        };
+      }
+    );
   }
 }
