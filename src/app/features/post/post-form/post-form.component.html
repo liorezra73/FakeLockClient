@@ -5,35 +5,6 @@
 >
   <fieldset>
     <legend>Post Form</legend>
-    <!-- <div>
-      <label>Text:</label>
-      <div>
-        <textarea
-          formControlName="text"
-          rows="5"
-          placeholder="text..."
-        ></textarea>
-        <span
-          *ngIf="
-            postForm.get('text').errors?.required &&
-            (postForm.get('text').dirty || postForm.get('text').touched)
-          "
-          [style.color]="'red'"
-          >*</span
-        >
-        <span
-          *ngIf="
-            postForm.get('text').errors?.minlength ||
-            postForm.get('text').errors?.maxlength
-          "
-          [style.color]="'red'"
-          >3-200 letters! letters number:{{
-            postForm.get("text").value.length
-          }}</span
-        >
-      </div>
-    </div> -->
-
     <div>
       <form formGroupName="location">
         <app-form-number-input
