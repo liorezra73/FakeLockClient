@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
   {
     path: "home",
+    canActivate:[UserLoggedGuard],
     loadChildren: () =>
       import("../../features/user/user.module").then(m => m.UserModule)
   },

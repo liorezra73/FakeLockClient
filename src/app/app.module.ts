@@ -54,6 +54,7 @@ import { UserLoggedGuard } from './shared/guards/user-logged.guard';
     IdGuard,
     AuthGuard,
     UserLoggedGuard
+    
   ],
   bootstrap: [AppComponent],
   exports: []
