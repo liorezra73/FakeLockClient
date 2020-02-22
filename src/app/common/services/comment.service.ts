@@ -35,7 +35,9 @@ export class CommentService implements ICommentService {
     comment.usersTags.forEach(x => usersTags.push(x.id));
     comment.tags = tags;
     comment.usersTags = usersTags;
-    return this.http.post(`${this.commentUrl}/${postId}/comments`, comment);
+    return this.http
+      .post(`${this.commentUrl}/${postId}/comments`, comment)
+      .pipe(map(res => this.getCommentsPipe(res)));
   }
   deleteComment(postId: number, id: number): Observable<any> {
     this.postId = postId;
