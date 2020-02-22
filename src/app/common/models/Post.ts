@@ -8,7 +8,7 @@ export interface Post {
     publishDate?: Date;
     usersTags?: User[] | number[];
     tags?: Tag[] | string[];
-    likes?: Number;
+    likes?: number;
     user?: User;
     isLikedByUser?:boolean;
     commentsCount?:number;

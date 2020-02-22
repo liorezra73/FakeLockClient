@@ -39,7 +39,6 @@ export class PostDetailsComponent implements OnInit {
   }
   ngOnInit() {
     this.getPostById(this.postId);
-   
   }
 
   getPostById(postId: number) {
@@ -55,6 +54,26 @@ export class PostDetailsComponent implements OnInit {
     );
   }
 
+  onLike() {
+    console.log("Like");
+    this.postService.doLike(this.post.id).subscribe(res => {
+      this.post.isLikedByUser = true;
+      this.post.likes++;
+    },err=>this.handleError(err));
+  }
+
+  onUnLike() {
+    console.log("unLike");
+    this.postService.unLike(this.post.id).subscribe(res => {
+      this.post.isLikedByUser = false;
+      this.post.likes--;
+    });
+  }
+
+  onSwitchLike() {
+    this.post.isLikedByUser ? this.onUnLike() : this.onLike();
+  }
+
   handleError(error): void {
     switch (error.status) {
       case 0:
@@ -64,6 +83,9 @@ export class PostDetailsComponent implements OnInit {
       case 404:
         alert("No post found! Redirect to main page. ");
         this.navigateMainByTimer(2000);
+        break;
+      case 400:
+        alert("Already liked.");
         break;
       case 500:
         alert("Connection error! please try again later.");

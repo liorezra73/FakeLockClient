@@ -6,8 +6,8 @@
       }}</span>
     <div class="date-likes-displayer">
     </div>
-    <div>{{ comment.content }}</div>
-    <span class="likes-display"
+    <div #commentContent>{{ comment.content }}</div>
+    <span class="likes-display" (click)="onSwitchLike(comment)"
       ><i class="fas fa-heart"></i> {{ comment.likes }}</span
     >
     <hr />

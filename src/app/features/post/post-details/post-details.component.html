@@ -1,15 +1,16 @@
 <div class="post-details-display">
   <div *ngIf="post">
     <div class="username-display">{{ post.user.username }}</div>
-    <div class="date-display">{{ post.publishDate | date: short }}</div>
+    <div class="date-display">{{ post.publishDate | date: "short" }}</div>
     <div>{{ post.text }}</div>
     <img src="{{ post.photo }}" />
     <div class="tag-likes-display">
       <div class="tags-display" *ngFor="let tag of post.tags">
         #{{ tag.Title }}
       </div>
-      <span class="like-display"
-        ><i class="fas fa-heart"></i> {{ post.likes }}</span
+      <span class="like-display" (click)="onSwitchLike()"
+        ><i class="fa fa-thumbs-up"></i>
+        {{ post.likes }}</span
       >
     </div>
     <span>

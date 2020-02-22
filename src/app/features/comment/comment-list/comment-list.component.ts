@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { ICommentService } from "src/app/common/intefaces/comment-service.inteface";
 import { CommentService } from "src/app/common/services/comment.service";
 import { PostComment } from "src/app/common/models/PostComment";
@@ -9,6 +9,7 @@ import { PostComment } from "src/app/common/models/PostComment";
   styleUrls: ["./comment-list.component.css"]
 })
 export class CommentListComponent implements OnInit {
+  @ViewChild('commentContent', { static: false }) commentContent: ElementRef;
   comments: PostComment[];
   commentService: ICommentService;
   @Input()
@@ -32,8 +33,33 @@ export class CommentListComponent implements OnInit {
   }
 
   createComment(comment: PostComment) {
-    console.log(comment)
-    // this.commentService.createComment(this.postId, comment).subscribe();
+    this.commentService
+      .createComment(this.postId, comment)
+      .subscribe(newcomment => {
+        console.log(newcomment);
+        // this.comments.push(newcomment);
+      });
+  }
+
+  onLike(comment) {
+    console.log(comment);
+    this.commentService.doLike(this.postId, comment.id).subscribe(
+      res => {
+        comment.userLiked = true;
+        comment.likes++;
+      },
+      err => this.handleError(err)
+    );
+  }
+
+  onUnLike(comment) {
+    this.commentService.unLike(this.postId, comment.id).subscribe(res => {
+      comment.userLiked = false;
+      comment.likes--;
+    });
+  }
+  onSwitchLike(comment) {
+    comment.userLiked ? this.onUnLike(comment) : this.onLike(comment);
   }
 
   handleError(error): void {
@@ -42,10 +68,10 @@ export class CommentListComponent implements OnInit {
         alert("Connection error! please try again.");
         break;
       case 400:
-        alert("No comments.");
+        return;
         break;
       case 404:
-        alert("No comments.");
+        return;
         break;
       case 500:
         alert("Connection error! please try again.");
