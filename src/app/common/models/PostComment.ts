@@ -1,5 +1,5 @@
 import { User } from "./User";
-import { Tag } from "./post";
+import { Tag } from "./Tag";
 
 export interface PostComment {
   id?: number;

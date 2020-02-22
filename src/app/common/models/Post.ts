@@ -1,9 +1,11 @@
 import { User } from './User';
+import { MapLocation } from './MapLocation';
+import { Tag } from './Tag';
 
 export interface Post {
     id?: number;
     text?: string;
-    location: Location;
+    location: MapLocation;
     photo?: File|string;
     publishDate?: Date;
     usersTags?: User[] | number[];
@@ -13,16 +15,4 @@ export interface Post {
     isLikedByUser?:boolean;
     commentsCount?:number;
   }
-  
-  export interface Location {
-    latitude: number;
-    longtitude: number;
-  }
-  
-  
-  export interface Tag {
-    title: string;
-  }
-
-
   
