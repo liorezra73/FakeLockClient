@@ -41,7 +41,7 @@ import { CommentModule } from '../comment/comment.module';
     PostFeedToolBarComponent,
     PostCardComponent,
     PostDetailsComponent,
-    PostLayoutFeedComponent
+    PostLayoutFeedComponent,
   ]
 })
 export class PostModule {}
