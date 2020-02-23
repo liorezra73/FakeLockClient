@@ -14,7 +14,6 @@
       <ngb-highlight [result]="r.username" [term]="t"></ngb-highlight>
     </ng-template>
 
-
     <button type="button" (click)="onAddUserTag(userTag)">+</button>
     <span *ngFor="let userTag of this.taggedUsers; let i = index" (click)="onDeleteUserTagged(i)">
         {{ userTag.username }}

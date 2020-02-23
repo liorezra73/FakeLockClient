@@ -29,25 +29,18 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder: string;
   users$: Observable<User[]>;
   users: User[];
-  taggedUsers: User[]=[];
+  taggedUsers: User[] = [];
   taggedUser: User;
   ngControl: NgControl;
   userService: IUserService;
+  tempArr: any[] = [{ username: "kfc" }, { username: "kf" }];
 
   constructor(private inj: Injector, userSerivce: UserService) {
     this.userService = userSerivce;
   }
 
   ngOnInit(): void {
-    this.getUsers();
     this.ngControl = this.inj.get(NgControl);
-  }
-
-  getUsers() {
-    this.users$ = this.userService.getUsersByUsername("dasd");
-    this.users$.subscribe(users => {
-      (this.users = users), console.log(this.users);
-    });
   }
 
   writeValue(obj: any): void {}
@@ -59,8 +52,7 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelTouched = fn;
   }
 
- 
-    onAddUserTag(userTag: HTMLInputElement) {
+  onAddUserTag(userTag: HTMLInputElement) {
     if (/\S/.test(userTag.value)) {
       const usersTags = [...this.ngControl.value, this.taggedUser.username];
       this.taggedUsers.push(this.taggedUser);
@@ -72,19 +64,45 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  
   onDeleteUserTagged(index: number) {
- 
-    this.taggedUsers = this.taggedUsers.filter(t => this.taggedUsers.indexOf(t) !== index);
-    console.log(this.taggedUsers)
+    this.taggedUsers = this.taggedUsers.filter(
+      t => this.taggedUsers.indexOf(t) !== index
+    );
+    console.log(this.taggedUsers);
     this.onModelChange(this.taggedUsers);
+  }
+
+  // search = (text$: Observable<string>) =>
+  //   text$.pipe(
+  //     debounceTime(200),
+  //     distinctUntilChanged(),
+  //     map(term => {
+  //       term.length < 2
+  //         ? []
+  //         : this.userService.getUsersByUsername(term).subscribe(
+  //             users => {
+  //               this.users = users;
+  //               console.log(this.users);
+  //             },
+  //             err => console.log(err),
+  //             () => {
+  //               return this.users.slice(0, 10);
+  //             }
+  //           );
+  //     })
+  //   );
+
+  getPostsByName(name): User[] {
+   this.userService.getUsersByUsername(name).subscribe(users => this.users = users, null, ()=>{return this.users})
+   console.log(this.users);
+   return this.users
   }
 
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => (term.length < 2 ? [] : this.users.slice(0, 10)))
+      map(term => (term.length < 2 ? [] : this.getPostsByName(term)))
     );
 
   formatter = (user: User) => user.username;

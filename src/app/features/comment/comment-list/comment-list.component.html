@@ -8,7 +8,7 @@
     </div>
     <div>{{ comment.content }}</div>
     <div *ngIf="comment.tags">
-      <div class="comment-tags-display" *ngFor="let tag of comment.tags">{{ tag.Title | lowercase }}</div>
+      <div class="comment-tags-display" *ngFor="let tag of comment.tags">#{{ tag.Title | lowercase }} </div>
     </div>
 
     <span class="likes-display" (click)="onSwitchLike(comment)">

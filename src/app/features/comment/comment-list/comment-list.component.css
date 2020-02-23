@@ -25,6 +25,7 @@ i{
 .comment-tags-display{
     font-weight: bold;
     font-size: x-small;
+    display: inline;
 }
 
 .red{
