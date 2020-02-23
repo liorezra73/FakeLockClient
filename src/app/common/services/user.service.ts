@@ -6,6 +6,7 @@ import { User } from "../models/User";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { Register } from "../models/Register";
+import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
 
 @Injectable({
   providedIn: "root"
@@ -13,12 +14,16 @@ import { Register } from "../models/Register";
 export class UserService implements IUserService {
   usersUrl: string;
 
-  constructor(private http: HttpClient, @Inject(APP_CONFIG) config: any) {
+  constructor(
+    private authhttp: AuthHttpProxyService,
+    private http: HttpClient,
+    @Inject(APP_CONFIG) config: any
+  ) {
     this.usersUrl = `${config.baseApiURL}/users`;
   }
 
   getUsersByUsername(username: string): Observable<User[]> {
-    return this.http
+    return this.authhttp
       .get<User[]>(`${this.usersUrl}?username=${username}`)
       .pipe(map(data => data.map(res => this.dataPipe(res))));
   }
