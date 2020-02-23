@@ -1,0 +1,19 @@
+h2{
+    font-family: serif
+}
+
+img{
+    height: 35px;
+    width: 35px;
+}
+
+.navbar{
+    border-bottom: 2px solid rgba(var(--ce3,239,239,239),1);
+    
+}
+
+#logout{
+    font-weight: bolder;
+    float: right;
+
+}

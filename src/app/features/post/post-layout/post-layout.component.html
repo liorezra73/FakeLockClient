@@ -1,4 +1,9 @@
-<button type="button" (click)="onLogout()">Logout</button>
-<button type="button" (click)="onGoPostForm()">Add Post</button>
-<button type="button" (click)="onGoFeed()">Feed</button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <img src="https://image.freepik.com/free-icon/lock-circle_318-9883.jpg"><b>fakelock</b>
+  <a class="nav-link" type="button" (click)="onGoFeed()">Feed</a>
+  <a class="nav-link" type="button" (click)="onGoPostForm()">Add Post</a>
+  <a class="nav-link" id="logout" type="button" (click)="onLogout()">Logout</a>
+</nav>
+
+
 <router-outlet></router-outlet>

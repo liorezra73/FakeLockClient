@@ -1,6 +1,11 @@
+<div class="container">
 <app-post-feed-tool-bar></app-post-feed-tool-bar>
+</div>
 <button type="button" (click)="onGoMainFeed()">Main</button>
 <button type="button" (click)="onGoMapFeed()">Map</button>
-<div class="posts-board">
-<router-outlet></router-outlet>
+<hr>
+<div class="posts-displayer">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

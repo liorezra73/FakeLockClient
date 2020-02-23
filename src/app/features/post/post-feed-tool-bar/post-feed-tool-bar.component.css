@@ -1,0 +1,23 @@
+.forms-displayer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+
+}
+
+form {
+  margin-right: 50pt;
+  width: 15%;
+}
+
+p {
+  margin-left: 30pt;
+  width: 20%;
+}
+
+button {
+  margin-left: 75pt;
+  width: 10%;
+}

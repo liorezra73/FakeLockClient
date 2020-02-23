@@ -1,4 +1,7 @@
 img{
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
+    margin: 4pt;
+    border: 2px solid #dbdbdb;
+    border-radius: 3px;
 }

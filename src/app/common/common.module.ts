@@ -22,7 +22,8 @@ import { MapComponent } from "./components/map/map.component";
     FormTextAreaInputComponent,
     FormControlErrorShowComponent,
     FormInputDateComponent,
-    MapComponent
+    MapComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -30,6 +31,7 @@ import { MapComponent } from "./components/map/map.component";
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyAL8BDG6ls8pxalyMwXMyn4YMes5fB_Dd0"
     })
+    
   ],
   exports: [
     FormTextInputComponent,

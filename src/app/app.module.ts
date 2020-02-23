@@ -23,6 +23,7 @@ import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { FeedService } from "./shared/services/feed.service";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,7 @@ import { FeedService } from "./shared/services/feed.service";
     ModalModule,
     CommonModule,
     NgbModule,
-    
+  
   ],
   providers: [
     { provide: PostService, useClass: PostService },

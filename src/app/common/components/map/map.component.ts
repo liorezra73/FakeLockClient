@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MapLocation } from "../../models/MapLocation";
 
+
 @Component({
   selector: "app-map",
   templateUrl: "./map.component.html",
@@ -8,8 +9,8 @@ import { MapLocation } from "../../models/MapLocation";
 })
 export class MapComponent implements OnInit {
   @ViewChild("map", { static: false }) map;
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  lat: number = 31.978418;
+  lng: number = 35.109007;
   location: MapLocation;
   constructor() {
     //this.initailLocation();
