@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { AgmCoreModule } from "@agm/core";
 import { FormTextInputComponent } from "./components/form-text-input/form-text-input.component";
 import { FormPasswordInputComponent } from "./components/form-password-input/form-password-input.component";
 import { FormInputErrorComponent } from "./components/form-input-error/form-input-error.component";
@@ -11,6 +10,7 @@ import { FormControlErrorShowComponent } from "./components/form-control-error-s
 import { AppSharedModule } from "../shared/shared.module";
 import { FormInputDateComponent } from "./components/form-input-date/form-input-date.component";
 import { MapComponent } from "./components/map/map.component";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [

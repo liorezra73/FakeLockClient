@@ -1,1 +1,15 @@
-<agm-map [latitude]="lat" [longitude]="lng"></agm-map>
+<div class="divMap">
+  <agm-map [latitude]="location?.latitude" [longitude]="location?.longtitude">
+    <div *ngFor="let marker of markers">
+      <agm-marker
+        [latitude]="marker?.location?.latitude"
+        [longitude]="marker?.location?.longtitude"
+        [iconUrl]='{"url":marker?.photoUrl,"scaledSize":{"height":50,"width":50}}'
+      >
+        <agm-info-window [disableAutoPan]="true">
+          <img src={{marker.photoUrl}} />
+        </agm-info-window>
+      </agm-marker>
+    </div>
+  </agm-map>
+</div>

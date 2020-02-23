@@ -22,8 +22,7 @@ import { PhotoService } from "./common/services/photo.service";
 import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { FeedService } from "./shared/services/feed.service";
-import { AgmCoreModule } from "@agm/core";
+import { MarkerService } from "./common/services/marker.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,15 +40,19 @@ import { AgmCoreModule } from "@agm/core";
     BrowserAnimationsModule,
     ModalModule,
     CommonModule,
+<<<<<<< HEAD
     NgbModule,
   
+=======
+    NgbModule
+>>>>>>> e6dc80f23730f158087ca8ffdcabbf78f32a7b6e
   ],
   providers: [
     { provide: PostService, useClass: PostService },
     { provide: UserService, useClass: UserService },
     { provide: CommentService, useClass: CommentService },
     { provide: PhotoService, useClass: PhotoService },
-    { provide: FeedService, useClass: FeedService },
+    { provide: MarkerService, useClass: MarkerService },
     { provide: AuthenticationService, useClass: AuthenticationService },
     { provide: APP_CONFIG, useValue: CONFIG },
     { provide: AuthHttpProxyService, useClass: AuthHttpProxyService },

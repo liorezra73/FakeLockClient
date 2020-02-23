@@ -34,6 +34,7 @@ import { CommentModule } from '../comment/comment.module';
     AppSharedModule,
     CommentModule,
     
+    
   ],
   exports: [
     PostFormComponent,
