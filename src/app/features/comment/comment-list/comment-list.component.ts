@@ -9,7 +9,7 @@ import { PostComment } from "src/app/common/models/PostComment";
   styleUrls: ["./comment-list.component.css"]
 })
 export class CommentListComponent implements OnInit {
-  @ViewChild('commentContent', { static: false }) commentContent: ElementRef;
+  @ViewChild("commentContent", { static: false }) commentContent: ElementRef;
   comments: PostComment[];
   commentService: ICommentService;
   @Input()
@@ -36,8 +36,7 @@ export class CommentListComponent implements OnInit {
     this.commentService
       .createComment(this.postId, comment)
       .subscribe(newcomment => {
-        console.log(newcomment);
-        // this.comments.push(newcomment);
+        this.comments.push(newcomment);
       });
   }
 

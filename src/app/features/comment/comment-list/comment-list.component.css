@@ -21,3 +21,12 @@ i{
     font-size: large;
     display: inline;
 }
+
+.comment-tags-display{
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.red{
+    color: red
+}

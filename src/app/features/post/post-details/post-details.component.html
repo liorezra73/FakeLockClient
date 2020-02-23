@@ -6,15 +6,19 @@
     <img src="{{ post.photo }}" />
     <div class="tag-likes-display">
       <div class="tags-display" *ngFor="let tag of post.tags">
-        #{{ tag.Title }}
+        #{{ tag.Title | lowercase }}
       </div>
-      <span class="like-display" (click)="onSwitchLike()"
-        ><i class="fa fa-thumbs-up"></i>
+      <span class="like-display" (click)="onSwitchLike()">
+        <span *ngIf="post.isLikedByUser"><i class="fas fa-heart red"></i></span>
+        <span *ngIf="!post.isLikedByUser"><i class="far fa-heart"></i></span>
+
         {{ post.likes }}</span
       >
     </div>
     <span>
-      <app-comment-modal [postId]="postId"></app-comment-modal>({{post.commentsCount}})
+      <app-comment-modal [postId]="postId"></app-comment-modal>({{
+        post.commentsCount
+      }})
     </span>
     <router-outlet></router-outlet>
   </div>

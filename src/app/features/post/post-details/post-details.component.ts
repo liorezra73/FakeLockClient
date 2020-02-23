@@ -59,6 +59,7 @@ export class PostDetailsComponent implements OnInit {
     this.postService.doLike(this.post.id).subscribe(res => {
       this.post.isLikedByUser = true;
       this.post.likes++;
+   
     },err=>this.handleError(err));
   }
 

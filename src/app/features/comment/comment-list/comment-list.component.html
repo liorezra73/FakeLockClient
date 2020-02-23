@@ -6,9 +6,15 @@
       }}</span>
     <div class="date-likes-displayer">
     </div>
-    <div #commentContent>{{ comment.content }}</div>
-    <span class="likes-display" (click)="onSwitchLike(comment)"
-      ><i class="fas fa-heart"></i> {{ comment.likes }}</span
+    <div>{{ comment.content }}</div>
+    <div *ngIf="comment.tags">
+      <div class="comment-tags-display" *ngFor="let tag of comment.tags">{{ tag.Title | lowercase }}</div>
+    </div>
+
+    <span class="likes-display" (click)="onSwitchLike(comment)">
+      <span *ngIf="comment.userLiked"><i class="fas fa-heart red"></i></span>
+      <span *ngIf="!comment.userLiked"><i class="far fa-heart"></i></span>
+       {{ comment.likes }}</span
     >
     <hr />
   </div>

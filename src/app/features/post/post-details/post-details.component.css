@@ -32,3 +32,11 @@ img{
 i{
     cursor: pointer;
 }
+
+.like-display{
+    float: right;
+}
+
+.red{
+    color: red;
+}

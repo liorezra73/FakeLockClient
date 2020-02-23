@@ -30,14 +30,19 @@ export class CommentService implements ICommentService {
   }
   createComment(postId: number, comment: PostComment): Observable<any> {
     const tags: string[] = [],
-      usersTags: number[] = [];
+    usersTags: number[] = [];
     comment.tags.forEach(x => tags.push(x.title));
     comment.usersTags.forEach(x => usersTags.push(x.id));
     comment.tags = tags;
     comment.usersTags = usersTags;
+    console.log(comment)
     return this.http
       .post(`${this.commentUrl}/${postId}/comments`, comment)
-      .pipe(map(res => this.getCommentsPipe(res)));
+      .pipe(
+        map(res => {
+          return this.getCommentsPipe(res);
+        })
+      );
   }
   deleteComment(postId: number, id: number): Observable<any> {
     this.postId = postId;
