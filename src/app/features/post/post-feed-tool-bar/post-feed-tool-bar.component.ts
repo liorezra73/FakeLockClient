@@ -1,7 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { Filter } from "src/app/common/models/filter";
-import { FormGroup, FormControl, Validators, AbstractControl } from "@angular/forms";
-import { formControlTouchOrDirty } from 'src/app/common/validations/formControlTouchOrDirty';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
+import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
+import { FeedService } from "src/app/shared/services/feed.service";
+import { OrderBy } from "src/app/common/enums/orderBy";
+import { IFeedService } from "src/app/shared/interfaces/feed.service.interface";
 
 @Component({
   selector: "app-post-feed-tool-bar",
@@ -11,8 +19,10 @@ import { formControlTouchOrDirty } from 'src/app/common/validations/formControlT
 export class PostFeedToolBarComponent implements OnInit {
   filter: Filter;
   filterForm: FormGroup;
-
-  constructor() {}
+  feedService: IFeedService;
+  constructor(feedService: FeedService) {
+    this.feedService = feedService;
+  }
 
   ngOnInit() {
     this.initializeFilter();
@@ -23,10 +33,10 @@ export class PostFeedToolBarComponent implements OnInit {
     this.filter = {
       radius: {
         location: {
-          latitude: 0,
-          longtitude: 0
+          latitude: null,
+          longtitude: null
         },
-        distance: 19000
+        distance: null
       },
       dates: {
         startDate: null,
@@ -41,24 +51,15 @@ export class PostFeedToolBarComponent implements OnInit {
       radius: new FormGroup({
         latitude: new FormControl(
           this.filter.radius.location.latitude,
-          Validators.compose([
-            Validators.min(-90),
-            Validators.max(90)
-          ])
+          Validators.compose([Validators.min(-90), Validators.max(90)])
         ),
         longtitude: new FormControl(
           this.filter.radius.location.longtitude,
-          Validators.compose([
-            Validators.min(-180),
-            Validators.max(180)
-          ])
+          Validators.compose([Validators.min(-180), Validators.max(180)])
         ),
         distance: new FormControl(
           this.filter.radius.distance,
-          Validators.compose([
-            Validators.min(0),
-            Validators.max(19000)
-          ])
+          Validators.compose([Validators.min(0), Validators.max(19000)])
         )
       }),
       dates: new FormGroup({
@@ -80,7 +81,8 @@ export class PostFeedToolBarComponent implements OnInit {
     return formControlTouchOrDirty(formControl);
   }
 
-  onFilter(){
-    console.log(this.filterForm.value)
+  onFilter() {
+    this.filter = this.filterForm.value;
+    this.feedService.filterPosts(OrderBy.date, null);
   }
 }

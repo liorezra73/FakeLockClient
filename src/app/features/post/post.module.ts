@@ -32,7 +32,8 @@ import { CommentModule } from '../comment/comment.module';
     ReactiveFormsModule,
     AppCommonModule,
     AppSharedModule,
-    CommentModule
+    CommentModule,
+    
   ],
   exports: [
     PostFormComponent,

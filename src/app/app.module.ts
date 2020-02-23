@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./shared/routes/app-routing.module";
 import { PostModule } from "./features/post/post.module";
@@ -20,9 +20,9 @@ import { AuthHttpProxyService } from "./common/proxies/auth-http-proxy.service";
 import { CommentService } from "./common/services/comment.service";
 import { PhotoService } from "./common/services/photo.service";
 import { ModalModule } from "ngx-bootstrap";
-import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { CommonModule } from "@angular/common";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { FeedService } from "./shared/services/feed.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,20 +42,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     NgbModule,
     
-
   ],
   providers: [
     { provide: PostService, useClass: PostService },
     { provide: UserService, useClass: UserService },
     { provide: CommentService, useClass: CommentService },
     { provide: PhotoService, useClass: PhotoService },
+    { provide: FeedService, useClass: FeedService },
     { provide: AuthenticationService, useClass: AuthenticationService },
     { provide: APP_CONFIG, useValue: CONFIG },
     { provide: AuthHttpProxyService, useClass: AuthHttpProxyService },
     IdGuard,
-    AuthGuard,
-    
-    
+    AuthGuard
   ],
   bootstrap: [AppComponent],
   exports: []
