@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { PostComment } from "src/app/common/models/PostComment";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-comment-form",
@@ -20,8 +20,18 @@ export class CommentFormComponent implements OnInit {
   }
 
   onSend(): void {
-    this.newComment = this.commentForm.value;
-    this.onSendComment.emit(this.newComment);
+    const { content, tags, usersTags } = this.commentForm.controls;
+    if (
+      !content.value &&
+      tags.value.length === 0 &&
+      usersTags.value.length === 0
+    ) {
+      alert("comment not valid!");
+    } else {
+      this.newComment = this.commentForm.value;
+      console.log(this.newComment);
+      this.onSendComment.emit(this.newComment);
+    }
   }
 
   initializeComment(): void {
@@ -32,26 +42,13 @@ export class CommentFormComponent implements OnInit {
     };
   }
   initializeCommentForm(): void {
-    this.commentForm = new FormGroup(
-      {
-        content: new FormControl(this.newComment.content),
-        tags: new FormControl(this.newComment.tags),
-        usersTags: new FormControl(this.newComment.usersTags)
-      },
-      { validators: this.atLeastOneRequired }
-    );
-  }
-
-  atLeastOneRequired(formGroup: FormGroup) {
-    let theOne = Object.keys(formGroup.controls).findIndex(
-      key => formGroup.controls[key].value !== ""
-    );
-    if (theOne === -1) {
-      return {
-        atLeastOneRequired: true
-      };
-    } else {
-      return null;
-    }
+    this.commentForm = new FormGroup({
+      content: new FormControl(
+        this.newComment.content,
+        Validators.compose([Validators.minLength(3), Validators.maxLength(200)])
+      ),
+      tags: new FormControl(this.newComment.tags),
+      usersTags: new FormControl(this.newComment.usersTags)
+    });
   }
 }

@@ -28,55 +28,82 @@ export class CommentListComponent implements OnInit {
       comments => {
         this.comments = comments;
       },
-      err => this.handleError(err)
+      err => {
+        switch (err.status) {
+          case 400:
+            alert("form not valid!");
+            break;
+          case 404:
+            alert("comments not found");
+            break;
+          default:
+            alert("something went wrong!try again later...");
+            break;
+        }
+      }
     );
   }
 
   createComment(comment: PostComment) {
-    this.commentService
-      .createComment(this.postId, comment)
-      .subscribe(newcomment => {
+    this.commentService.createComment(this.postId, comment).subscribe(
+      newcomment => {
         this.comments.push(newcomment);
-      });
+        console.log(this.comments.length);
+      },
+      err => {
+        switch (err.status) {
+          case 400:
+            alert("form not valid!");
+            break;
+          case 404:
+            alert("post is not exist");
+            break;
+          default:
+            alert("somthin went wrong!try again later...");
+            break;
+        }
+      }
+    );
   }
 
   onLike(comment) {
-    console.log(comment);
     this.commentService.doLike(this.postId, comment.id).subscribe(
       res => {
         comment.userLiked = true;
         comment.likes++;
       },
-      err => this.handleError(err)
+      err => {
+        switch (err.status) {
+          case 404:
+            alert("comment not exist");
+            break;
+          default:
+            alert("somthin went wrong!try again later...");
+            break;
+        }
+      }
     );
   }
 
   onUnLike(comment) {
-    this.commentService.unLike(this.postId, comment.id).subscribe(res => {
-      comment.userLiked = false;
-      comment.likes--;
-    });
+    this.commentService.unLike(this.postId, comment.id).subscribe(
+      res => {
+        comment.userLiked = false;
+        comment.likes--;
+      },
+      err => {
+        switch (err.status) {
+          case 404:
+            alert("comment not exist");
+            break;
+          default:
+            alert("somthin went wrong!try again later...");
+            break;
+        }
+      }
+    );
   }
   onSwitchLike(comment) {
     comment.userLiked ? this.onUnLike(comment) : this.onLike(comment);
-  }
-
-  handleError(error): void {
-    switch (error.status) {
-      case 0:
-        alert("Connection error! please try again.");
-        break;
-      case 400:
-        return;
-        break;
-      case 404:
-        return;
-        break;
-      case 500:
-        alert("Connection error! please try again.");
-      default:
-        alert("Connection error! Redirect to home page");
-        break;
-    }
   }
 }

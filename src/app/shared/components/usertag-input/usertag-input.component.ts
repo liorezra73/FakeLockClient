@@ -72,26 +72,6 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelChange(this.taggedUsers);
   }
 
-  // search = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     map(term => {
-  //       term.length < 2
-  //         ? []
-  //         : this.userService.getUsersByUsername(term).subscribe(
-  //             users => {
-  //               this.users = users;
-  //               console.log(this.users);
-  //             },
-  //             err => console.log(err),
-  //             () => {
-  //               return this.users.slice(0, 10);
-  //             }
-  //           );
-  //     })
-  //   );
-
   getPostsByName(name): User[] {
    this.userService.getUsersByUsername(name).subscribe(users => this.users = users, null, ()=>{return this.users})
    console.log(this.users);

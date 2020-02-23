@@ -23,11 +23,20 @@ export class PostMapFeedComponent implements OnInit {
   constructor(markersService: MarkerService, postService: PostService) {
     this.postService = postService;
     this.markersService = markersService;
-    this.markersService.initializeMarkers();
-    this.markersService.markers$.subscribe(res => {
-      this.markers = res;
-    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._getMarkers();
+  }
+
+  private _getMarkers(): void {
+    this.postService.filterPosts(null, null);
+    this.markersService.markers$.subscribe(
+      markers => {
+        console.log("markers");
+        this.markers = markers;
+      },
+      err => console.log(err)
+    );
+  }
 }

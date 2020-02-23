@@ -9,6 +9,8 @@ import { OrderBy } from "../enums/orderBy";
 import { Filter } from "../models/Flter";
 import { IPhotoService } from "../intefaces/photo.service.interface";
 import { PhotoService } from "./photo.service";
+import { IMarkerService } from "../intefaces/marker.service.interface";
+import { MarkerService } from "./marker.service";
 
 @Injectable({
   providedIn: "root"
@@ -17,15 +19,18 @@ export class PostService implements IPostService {
   postUrl: string;
   posts$: BehaviorSubject<Post[]>;
   photoService: IPhotoService;
+  markerService: IMarkerService;
 
   constructor(
     private http: AuthHttpProxyService,
     @Inject(APP_CONFIG) config: any,
-    photoService: PhotoService
+    photoService: PhotoService,
+    markerService: MarkerService
   ) {
     this.postUrl = `${config.baseApiURL}/posts`;
     this.posts$ = new BehaviorSubject<Post[]>(null);
     this.photoService = photoService;
+    this.markerService = markerService;
   }
 
   filterPosts(orderBy: OrderBy, filter: Filter): void {
@@ -68,15 +73,24 @@ export class PostService implements IPostService {
         `${usersTagsFilter}`;
     }
 
-    this.http.get(filterUrl).subscribe(res =>
+    this.http.get(filterUrl).subscribe(res => {
       this.posts$.next(
         res.map((post: Post) => {
           const p = this.postsDataPipe({ ...post });
           p.photo = this.photoService.getPhotoByPhotoId(p.photo as string);
           return p;
         })
-      )
-    );
+      );
+      this.markerService.markers$.next(
+        res.map((post: Post) => {
+          const p = this.markerService.mapPostToMarker({ ...post });
+          p.photoUrl = this.photoService.getPhotoByPhotoId(
+            p.photoUrl as string
+          );
+          return p;
+        })
+      );
+    });
   }
 
   getPosts(orderBy: OrderBy): void {
