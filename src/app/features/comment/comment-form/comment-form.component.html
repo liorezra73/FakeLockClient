@@ -1,16 +1,20 @@
 <form [formGroup]="commentForm">
-  <app-form-text-input formControlName="content"></app-form-text-input>
+  <app-form-text-input
+    formControlName="content"
+    placeholder="content..."
+    label="Content"
+  ></app-form-text-input>
   <app-tag-input
-  label="Tags:"
-  placeholder="tag..."
-  formControlName="tags"
-></app-tag-input>
-
-<app-usertag-input
-  label="Userstags:"
-  placeholder="username..."
-  formControlName="usersTags"
-></app-usertag-input>
-  <button type="button" class="btn btn-outline-secondary" (click)="onSend()">Send</button>
+    label="Tags:"
+    placeholder="tag..."
+    formControlName="tags"
+  ></app-tag-input>
+  <app-usertag-input
+    label="Userstags:"
+    placeholder="username..."
+    formControlName="usersTags"
+  ></app-usertag-input>
+  <button type="button" class="btn btn-outline-secondary" (click)="onSend()">
+    Send
+  </button>
 </form>
-

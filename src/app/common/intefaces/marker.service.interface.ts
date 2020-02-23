@@ -1,7 +1,8 @@
-import { BehaviorSubject } from 'rxjs';
-import { Marker } from '../models/marker';
+import { BehaviorSubject } from "rxjs";
+import { Marker } from "../models/marker";
+import { Post } from "../models/post";
 
-export interface IMarkerService{
-    markers$: BehaviorSubject<Marker[]>;
-    initializeMarkers():void;
+export interface IMarkerService {
+  markers$: BehaviorSubject<Marker[]>;
+  mapPostToMarker(i: Post): Marker;
 }

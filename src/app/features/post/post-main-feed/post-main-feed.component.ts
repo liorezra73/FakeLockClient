@@ -19,10 +19,11 @@ export class PostMainFeedComponent implements OnInit {
   constructor(postService: PostService, navigateService: NavigateService) {
     this.postService = postService;
     this.navgiateService = navigateService;
-    this._getPosts();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._getPosts();
+  }
 
   private _getPosts(): void {
     this.postService.filterPosts(null, null);

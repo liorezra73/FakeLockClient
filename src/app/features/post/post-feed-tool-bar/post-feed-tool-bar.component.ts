@@ -85,6 +85,7 @@ export class PostFeedToolBarComponent implements OnInit {
 
   onFilter() {
     this.filter = this.filterForm.value;
+    console.log(this.filter)
     this.postService.filterPosts(OrderBy.date, this.filter);
   }
 }

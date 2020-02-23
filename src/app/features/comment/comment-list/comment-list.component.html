@@ -1,22 +1,23 @@
 <div *ngIf="postId">
   <div *ngFor="let comment of comments">
-  <div class="username-display">{{comment.username}} </div>
-      <span class="date-display">{{
-        comment.publishDate | date: "short"
-      }}</span>
-    <div class="date-likes-displayer">
-    </div>
+    <div class="username-display">{{ comment.username }}</div>
+    <span class="date-display">{{ comment.publishDate | date: "short" }}</span>
+    <div class="date-likes-displayer"></div>
     <div>{{ comment.content }}</div>
     <div *ngIf="comment.tags">
-      <div class="comment-tags-display" *ngFor="let tag of comment.tags">#{{ tag.Title | lowercase }} </div>
+      <div *ngIf="comment.tags.length > 0">
+        <div class="comment-tags-display" *ngFor="let tag of comment.tags">
+          #{{ tag?.Title }}
+        </div>
+      </div>
     </div>
 
     <span class="likes-display" (click)="onSwitchLike(comment)">
       <span *ngIf="comment.userLiked"><i class="fas fa-heart red"></i></span>
       <span *ngIf="!comment.userLiked"><i class="far fa-heart"></i></span>
-       {{ comment.likes }}</span
+      {{ comment.likes }}</span
     >
     <hr />
   </div>
-   <app-comment-form (onSendComment)="createComment($event)"></app-comment-form>
+  <app-comment-form (onSendComment)="createComment($event)"></app-comment-form>
 </div>
