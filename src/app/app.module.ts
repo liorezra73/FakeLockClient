@@ -40,12 +40,7 @@ import { MarkerService } from "./common/services/marker.service";
     BrowserAnimationsModule,
     ModalModule,
     CommonModule,
-<<<<<<< HEAD
-    NgbModule,
-  
-=======
     NgbModule
->>>>>>> e6dc80f23730f158087ca8ffdcabbf78f32a7b6e
   ],
   providers: [
     { provide: PostService, useClass: PostService },
