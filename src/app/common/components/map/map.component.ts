@@ -1,5 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MapLocation } from "../../models/MapLocation";
+import { Component, OnInit, Input } from "@angular/core";
+import { MapLocation } from "src/app/common/models/MapLocation";
+import { Post } from "src/app/common/models/post";
+import { Marker } from "../../models/marker";
+import { IMarkerService } from "../../intefaces/marker.service.interface";
+import { MarkerService } from "../../services/marker.service";
 
 @Component({
   selector: "app-map",
@@ -7,20 +11,15 @@ import { MapLocation } from "../../models/MapLocation";
   styleUrls: ["./map.component.css"]
 })
 export class MapComponent implements OnInit {
-  @ViewChild("map", { static: false }) map;
-  lat: number = 51.678418;
-  lng: number = 7.809007;
   location: MapLocation;
+  @Input() markers: Marker[];
   constructor() {
-    //this.initailLocation();
   }
-
   ngOnInit() {
-    
+    this.initializeLocation();
   }
 
-  initializeLocation() {}
-  initailLocation() {
+  initializeLocation() {
     navigator.geolocation.getCurrentPosition(
       res => {
         this.location = {

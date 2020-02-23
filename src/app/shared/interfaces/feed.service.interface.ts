@@ -1,8 +1,9 @@
 import { Post } from "src/app/common/models/post";
 import { OrderBy } from "src/app/common/enums/orderBy";
-import { Filter } from "src/app/common/models/filter";
+import { Filter } from "src/app/common/models/Flter";
+import { Subject } from "rxjs";
 
 export interface IFeedService {
-  posts: Post[];
+  posts: Subject<Post[]>;
   filterPosts(orderBy: OrderBy, filter: Filter): void;
 }

@@ -1,27 +1,34 @@
 import { Injectable, Inject } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { Post } from "../models/post";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map } from "rxjs/operators";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
 import { OrderBy } from "../enums/orderBy";
-import { Filter } from "../models/filter";
+import { Filter } from "../models/Flter";
+import { IPhotoService } from "../intefaces/photo.service.interface";
+import { PhotoService } from "./photo.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class PostService implements IPostService {
   postUrl: string;
+  posts$: BehaviorSubject<Post[]>;
+  photoService: IPhotoService;
 
   constructor(
     private http: AuthHttpProxyService,
-    @Inject(APP_CONFIG) config: any
+    @Inject(APP_CONFIG) config: any,
+    photoService: PhotoService
   ) {
     this.postUrl = `${config.baseApiURL}/posts`;
+    this.posts$ = new BehaviorSubject<Post[]>(null);
+    this.photoService = photoService;
   }
 
-  filterPosts(orderBy: OrderBy, filter: Filter): Observable<Post[]> {
+  filterPosts(orderBy: OrderBy, filter: Filter): void {
     let filterUrl: string = `${this.postUrl}?orderBy=${
       orderBy ? orderBy : "date"
     }`;
@@ -61,17 +68,21 @@ export class PostService implements IPostService {
         `${usersTagsFilter}`;
     }
 
-    return this.http.get(filterUrl).pipe(
-      map((res: Post[]) => {
-        return res.map((post: Post) => this.postsDataPipe(post));
-      })
+    this.http.get(filterUrl).subscribe(res =>
+      this.posts$.next(
+        res.map((post: Post) => {
+          const p = this.postsDataPipe({ ...post });
+          p.photo = this.photoService.getPhotoByPhotoId(p.photo as string);
+          return p;
+        })
+      )
     );
   }
 
-  getPosts(orderBy: OrderBy): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.postUrl}?orderBy=${orderBy}`).pipe(
+  getPosts(orderBy: OrderBy): void {
+    this.http.get<Post[]>(`${this.postUrl}?orderBy=${orderBy}`).pipe(
       map((res: Post[]) => {
-        return res.map((post: Post) => this.postsDataPipe(post));
+        this.posts$.next(res.map((post: Post) => this.postsDataPipe(post)));
       })
     );
   }

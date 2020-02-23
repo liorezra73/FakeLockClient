@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Filter } from "src/app/common/models/filter";
+import { Filter } from "src/app/common/models/Flter";
 import {
   FormGroup,
   FormControl,
@@ -7,9 +7,10 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
-import { FeedService } from "src/app/shared/services/feed.service";
 import { OrderBy } from "src/app/common/enums/orderBy";
 import { IFeedService } from "src/app/shared/interfaces/feed.service.interface";
+import { IPostService } from "src/app/common/intefaces/post-service.inteface";
+import { PostService } from "src/app/common/services/post-service.service";
 
 @Component({
   selector: "app-post-feed-tool-bar",
@@ -19,9 +20,10 @@ import { IFeedService } from "src/app/shared/interfaces/feed.service.interface";
 export class PostFeedToolBarComponent implements OnInit {
   filter: Filter;
   filterForm: FormGroup;
-  feedService: IFeedService;
-  constructor(feedService: FeedService) {
-    this.feedService = feedService;
+  postService: IPostService;
+
+  constructor(postService: PostService) {
+    this.postService = postService;
   }
 
   ngOnInit() {
@@ -83,6 +85,6 @@ export class PostFeedToolBarComponent implements OnInit {
 
   onFilter() {
     this.filter = this.filterForm.value;
-    this.feedService.filterPosts(OrderBy.date, null);
+    this.postService.filterPosts(OrderBy.date, this.filter);
   }
 }
