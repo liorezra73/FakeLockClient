@@ -23,6 +23,7 @@ import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -39,7 +40,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     ModalModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    
 
   ],
   providers: [
