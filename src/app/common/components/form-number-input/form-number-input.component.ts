@@ -21,7 +21,7 @@ export class FormNumberInputComponent implements ControlValueAccessor, OnInit {
   @Input() label: string;
   @Input() placeholder: string;
   @Input() disable: boolean = false;
-  value = null;
+  value:number = null;
 
   constructor() {}
   writeValue(value: number) {

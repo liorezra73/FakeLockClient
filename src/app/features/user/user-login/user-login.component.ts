@@ -2,13 +2,17 @@ import { Component, OnInit } from "@angular/core";
 import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
 import { Login } from "src/app/common/models/Login";
-import { FormGroup, FormControl, Validators, AbstractControl } from "@angular/forms";
-import { stringValidation } from "src/app/common/validations/formControl.string.validation";
-import { Router } from "@angular/router";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
 import { formControlTouchOrDirty } from 'src/app/common/validations/formControlTouchOrDirty';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: "app-user-login",
@@ -79,5 +83,8 @@ export class UserLoginComponent implements OnInit {
       this.initializeLogin();
       this.initializeLoginForm();
     }
+  }
+  onGoRegisterPage() {
+    this.navigateService.navigate("/home/register");
   }
 }

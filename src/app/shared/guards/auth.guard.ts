@@ -20,7 +20,8 @@ export class AuthGuard implements CanActivate {
   navigateService: INavigateService;
   constructor(
     authService: AuthenticationService,
-    navigateService: NavigateService
+    navigateService: NavigateService,
+    private router: Router
   ) {
     this.authService = authService;
     this.navigateService = navigateService;
@@ -39,13 +40,21 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-     const res = this.authService.isLoggedIn();
-     console.log(res)
+    const res = this.authService.isLoggedIn();
+
+    
     if (!res) {
-      return this.defaultNavigation("/home/login");
+      if (next.url[0].path.startsWith("home")) {
+        return true;
+      } else {
+        return this.router.createUrlTree(["/home/login"]);
+      }
     } else {
-     return true;
+      if (next.url[0].path.startsWith("home")) {
+        return this.router.createUrlTree(["/posts"]);
+      } else {
+        return true;
+      }
     }
-    return true;
   }
 }

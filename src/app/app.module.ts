@@ -23,7 +23,12 @@ import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { MarkerService } from "./common/services/marker.service";
+<<<<<<< HEAD
 import { ToastrModule } from 'ngx-toastr';
+import { LocationService } from './common/services/location.service';
+=======
+import { LocationService } from "./common/services/location.service";
+>>>>>>> 2bcdeedd07ec71a4faab076015c1b86fd0a51506
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +56,7 @@ import { ToastrModule } from 'ngx-toastr';
     { provide: CommentService, useClass: CommentService },
     { provide: PhotoService, useClass: PhotoService },
     { provide: MarkerService, useClass: MarkerService },
+    { provide: LocationService, useClass: LocationService },
     { provide: AuthenticationService, useClass: AuthenticationService },
     { provide: APP_CONFIG, useValue: CONFIG },
     { provide: AuthHttpProxyService, useClass: AuthHttpProxyService },

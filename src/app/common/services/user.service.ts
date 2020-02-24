@@ -3,7 +3,7 @@ import { IUserService } from "../intefaces/user-service.inteface";
 import { HttpClient } from "@angular/common/http";
 import { APP_CONFIG } from "./config.service";
 import { User } from "../models/User";
-import { map } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { Register } from "../models/Register";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
@@ -25,7 +25,12 @@ export class UserService implements IUserService {
   getUsersByUsername(username: string): Observable<User[]> {
     return this.authhttp
       .get<User[]>(`${this.usersUrl}?username=${username}`)
-      .pipe(map(data => data.map(res => this.dataPipe(res))));
+      .pipe(
+        map(data => data.map(res => this.dataPipe(res))),
+        catchError(err => {
+          throw null
+        })
+      );
   }
 
   onRegister(register: Register): Observable<number> {
@@ -33,7 +38,7 @@ export class UserService implements IUserService {
   }
 
   private dataPipe(i): User {
-    console.log(i)
+    console.log(i);
     return {
       id: i.Id,
       username: i.Username

@@ -38,10 +38,8 @@ export class PostService implements IPostService {
       orderBy ? orderBy : "date"
     }`;
     if (filter) {
-      const radiusFilterValid: boolean =
-        !!filter.radius.distance &&
-        !!filter.radius.location.latitude &&
-        !!filter.radius.location.longtitude;
+      console.log(filter);
+      const radiusFilterValid: boolean = !!filter.radius.distance;
 
       const radiusFilter: string = radiusFilterValid
         ? `&distance=${filter.radius.distance}&latitude=${filter.radius.location.latitude}&longtitude=${filter.radius.location.longtitude}`
@@ -71,6 +69,8 @@ export class PostService implements IPostService {
         `${endDateFilter}` +
         `${tagsFilter}` +
         `${usersTagsFilter}`;
+
+      console.log(filterUrl);
     }
 
     this.http.get(filterUrl).subscribe(res => {

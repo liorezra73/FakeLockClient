@@ -1,79 +1,64 @@
-<form [formGroup]="filterForm" (ngSubmit)="onFilter()" class="forms-displayer">
-  <form formGroupName="radius">
-    <app-form-number-input
-      formControlName="latitude"
-      label="Latitude:"
-      placeholder="latitude..."
-      disable="true"
-    ></app-form-number-input>
+<div *ngIf="filterForm">
+  <form
+    [formGroup]="filterForm"
+    (ngSubmit)="onFilter()"
+    class="forms-displayer"
+  >
+  {{filter.radius.location.latitude}}
+  {{filter.radius.location.longtitude}}
+    <form formGroupName="radius">
+      <app-form-number-input
+        formControlName="distance"
+        label="Distance:"
+        placeholder="distance..."
+      ></app-form-number-input>
 
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(filterForm.get('radius').get('latitude'))"
-      [errors]="filterForm.get('radius').get('latitude').errors"
-    ></app-form-control-error-show>
+      <app-form-control-error-show
+        *ngIf="
+          formControlTouchOrDirty(filterForm.get('radius').get('distance'))
+        "
+        [errors]="filterForm.get('radius').get('distance').errors"
+      ></app-form-control-error-show>
+    </form>
 
-    <app-form-number-input
-      formControlName="longtitude"
-      label="Longtitude:"
-      placeholder="longtitude..."
-      disable="true"
-    ></app-form-number-input>
+    <form formGroupName="dates">
+      <app-form-input-date
+        formControlName="startDate"
+        label="Start Date:"
+      ></app-form-input-date>
+      <app-form-control-error-show
+        *ngIf="
+          formControlTouchOrDirty(filterForm.get('dates').get('startDate'))
+        "
+        [errors]="filterForm.get('dates').get('startDate').errors"
+        message="null"
+      ></app-form-control-error-show>
+      <app-form-input-date
+        formControlName="endDate"
+        label="End Date:"
+      ></app-form-input-date>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(filterForm.get('dates').get('endDate'))"
+        [errors]="filterForm.get('dates').get('endDate').errors"
+        message="null"
+      ></app-form-control-error-show>
+    </form>
+    <p>
+      <app-tag-input
+        class="input-solo"
+        label="Tags:"
+        placeholder="tag..."
+        formControlName="tags"
+      ></app-tag-input>
 
-    <app-form-control-error-show
-      *ngIf="
-        formControlTouchOrDirty(filterForm.get('radius').get('longtitude'))
-      "
-      [errors]="filterForm.get('radius').get('longtitude').errors"
-    ></app-form-control-error-show>
+      <app-usertag-input
+        class="input-solo"
+        label="Userstags:"
+        placeholder="username..."
+        formControlName="usersTags"
+      ></app-usertag-input>
+    </p>
 
-    <app-form-number-input
-      formControlName="distance"
-      label="Distance:"
-      placeholder="distance..."
-    ></app-form-number-input>
-
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(filterForm.get('radius').get('distance'))"
-      [errors]="filterForm.get('radius').get('distance').errors"
-    ></app-form-control-error-show>
+    <button type="submit">Filter</button>
   </form>
-
-  <form formGroupName="dates">
-    <app-form-input-date
-      formControlName="startDate"
-      label="Start Date:"
-    ></app-form-input-date>
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(filterForm.get('dates').get('startDate'))"
-      [errors]="filterForm.get('dates').get('startDate').errors"
-      message="null"
-    ></app-form-control-error-show>
-    <app-form-input-date
-      formControlName="endDate"
-      label="End Date:"
-    ></app-form-input-date>
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(filterForm.get('dates').get('endDate'))"
-      [errors]="filterForm.get('dates').get('endDate').errors"
-      message="null"
-    ></app-form-control-error-show>
-  </form>
-  <p>
-    <app-tag-input
-      class="input-solo"
-      label="Tags:"
-      placeholder="tag..."
-      formControlName="tags"
-    ></app-tag-input>
-
-    <app-usertag-input
-      class="input-solo"
-      label="Userstags:"
-      placeholder="username..."
-      formControlName="usersTags"
-    ></app-usertag-input>
-  </p>
-
-  <button type="submit">Filter</button>
-</form>
-
+</div>
