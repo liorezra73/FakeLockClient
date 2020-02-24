@@ -1,17 +1,18 @@
 <div>
   <div class="form-group">
     <label>Enter address</label>
-    <input
-      type="text"
-      class="form-control"
-      (keydown.enter)="$event.preventDefault()"
-      placeholder="Search Nearest Location"
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck="off"
-      type="text"
-      #search
-    />
+    <div>
+      <input
+        type="text"
+        (keydown.enter)="$event.preventDefault()"
+        placeholder="Search Nearest Location"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="off"
+        type="text"
+        #search
+      />
+    </div>
   </div>
 
   <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">

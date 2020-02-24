@@ -36,10 +36,7 @@ export class FormLocationInputComponent implements OnInit {
       this.geoCoder = new google.maps.Geocoder();
 
       let autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement,
-        {
-          types: ["address"]
-        }
+        this.searchElementRef.nativeElement
       );
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
