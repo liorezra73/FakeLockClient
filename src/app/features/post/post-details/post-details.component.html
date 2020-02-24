@@ -8,18 +8,23 @@
       <div class="tags-display" *ngFor="let tag of post.tags">
         #{{ tag.Title | lowercase }}
       </div>
+
       <span class="like-display" (click)="onSwitchLike()">
         <span *ngIf="post.isLikedByUser"><i class="fas fa-heart red"></i></span>
         <span *ngIf="!post.isLikedByUser"><i class="far fa-heart"></i></span>
 
         {{ post.likes }}</span
       >
+
     </div>
-    <span>
+    <div class="userTags-display" *ngFor="let userTag of post.usersTags">
+      @{{ userTag.Username }}
+    </div>
+    <div>
       <app-comment-modal [postId]="postId"></app-comment-modal>({{
         post.commentsCount
       }})
-    </span>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

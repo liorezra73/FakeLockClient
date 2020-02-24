@@ -1,0 +1,11 @@
+.tagged-title-display {
+  border: 1pt solid lightgray;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.delete-btn{
+    font-weight: bolder;
+    color: red;
+}

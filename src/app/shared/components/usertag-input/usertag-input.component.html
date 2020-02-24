@@ -20,7 +20,9 @@
       *ngFor="let userTag of this.taggedUsers; let i = index"
       (click)="onDeleteUserTagged(i)"
     >
-      {{ userTag.username }}
+      <button id="button" type="button">
+        {{ userTag.username }} <span class="delete-btn">x</span>
+      </button>
     </span>
   </div>
 </div>
