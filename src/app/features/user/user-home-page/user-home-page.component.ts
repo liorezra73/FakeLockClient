@@ -16,7 +16,6 @@ export class UserHomePageComponent implements OnInit {
   ngOnInit() {}
 
   onGoLoginPage() {
-    console.log("dsada")
     this.navigateService.navigate("/home/login");
   }
   onGoRegisterPage() {

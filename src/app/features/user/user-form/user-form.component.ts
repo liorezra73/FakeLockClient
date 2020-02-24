@@ -109,7 +109,9 @@ export class UserFormComponent implements OnInit {
             case 400:
               alert("form not valid!");
             case 409:
-              this.registerForm.get("username").setErrors({'usernameExists':true});
+              this.registerForm
+                .get("username")
+                .setErrors({ usernameExists: true });
               break;
             case 500:
               alert("something went wrong! try again later");
@@ -121,5 +123,9 @@ export class UserFormComponent implements OnInit {
     }
     console.log(this.register);
     console.log(this.registerForm.errors);
+  }
+
+  onGoLoginPage() {
+    this.navigateService.navigate("/home/login");
   }
 }

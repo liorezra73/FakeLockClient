@@ -2,21 +2,25 @@
   <label>{{ label }}</label>
   <div>
     <input
-    #userTag
-    id="typeahead-basic"
-    type="text"
-    [ngbTypeahead]="search"
-    [resultTemplate]="rt"
-    (selectItem)="onSelectUser($event)"
-    [inputFormatter]="formatter"/>
+      #userTag
+      id="typeahead-basic"
+      type="text"
+      [ngbTypeahead]="search"
+      [resultTemplate]="rt"
+      (selectItem)="onSelectUser($event)"
+      [inputFormatter]="formatter"
+      [value]="taggedUser"
+    />
 
     <ng-template #rt let-r="result" let-t="term">
       <ngb-highlight [result]="r.username" [term]="t"></ngb-highlight>
     </ng-template>
 
-    <button type="button" (click)="onAddUserTag(userTag)">+</button>
-    <span *ngFor="let userTag of this.taggedUsers; let i = index" (click)="onDeleteUserTagged(i)">
-        {{ userTag.username }}
-      </span>
+    <span
+      *ngFor="let userTag of this.taggedUsers; let i = index"
+      (click)="onDeleteUserTagged(i)"
+    >
+      {{ userTag.username }}
+    </span>
   </div>
 </div>

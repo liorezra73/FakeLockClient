@@ -1,76 +1,80 @@
-<form
-  [formGroup]="postForm"
-  (ngSubmit)="savePost()"
-  enctype="multipart/form-data"
->
-  <fieldset>
-    <legend>Post Form</legend>
-    <app-form-text-area-input
-      placeholder="text..."
-      formControlName="text"
-      rows=5
-      label="Text:"
-    ></app-form-text-area-input>
+<div *ngIf="postForm">
+  <form
+    [formGroup]="postForm"
+    (ngSubmit)="savePost()"
+    enctype="multipart/form-data"
+  >
+    <fieldset>
+      <legend>Post Form</legend>
+      <app-form-text-area-input
+        placeholder="text..."
+        formControlName="text"
+        rows="5"
+        label="Text:"
+      ></app-form-text-area-input>
 
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(postForm.get('text'))"
-      [errors]="postForm.get('text').errors"
-    ></app-form-control-error-show>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(postForm.get('text'))"
+        [errors]="postForm.get('text').errors"
+      ></app-form-control-error-show>
 
-    <div>
-      <form formGroupName="location">
-        <app-form-number-input
-          formControlName="latitude"
-          label="Latitude:"
-          placeholder="latitude..."
-          disable=true
-        ></app-form-number-input>
+      <div>
+        <form formGroupName="location">
+          <app-form-number-input
+            formControlName="latitude"
+            label="Latitude:"
+            placeholder="latitude..."
+            disable="true"
+          ></app-form-number-input>
 
-        <app-form-control-error-show
-          *ngIf="
-            formControlTouchOrDirty(postForm.get('location').get('latitude'))
-          "
-          [errors]="postForm.get('location').get('latitude').errors"
-        ></app-form-control-error-show>
+          <app-form-control-error-show
+            *ngIf="
+              formControlTouchOrDirty(postForm.get('location').get('latitude'))
+            "
+            [errors]="postForm.get('location').get('latitude').errors"
+          ></app-form-control-error-show>
 
-        <app-form-number-input
-          formControlName="longtitude"
-          label="Longtitude:"
-          placeholder="longtitude..."
-          disable=true
-        ></app-form-number-input>
+          <app-form-number-input
+            formControlName="longtitude"
+            label="Longtitude:"
+            placeholder="longtitude..."
+            disable="true"
+          ></app-form-number-input>
 
-        <app-form-control-error-show
-          *ngIf="
-            formControlTouchOrDirty(postForm.get('location').get('longtitude'))
-          "
-          [errors]="postForm.get('location').get('longtitude').errors"
-        ></app-form-control-error-show>
-      </form>
-    </div>
+          <app-form-control-error-show
+            *ngIf="
+              formControlTouchOrDirty(
+                postForm.get('location').get('longtitude')
+              )
+            "
+            [errors]="postForm.get('location').get('longtitude').errors"
+          ></app-form-control-error-show>
+        </form>
+      </div>
 
-    <app-form-image-input
-      label="Photo:"
-      formControlName="photo"
-    ></app-form-image-input>
+      <app-form-image-input
+        label="Photo:"
+        formControlName="photo"
+      ></app-form-image-input>
 
-    <app-form-control-error-show
-      *ngIf="formControlTouchOrDirty(postForm.get('photo'))"
-      [errors]="postForm.get('photo').errors"
-    ></app-form-control-error-show>
+      <app-form-control-error-show
+        *ngIf="formControlTouchOrDirty(postForm.get('photo'))"
+        [errors]="postForm.get('photo').errors"
+      ></app-form-control-error-show>
 
-    <app-tag-input
-      label="Tags:"
-      placeholder="tag..."
-      formControlName="tags"
-    ></app-tag-input>
+      <app-tag-input
+        label="Tags:"
+        placeholder="tag..."
+        formControlName="tags"
+      ></app-tag-input>
 
-    <app-usertag-input
-      label="Userstags:"
-      placeholder="username..."
-      formControlName="usersTags"
-    ></app-usertag-input>
+      <app-usertag-input
+        label="Userstags:"
+        placeholder="username..."
+        formControlName="usersTags"
+      ></app-usertag-input>
 
-    <button type="submit" >Save</button>
-  </fieldset>
-</form>
+      <button type="submit">Save</button>
+    </fieldset>
+  </form>
+</div>

@@ -4,8 +4,14 @@ import {
   ControlValueAccessor,
   NgControl
 } from "@angular/forms";
-import { Observable } from "rxjs";
-import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { Observable, timer, of } from "rxjs";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  catchError
+} from "rxjs/operators";
 import { UserService } from "src/app/common/services/user.service";
 import { IUserService } from "src/app/common/intefaces/user-service.inteface";
 import { User } from "src/app/common/models/User";
@@ -28,9 +34,9 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
   @Input() label: string;
   @Input() placeholder: string;
   users$: Observable<User[]>;
-  users: User[];
+  users: User[] = [];
   taggedUsers: User[] = [];
-  taggedUser: User;
+  taggedUser: string = "";
   ngControl: NgControl;
   userService: IUserService;
   tempArr: any[] = [{ username: "kfc" }, { username: "kf" }];
@@ -52,42 +58,46 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelTouched = fn;
   }
 
-  onAddUserTag(userTag: HTMLInputElement) {
-    if (/\S/.test(userTag.value)) {
-      const usersTags = [...this.ngControl.value, this.taggedUser.username];
-      this.taggedUsers.push(this.taggedUser);
-      console.log(this.taggedUsers);
-      this.onModelChange(this.taggedUsers);
-      userTag.value = null;
-    } else {
-      alert("cant be empty");
-    }
-  }
+  // onAddUserTag(userTag: HTMLInputElement) {
+  //   if (/\S/.test(userTag.value)) {
+  //     debugger;
+  //     const usersTags = [...this.ngControl.value, this.taggedUser.username];
+  //     this.taggedUsers.push(this.taggedUser);
+  //     this.onModelChange(this.taggedUsers);
+  //     userTag.value = null;
+  //   } else {
+  //     alert("cant be empty");
+  //   }
+  // }
 
   onDeleteUserTagged(index: number) {
     this.taggedUsers = this.taggedUsers.filter(
       t => this.taggedUsers.indexOf(t) !== index
     );
-    console.log(this.taggedUsers);
     this.onModelChange(this.taggedUsers);
-  }
-
-  getPostsByName(name): User[] {
-   this.userService.getUsersByUsername(name).subscribe(users => this.users = users, null, ()=>{return this.users})
-   console.log(this.users);
-   return this.users
   }
 
   search = (text$: Observable<string>) =>
     text$.pipe(
-      debounceTime(200),
+      debounceTime(1000),
       distinctUntilChanged(),
-      map(term => (term.length < 2 ? [] : this.getPostsByName(term)))
+      switchMap(term =>
+        this.userService.getUsersByUsername(term).pipe(
+          catchError(() => {
+            return of([]);
+          }),
+          map(users =>
+            users.filter(user => !this.taggedUsers.find(u => u.id === user.id))
+          )
+        )
+      )
     );
 
   formatter = (user: User) => user.username;
 
   onSelectUser(user) {
-    this.taggedUser = user.item as User;
+    this.taggedUsers.push(user.item);
+    this.onModelChange(this.taggedUsers);
+    this.taggedUser = null;
   }
 }

@@ -8,43 +8,38 @@ import {
   FormControl,
   AbstractControl
 } from "@angular/forms";
-import { UserService } from "src/app/common/services/user.service";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
+import { LocationService } from "src/app/common/services/location.service";
+import { ILocationService } from "src/app/common/intefaces/location.service.interface";
+import { MapLocation } from "src/app/common/models/MapLocation";
 
 @Component({
   selector: "app-post-form",
   templateUrl: "./post-form.component.html",
   styleUrls: ["./post-form.component.css"]
 })
-export class PostFormComponent implements OnInit, DoCheck {
+export class PostFormComponent implements OnInit {
   postService: IPostService;
   post: Post;
   postForm: FormGroup;
   navigateService: INavigateService;
+  locationService: ILocationService;
 
-  constructor(postService: PostService, navigateService: NavigateService) {
+  constructor(
+    postService: PostService,
+    navigateService: NavigateService,
+    locationService: LocationService
+  ) {
     this.postService = postService;
     this.navigateService = navigateService;
+    this.locationService = locationService;
   }
 
   ngOnInit() {
-    this.initializePost();
-    this.getCurrentLocation();
-    this.initializePostForm();
-  }
-
-  ngDoCheck(): void {
-    this.postForm
-      .get("location")
-      .get("latitude")
-      .setValue(this.post.location.latitude);
-    this.postForm
-      .get("location")
-      .get("longtitude")
-      .setValue(this.post.location.longtitude);
+    this.initializeAll();
   }
   initializePost() {
     this.post = {
@@ -58,7 +53,6 @@ export class PostFormComponent implements OnInit, DoCheck {
       tags: []
     };
   }
-  //need to sepraet code that repeats himself
   initializePostForm() {
     this.postForm = new FormGroup({
       text: new FormControl(this.post.text, stringValidation(3, 200)),
@@ -72,7 +66,7 @@ export class PostFormComponent implements OnInit, DoCheck {
           ])
         ),
         longtitude: new FormControl(
-          this.post.location.latitude,
+          this.post.location.longtitude,
           Validators.compose([
             Validators.required,
             Validators.min(-180),
@@ -96,9 +90,7 @@ export class PostFormComponent implements OnInit, DoCheck {
       this.postService.createPost({ ...this.post }).subscribe(
         res => {
           this.navigateService.navigate(`/posts/${res.Id}`);
-          this.initializePost();
-          this.initializePostForm();
-          this.ngDoCheck();
+          this.initializeAll();
         },
         err => {
           switch (err.status) {
@@ -124,12 +116,13 @@ export class PostFormComponent implements OnInit, DoCheck {
     }
   }
 
-  getCurrentLocation(): void {
-    navigator.geolocation.getCurrentPosition(
-      res => {
+  initializeAll(): void {
+    this.initializePost();
+    this.locationService.getCurrentLocation().subscribe(
+      (res: MapLocation) => {
         this.post.location = {
-          latitude: res.coords.latitude,
-          longtitude: res.coords.longitude
+          latitude: res.latitude,
+          longtitude: res.longtitude
         };
       },
       err => {
@@ -137,6 +130,9 @@ export class PostFormComponent implements OnInit, DoCheck {
           latitude: 32.0970604,
           longtitude: 34.826543799999996
         };
+      },
+      () => {
+        this.initializePostForm();
       }
     );
   }
