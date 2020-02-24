@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { ICommentService } from "src/app/common/intefaces/comment-service.inteface";
 import { CommentService } from "src/app/common/services/comment.service";
 import { PostComment } from "src/app/common/models/PostComment";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-comment-list",
@@ -15,7 +16,7 @@ export class CommentListComponent implements OnInit {
   @Input()
   postId: number;
 
-  constructor(commentService: CommentService) {
+  constructor(private toastr: ToastrService, commentService: CommentService) {
     this.commentService = commentService;
   }
 
@@ -27,18 +28,11 @@ export class CommentListComponent implements OnInit {
     this.commentService.getCommentsByPostId(postId).subscribe(
       comments => {
         this.comments = comments;
-        console.log(this.comments);
       },
       err => {
         switch (err.status) {
-          case 400:
-            alert("form not valid!");
-            break;
-          case 404:
-            return;
-            break;
           default:
-            alert("something went wrong!try again later...");
+            this.toastr.error("something went wrong!try again later...");
             break;
         }
       }
@@ -48,19 +42,19 @@ export class CommentListComponent implements OnInit {
   createComment(comment: PostComment) {
     this.commentService.createComment(this.postId, comment).subscribe(
       (newComment: PostComment) => {
-        console.log(newComment)
         this.comments.push(newComment);
+        this.toastr.success("comment created!");
       },
       err => {
         switch (err.status) {
           case 400:
-            alert("form not valid!");
+            this.toastr.error("form not valid!");
             break;
           case 404:
-            alert("post is not exist");
+            this.toastr.error("post is not exist");
             break;
           default:
-            alert("somthin went wrong!try again later...");
+            this.toastr.error("something went wrong!try again later...");
             break;
         }
       }
@@ -76,10 +70,10 @@ export class CommentListComponent implements OnInit {
       err => {
         switch (err.status) {
           case 404:
-            alert("comment not exist");
+            this.toastr.error("comment not exist");
             break;
           default:
-            alert("somthin went wrong!try again later...");
+            this.toastr.error("somthin went wrong!try again later...");
             break;
         }
       }
@@ -95,10 +89,10 @@ export class CommentListComponent implements OnInit {
       err => {
         switch (err.status) {
           case 404:
-            alert("comment not exist");
+            this.toastr.error("comment not exist");
             break;
           default:
-            alert("somthin went wrong!try again later...");
+            this.toastr.error("somthin went wrong!try again later...");
             break;
         }
       }

@@ -1,26 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  NgZone
-} from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MapLocation } from "src/app/common/models/MapLocation";
-import { Post } from "src/app/common/models/post";
 import { Marker } from "../../models/marker";
-import { IMarkerService } from "../../intefaces/marker.service.interface";
-import { MarkerService } from "../../services/marker.service";
-import { NavigateService } from "src/app/shared/services/navigate.service";
-import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
-import { MapsAPILoader } from "@agm/core";
-import { FormControl } from "@angular/forms";
-declare var google: any;
 
-declare namespace google.maps.places {
-    export interface PlaceResult { geometry }
-}
 @Component({
   selector: "app-map",
   templateUrl: "./map.component.html",
@@ -28,6 +9,7 @@ declare namespace google.maps.places {
 })
 export class MapComponent implements OnInit {
   @Input() markers: Marker[];
+  @Output() onSendMarkerId = new EventEmitter<number>();
   location: MapLocation;
   markersOnBounds: any[];
 
@@ -39,14 +21,8 @@ export class MapComponent implements OnInit {
     }
   };
   iconMode: boolean = true;
-  navigateService: INavigateService;
-  constructor(
-    navigateService: NavigateService,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-  ) {
-    this.navigateService = navigateService;
-  }
+
+  constructor() {}
   ngOnInit() {
     this.initializeLocation();
   }
@@ -84,10 +60,9 @@ export class MapComponent implements OnInit {
     } else {
       this.iconMode = false;
     }
-    console.log(this.iconMode);
   }
 
-  onGoToPost(): void {
-    this.navigateService.navigate("/posts");
+  onGoToPost(markerId: number): void {
+    this.onSendMarkerId.emit(markerId);
   }
 }

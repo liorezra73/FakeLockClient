@@ -14,8 +14,8 @@ import { INavigateService } from "src/app/shared/interfaces/navigate.service.int
 import { NavigateService } from "src/app/shared/services/navigate.service";
 import { ToastrService } from "ngx-toastr";
 import { MapLocation } from "src/app/common/models/MapLocation";
-import { ILocationService } from 'src/app/common/intefaces/location.service.interface';
-import { LocationService } from 'src/app/common/services/location.service';
+import { ILocationService } from "src/app/common/intefaces/location.service.interface";
+import { LocationService } from "src/app/common/services/location.service";
 
 @Component({
   selector: "app-post-form",
@@ -100,24 +100,22 @@ export class PostFormComponent implements OnInit {
         err => {
           switch (err.status) {
             case 400:
-              alert("form not valid!");
+              this.toastr.error("form not valid!");
               break;
             case 401:
               this.navigateService.navigate("/home/login");
               break;
             case 406:
-              alert("image size is too large");
+              this.toastr.error("image size is too large");
               break;
             default:
-              console.log(err);
-
-              alert("something went wrong!please try again later...");
+              this.toastr.error("something went wrong!try again later...");
               break;
           }
         }
       );
     } else {
-      alert("form not valid!");
+      this.toastr.error("form not valid!");
     }
   }
 
@@ -131,7 +129,6 @@ export class PostFormComponent implements OnInit {
       .get("longtitude")
       .setValue($event.longtitude);
   }
-
 
   initializeAll(): void {
     this.initializePost();

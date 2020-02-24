@@ -6,6 +6,7 @@ import { PostService } from "src/app/common/services/post-service.service";
 import { OrderBy } from "src/app/common/enums/orderBy";
 import { NavigateService } from "src/app/shared/services/navigate.service";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-post-main-feed",
@@ -16,7 +17,11 @@ export class PostMainFeedComponent implements OnInit {
   postService: IPostService;
   navgiateService: INavigateService;
   posts: Post[];
-  constructor(postService: PostService, navigateService: NavigateService) {
+  constructor(
+    postService: PostService,
+    private toastr: ToastrService,
+    navigateService: NavigateService
+  ) {
     this.postService = postService;
     this.navgiateService = navigateService;
   }
@@ -26,32 +31,25 @@ export class PostMainFeedComponent implements OnInit {
   }
 
   private _getPosts(): void {
-    this.postService.filterPosts(null, null);
+    this.postService.filterPosts(OrderBy.date, null);
     this.postService.posts$.subscribe(
       posts => {
         this.posts = posts;
       },
-      err => this.handleError(err)
+      err => {
+        switch (err.status) {
+          case 404:
+            this.posts = [];
+            break;
+          default:
+            this.toastr.error("something went wrong!try again later...");
+            break;
+        }
+      }
     );
   }
 
   onPostSelect(postId: number) {
     this.navgiateService.navigate(`/posts/${postId}`);
-  }
-
-  handleError(error): void {
-    switch (error.status) {
-      case 0:
-        alert("Connection error!  Redirect to home page.");
-        break;
-      case 404:
-        alert("No posts to display, please try again.");
-        break;
-      case 500:
-        alert("Connection error! please try again.");
-      default:
-        alert("Connection error! Redirect to home page");
-        break;
-    }
   }
 }

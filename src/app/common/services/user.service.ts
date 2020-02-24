@@ -28,7 +28,7 @@ export class UserService implements IUserService {
       .pipe(
         map(data => data.map(res => this.dataPipe(res))),
         catchError(err => {
-          throw null
+          throw null;
         })
       );
   }
@@ -38,7 +38,6 @@ export class UserService implements IUserService {
   }
 
   private dataPipe(i): User {
-    console.log(i);
     return {
       id: i.Id,
       username: i.Username
