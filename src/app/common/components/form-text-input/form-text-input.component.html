@@ -2,11 +2,12 @@
   <label>{{ label }}</label>
   <div>
     <input
-      (change)="onModelChange($event.target.value);"
+      class="form-control"
+      (change)="onModelChange($event.target.value)"
       type="text"
       (blur)="onModelTouched()"
       [value]="value"
-      placeholder={{placeholder}}
+      placeholder="{{ placeholder }}"
     />
   </div>
 </div>

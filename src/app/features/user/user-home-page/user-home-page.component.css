@@ -1,0 +1,45 @@
+h2 {
+  font-family: serif;
+}
+
+.img-navbar {
+  height: 35px;
+  width: 35px;
+}
+
+.navbar {
+  border-bottom: 2px solid rgba(var(--ce3, 239, 239, 239), 1);
+  width: 100%;
+  position: fixed;
+}
+
+.home-body-display {
+  display: flex;
+  align-items: center;
+  width: 800;
+  height: 150px;
+  position: absolute;
+  left: 20%;
+  top: 40%;
+}
+
+.home-details {
+  margin-left: 8pt;
+  margin-top: 35pt;
+  height: auto;
+  width: 300px;
+  border: 1px solid;
+  padding: 20px;
+  border: 2px solid rgba(var(--ce3, 239, 239, 239), 1);
+  background-color: #fff;
+  text-align: center;
+}
+
+p {
+  color: gray
+}
+
+
+.image-home{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.40);
+}

@@ -20,7 +20,7 @@ export class FormTextInputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   value = null;
 
-  constructor() {}
+  constructor() {console.log(this.placeholder)}
 
   writeValue(value: string) {
     this.value = value;

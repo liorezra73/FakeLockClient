@@ -1,10 +1,8 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
   <fieldset>
-    <legend>Login:</legend>
     <div>
       <app-form-text-input
-        label="Username:"
-        placeholder="username..."
+        placeholder="Username"
         formControlName="username"
       ></app-form-text-input>
       <app-form-control-error-show
@@ -15,8 +13,7 @@
 
     <div>
       <app-form-password-input
-        label="Password:"
-        placeholder="password..."
+        placeholder="Password"
         formControlName="password"
       >
       </app-form-password-input>
@@ -26,6 +23,7 @@
       ></app-form-control-error-show>
     </div>
 
-    <button type="submit">Login</button>
+    <button class="btn btn-primary" type="submit">Login</button>
   </fieldset>
 </form>
+<p>Don't have an account?<a href="/home/register">Sign up</a> </p>

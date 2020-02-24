@@ -1,13 +1,15 @@
 <div>
-    <label>{{ label }}</label>
-    <div>
-      <input
-        (change)="onModelChange($event.target.value);"
-        type="date"
-        (blur)="onModelTouched()"
-        [value]="value"
-        placeholder={{placeholder}}
-        [disabled]="disable"
-      />
-    </div>
+  <label>{{ label }}</label>
+  <div>
+    <input
+      type="text"
+      onfocus="(this.type='date')"
+      class="form-control"
+      (change)="onModelChange($event.target.value)"
+      (blur)="onModelTouched()"
+      [value]="value"
+      placeholder="{{ placeholder }}"
+      [disabled]="disable"
+    />
   </div>
+</div>

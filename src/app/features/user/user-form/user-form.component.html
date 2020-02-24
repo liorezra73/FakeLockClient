@@ -1,11 +1,9 @@
 <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
   <fieldset>
-    <legend>Register:</legend>
     <div>
       <app-form-text-input
         formControlName="fullName"
-        label="Full name:"
-        placeholer="Enter full name.."
+        [placeholder]="'Full name'"
       ></app-form-text-input>
 
       <app-form-control-error-show
@@ -17,8 +15,7 @@
     <div>
       <app-form-text-input
         formControlName="username"
-        label="Username:"
-        placeholer="Enter username"
+        placeholder="Username"
       ></app-form-text-input>
       <app-form-control-error-show
         *ngIf="formControlTouchOrDirty(registerForm.get('username'))"
@@ -29,8 +26,7 @@
     <div>
       <app-form-password-input
         formControlName="password"
-        [placeholder]="'Enter password..'"
-        [label]="'Password:'"
+        [placeholder]="'Password'"
       ></app-form-password-input>
 
       <app-form-control-error-show
@@ -42,8 +38,7 @@
     <div>
       <app-form-password-input
         formControlName="repeatPassword"
-        [placeholder]="'Repeat password..'"
-        [label]="'Repeat password:'"
+        [placeholder]="'Repeat password'"
       ></app-form-password-input>
       <app-form-control-error-show
         *ngIf="formControlTouchOrDirty(registerForm.get('repeatPassword'))"
@@ -59,7 +54,7 @@
     <div>
       <app-form-input-date
         formControlName="birthDate"
-        label="Birthdate:"
+        placeholder="Birthdate"
       ></app-form-input-date>
       <app-form-control-error-show
         *ngIf="formControlTouchOrDirty(registerForm.get('birthDate'))"
@@ -67,12 +62,11 @@
         message="must be 18 years old"
       ></app-form-control-error-show>
     </div>
-    
+
     <div>
       <app-form-text-input
         formControlName="address"
-        label="Address:"
-        placeholer="Enter address"
+        placeholder="Address"
       ></app-form-text-input>
       <app-form-control-error-show
         *ngIf="formControlTouchOrDirty(registerForm.get('address'))"
@@ -83,8 +77,7 @@
     <div>
       <app-form-text-input
         formControlName="jobAddress"
-        label="Job address:"
-        placeholer="Enter job address"
+        placeholder="Job address"
       ></app-form-text-input>
       <app-form-control-error-show
         *ngIf="formControlTouchOrDirty(registerForm.get('jobAddress'))"
@@ -92,6 +85,13 @@
       ></app-form-control-error-show>
     </div>
 
-    <button type="submit" [disabled]="!registerForm.valid">Register</button>
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!registerForm.valid"
+    >
+      Register
+    </button>
   </fieldset>
 </form>
+<p>Have an account? <a href="home/login">Log in</a></p>

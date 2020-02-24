@@ -1,4 +1,18 @@
-<h1>FackLock</h1>
-<button type="button" (click)="onGoLoginPage()">Login</button>
-<button type="button" (click)="onGoRegisterPage()">Register</button>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <img
+    class="img-navbar"
+    src="https://image.freepik.com/free-icon/lock-circle_318-9883.jpg"
+  /><b>fakelock</b>
+  <a class="nav-link" type="button" (click)="onGoLoginPage()">Login</a>
+  <a class="nav-link" type="button" (click)="onGoRegisterPage()">Register</a>
+</nav>
+
+<div class="home-body-display">
+  <img class="image-home" src="https://i.ibb.co/b7Gp7Rw/Home-Photo-New.png" />
+  <span class="home-details"
+    ><h2><b>fakelock</b></h2>
+    <p>Sign up to see photos from your friends. </p>
+    <hr>
+    <router-outlet></router-outlet
+  ></span>
+</div>

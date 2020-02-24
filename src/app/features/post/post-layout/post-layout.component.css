@@ -1,3 +1,5 @@
+
+
 h2{
     font-family: serif
 }
@@ -9,10 +11,11 @@ img{
 
 .navbar{
     border-bottom: 2px solid rgba(var(--ce3,239,239,239),1);
-    
+    width: 100%;
+    position: fixed;
 }
 
-#logout{
+.navlogout{
     font-weight: bolder;
     float: right;
 
