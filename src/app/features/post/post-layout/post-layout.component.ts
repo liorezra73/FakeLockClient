@@ -3,6 +3,7 @@ import { IAuthService } from "src/app/common/intefaces/auth-service.interface";
 import { AuthenticationService } from "src/app/common/services/authentication.service";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-post-layout",
@@ -14,6 +15,7 @@ export class PostLayoutComponent implements OnInit {
   navigateService: INavigateService;
   constructor(
     authService: AuthenticationService,
+    private toastr: ToastrService,
     navigateService: NavigateService
   ) {
     this.authService = authService;
@@ -21,15 +23,17 @@ export class PostLayoutComponent implements OnInit {
   }
 
   ngOnInit() {}
-  onLogout() {
+  onaskLogout() {
+    this.logout();
+  }
+  logout() {
     this.authService.onLogout();
-    this.navigateService.navigate('/home');
+    this.navigateService.navigate("/home");
   }
-  onGoPostForm(){
-    this.navigateService.navigate('/posts/form');
+  onGoPostForm() {
+    this.navigateService.navigate("/posts/form");
   }
-  onGoFeed(){
-    this.navigateService.navigate('/posts/feed/main');
+  onGoFeed() {
+    this.navigateService.navigate("/posts/feed/main");
   }
-
 }

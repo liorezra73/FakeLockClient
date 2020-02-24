@@ -10,9 +10,8 @@ import {
 } from "@angular/forms";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
-import { formControlTouchOrDirty } from 'src/app/common/validations/formControlTouchOrDirty';
-import { ToastrService } from 'ngx-toastr';
-
+import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-user-login",
@@ -63,25 +62,21 @@ export class UserLoginComponent implements OnInit {
           const tokenSaved = this.authService.saveToken(res);
           if (tokenSaved) {
             this.navigateService.navigate("/posts");
+            this.toastr.success("Logged in");
+            this.initializeLogin();
+            this.initializeLoginForm();
           } else {
-            throw new Error("token not saved");
-          };
-          this.toastr.success("Logged in")
-          
-          
+            this.toastr.success("failed to log in");
+          }
         },
         err => {
-          console.log(err)
           if (err.status < 500) {
-            this.toastr.error(err.error)
+            this.toastr.error("username or password incorrect");
           } else {
-            this.toastr.error(err.error)
+            this.toastr.error("something went wrong!try again later...");
           }
-          
         }
       );
-      this.initializeLogin();
-      this.initializeLoginForm();
     }
   }
   onGoRegisterPage() {

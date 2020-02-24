@@ -8,6 +8,9 @@ import { Marker } from "src/app/common/models/marker";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { PostService } from "src/app/common/services/post-service.service";
 import { LocationService } from "src/app/common/services/location.service";
+import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { NavigateService } from "src/app/shared/services/navigate.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-post-map-feed",
@@ -18,23 +21,41 @@ export class PostMapFeedComponent implements OnInit {
   markersService: IMarkerService;
   postService: IPostService;
   markers: Marker[];
-  constructor(markersService: MarkerService, postService: PostService) {
+  navigateService: INavigateService;
+  constructor(
+    navigateService: NavigateService,
+    markersService: MarkerService,
+    private toastr: ToastrService,
+    postService: PostService
+  ) {
     this.postService = postService;
     this.markersService = markersService;
+    this.navigateService = navigateService;
   }
 
   ngOnInit() {
     this._getMarkers();
   }
+  onNavigatePost($event) {
+    this.navigateService.navigate(`/posts/${$event}`);
+  }
 
   private _getMarkers(): void {
-    this.postService.filterPosts(null, null);
+    this.postService.filterPosts(OrderBy.likes, null);
     this.markersService.markers$.subscribe(
       markers => {
-        console.log("markers");
-        this.markers = markers;
+        this.markers = markers
       },
-      err => console.log(err)
+      err => {
+        switch (err.status) {
+          case 404:
+            this.markers = [];
+            break;
+          default:
+            this.toastr.error("something went wrong!try again later...");
+            break;
+        }
+      }
     );
   }
 }

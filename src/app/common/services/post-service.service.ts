@@ -89,6 +89,7 @@ export class PostService implements IPostService {
           return p;
         })
       );
+
       this.markerService.markers$.next(
         res.map((post: Post) => {
           const p = this.markerService.mapPostToMarker({ ...post });
@@ -98,6 +99,7 @@ export class PostService implements IPostService {
           return p;
         })
       );
+
     });
   }
 
