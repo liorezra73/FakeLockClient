@@ -48,7 +48,8 @@ export class PostFeedToolBarComponent implements OnInit {
         endDate: null
       },
       tags: [],
-      usersTags: []
+      usersTags: [],
+      publishers: []
     };
   }
   initializeFilterForm() {
@@ -80,7 +81,9 @@ export class PostFeedToolBarComponent implements OnInit {
         )
       }),
       tags: new FormControl(this.filter.tags),
-      usersTags: new FormControl(this.filter.usersTags)
+      usersTags: new FormControl(this.filter.usersTags),
+      publishers: new FormControl(this.filter.publishers)
+
     });
   }
 

@@ -7,6 +7,7 @@ export interface Filter {
   dates?: DatesFilter;
   tags?: Tag[] | string[];
   usersTags?: User[] | number[];
+  publishers?: User[] | number[];
 }
 
 interface RadiusFilter {

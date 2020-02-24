@@ -63,12 +63,20 @@ export class PostService implements IPostService {
           ut => (usersTagsFilter += `&usersTags[]=${ut.id}`)
         );
       }
+
+      let publisherFilter: string = "";
+      if (filter.publishers.length > 0) {
+        filter.publishers.forEach(
+          p => (publisherFilter += `&publishers[]=${p.id}`)
+        );
+      }
       filterUrl +=
         `${radiusFilter}` +
         `${stratDateFilter}` +
         `${endDateFilter}` +
         `${tagsFilter}` +
-        `${usersTagsFilter}`;
+        `${usersTagsFilter}` +
+        `${publisherFilter}`;
 
       console.log(filterUrl);
     }

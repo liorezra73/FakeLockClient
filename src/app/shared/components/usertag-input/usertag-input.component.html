@@ -16,8 +16,8 @@
     <ng-template #rt let-r="result" let-t="term">
       <ngb-highlight [result]="r.username" [term]="t"></ngb-highlight>
     </ng-template>
-
-    <span
+    <div class="container">
+    <span 
       *ngFor="let userTag of this.taggedUsers; let i = index"
       (click)="onDeleteUserTagged(i)"
     >
@@ -25,5 +25,6 @@
         {{ userTag.username }} <span class="delete-btn">x</span>
       </button>
     </span>
+  </div>
   </div>
 </div>
