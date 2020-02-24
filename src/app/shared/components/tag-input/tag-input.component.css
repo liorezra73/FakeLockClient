@@ -9,3 +9,7 @@
     font-weight: bolder;
     color: red;
 }
+
+.input-merge-btn{
+ display: inline-flex;
+}

@@ -1,9 +1,10 @@
 <div>
   <label>{{ label }}</label>
   <div>
-    <input #tag type="text" placeholder="{{ placeholder }}" />
+    <div class="input-merge-btn">
+    <input #tag type="text" placeholder="{{ placeholder }}" class="form-control"/>
     <button type="button" (click)="onAddTag(tag)">+</button>
-
+  </div>
     <span
       id="container"
       *ngFor="let tag of ngControl.value; let i = index"
