@@ -1,10 +1,22 @@
 <div>
   <label>{{ label }}</label>
   <div>
-    <input #tag type="text" placeholder="{{ placeholder }}" />
+    <div class="input-merge-btn">
+    <input #tag type="text" placeholder="{{ placeholder }}" class="form-control"/>
     <button type="button" (click)="onAddTag(tag)">+</button>
-    <span *ngFor="let tag of ngControl.value; let i = index" (click)="onDeleteTag(i)">
-      {{ tag.title }}
+  </div>
+    <span
+      id="container"
+      *ngFor="let tag of ngControl.value; let i = index"
+      (click)="onDeleteTag(i)"
+    >
+      <button id="button" type="button">
+        {{ tag.title }} <span class="delete-btn">x</span>
+      </button>
     </span>
   </div>
 </div>
+
+<!-- <div class="itembox" *ngFor="let tag of ngControl.value; let i = index" (click)="onDeleteTag(i)">
+  {{ tag.title }}<div class="RemoveMediaNotif">x</div>
+</div> -->

@@ -6,7 +6,7 @@
     <div>{{ comment.content }}</div>
     <div *ngIf="comment.tags">
         <div class="comment-tags-display" *ngFor="let tag of comment.tags">
-          #{{ tag?.Title }}
+          #{{ tag?.Title | lowercase }}
         </div>
       </div>
       <div *ngIf="comment.usersTags">

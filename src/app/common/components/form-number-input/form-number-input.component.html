@@ -1,13 +1,14 @@
-<div>
+<span>
     <label>{{ label }}</label>
     <div>
       <input
         (change)="onModelChange($event.target.value);"
         type="number"
+        class="form-control"
         (blur)="onModelTouched()"
         [value]="value"
         placeholder={{placeholder}}
         [disabled]="disable"
       />
     </div>
-  </div>
+  </span>

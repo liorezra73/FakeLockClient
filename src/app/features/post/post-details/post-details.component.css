@@ -40,3 +40,9 @@ i{
 .red{
     color: red;
 }
+
+.userTags-display{
+    display: inline;
+    font-weight: bold;
+}
+

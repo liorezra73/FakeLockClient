@@ -21,3 +21,19 @@ button {
   margin-left: 75pt;
   width: 10%;
 }
+
+.dates-form{
+  display: contents;
+}
+
+.tags-form{
+  display: contents;
+}
+
+.main-form{
+  display: contents;
+}
+
+.form-item{
+  margin:auto
+}
