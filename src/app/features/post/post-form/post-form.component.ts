@@ -13,6 +13,8 @@ import { stringValidation } from "src/app/common/validations/formControl.string.
 import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
+import { ToastrService } from "ngx-toastr";
+import { MapLocation } from "src/app/common/models/MapLocation";
 
 @Component({
   selector: "app-post-form",
@@ -25,7 +27,11 @@ export class PostFormComponent implements OnInit, DoCheck {
   postForm: FormGroup;
   navigateService: INavigateService;
 
-  constructor(postService: PostService, navigateService: NavigateService) {
+  constructor(
+    postService: PostService,
+    navigateService: NavigateService,
+    private toastr: ToastrService
+  ) {
     this.postService = postService;
     this.navigateService = navigateService;
   }
@@ -99,6 +105,7 @@ export class PostFormComponent implements OnInit, DoCheck {
           this.initializePost();
           this.initializePostForm();
           this.ngDoCheck();
+          this.toastr.success("Post created!");
         },
         err => {
           switch (err.status) {
@@ -122,6 +129,17 @@ export class PostFormComponent implements OnInit, DoCheck {
     } else {
       alert("form not valid!");
     }
+  }
+
+  onGetNewLocation($event: MapLocation) {
+    this.postForm
+      .get("location")
+      .get("latitude")
+      .setValue($event.latitude);
+    this.postForm
+      .get("location")
+      .get("longtitude")
+      .setValue($event.longtitude);
   }
 
   getCurrentLocation(): void {

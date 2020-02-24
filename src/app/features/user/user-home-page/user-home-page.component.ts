@@ -1,4 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit
+} from "@angular/core";
+import { MapsAPILoader } from "@agm/core";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
 
@@ -16,7 +23,7 @@ export class UserHomePageComponent implements OnInit {
   ngOnInit() {}
 
   onGoLoginPage() {
-    console.log("dsada")
+    console.log("dsada");
     this.navigateService.navigate("/home/login");
   }
   onGoRegisterPage() {

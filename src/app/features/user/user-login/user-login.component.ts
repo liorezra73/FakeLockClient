@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
 import { formControlTouchOrDirty } from 'src/app/common/validations/formControlTouchOrDirty';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-user-login",
@@ -21,7 +22,8 @@ export class UserLoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(
     authenticationService: AuthenticationService,
-    navigateService: NavigateService
+    navigateService: NavigateService,
+    private toastr: ToastrService
   ) {
     this.authService = authenticationService;
     this.navigateService = navigateService;
@@ -59,14 +61,19 @@ export class UserLoginComponent implements OnInit {
             this.navigateService.navigate("/posts");
           } else {
             throw new Error("token not saved");
-          }
+          };
+          this.toastr.success("Logged in")
+          
+          
         },
         err => {
+          console.log(err)
           if (err.status < 500) {
-            alert("username/password incorrect!");
+            this.toastr.error(err.error)
           } else {
-            alert("feild to login!");
+            this.toastr.error(err.error)
           }
+          
         }
       );
       this.initializeLogin();

@@ -11,6 +11,8 @@ import { AppSharedModule } from "../shared/shared.module";
 import { FormInputDateComponent } from "./components/form-input-date/form-input-date.component";
 import { MapComponent } from "./components/map/map.component";
 import { AgmCoreModule } from "@agm/core";
+import { FormLocationInputComponent } from './components/form-location-input/form-location-input.component';
+
 
 @NgModule({
   declarations: [
@@ -23,15 +25,15 @@ import { AgmCoreModule } from "@agm/core";
     FormControlErrorShowComponent,
     FormInputDateComponent,
     MapComponent,
-    
+    FormLocationInputComponent
   ],
   imports: [
     CommonModule,
     AppSharedModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyAL8BDG6ls8pxalyMwXMyn4YMes5fB_Dd0"
+      apiKey: "AIzaSyAL8BDG6ls8pxalyMwXMyn4YMes5fB_Dd0",
+      libraries: ["places"]
     })
-    
   ],
   exports: [
     FormTextInputComponent,
@@ -42,7 +44,8 @@ import { AgmCoreModule } from "@agm/core";
     FormTextAreaInputComponent,
     FormControlErrorShowComponent,
     FormInputDateComponent,
-    MapComponent
+    MapComponent,
+    FormLocationInputComponent
   ]
 })
 export class AppCommonModule {}

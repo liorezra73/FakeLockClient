@@ -23,6 +23,7 @@ import { ModalModule } from "ngx-bootstrap";
 import { CommonModule } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { MarkerService } from "./common/services/marker.service";
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +41,9 @@ import { MarkerService } from "./common/services/marker.service";
     BrowserAnimationsModule,
     ModalModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({positionClass: 'toast-top-center'})
   ],
   providers: [
     { provide: PostService, useClass: PostService },

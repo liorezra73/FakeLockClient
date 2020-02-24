@@ -46,6 +46,8 @@
           "
           [errors]="postForm.get('location').get('longtitude').errors"
         ></app-form-control-error-show>
+
+        <app-form-location-input (sendNewLocation)="onGetNewLocation($event)"></app-form-location-input>
       </form>
     </div>
 
