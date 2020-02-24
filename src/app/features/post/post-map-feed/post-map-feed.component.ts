@@ -44,7 +44,7 @@ export class PostMapFeedComponent implements OnInit {
     this.postService.filterPosts(OrderBy.likes, null);
     this.markersService.markers$.subscribe(
       markers => {
-        this.markers = markers;
+        this.markers = markers
       },
       err => {
         switch (err.status) {

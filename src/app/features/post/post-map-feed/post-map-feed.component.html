@@ -1,4 +1,4 @@
-<app-map [markers]="markers" (onSendMarkerId)="onNavigatePost($event)">
+<app-map [markers]="markers?.slice(0,100)" (onSendMarkerId)="onNavigatePost($event)">
   
 </app-map>
 {{markers?.length}}
