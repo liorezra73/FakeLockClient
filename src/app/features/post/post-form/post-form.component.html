@@ -6,6 +6,7 @@
   >
     <fieldset>
       <legend>Post Form</legend>
+
       <app-form-text-area-input
         placeholder="text..."
         formControlName="text"
@@ -41,16 +42,6 @@
             disable="true"
           ></app-form-number-input>
 
-        <app-form-control-error-show
-          *ngIf="
-            formControlTouchOrDirty(postForm.get('location').get('longtitude'))
-          "
-          [errors]="postForm.get('location').get('longtitude').errors"
-        ></app-form-control-error-show>
-
-        <app-form-location-input (sendNewLocation)="onGetNewLocation($event)"></app-form-location-input>
-      </form>
-    </div>
           <app-form-control-error-show
             *ngIf="
               formControlTouchOrDirty(
@@ -59,7 +50,17 @@
             "
             [errors]="postForm.get('location').get('longtitude').errors"
           ></app-form-control-error-show>
+
+          <app-form-location-input
+            (sendNewLocation)="onGetNewLocation($event)"
+          ></app-form-location-input>
         </form>
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(postForm.get('location').get('longtitude'))
+          "
+          [errors]="postForm.get('location').get('longtitude').errors"
+        ></app-form-control-error-show>
       </div>
 
       <app-form-image-input
