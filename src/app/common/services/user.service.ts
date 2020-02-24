@@ -33,6 +33,7 @@ export class UserService implements IUserService {
   }
 
   private dataPipe(i): User {
+    console.log(i)
     return {
       id: i.Id,
       username: i.Username

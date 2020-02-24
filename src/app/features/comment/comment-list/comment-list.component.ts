@@ -10,7 +10,7 @@ import { PostComment } from "src/app/common/models/PostComment";
 })
 export class CommentListComponent implements OnInit {
   @ViewChild("commentContent", { static: false }) commentContent: ElementRef;
-  comments: PostComment[];
+  comments: PostComment[] = [];
   commentService: ICommentService;
   @Input()
   postId: number;
@@ -27,6 +27,7 @@ export class CommentListComponent implements OnInit {
     this.commentService.getCommentsByPostId(postId).subscribe(
       comments => {
         this.comments = comments;
+        console.log(this.comments);
       },
       err => {
         switch (err.status) {
@@ -34,7 +35,7 @@ export class CommentListComponent implements OnInit {
             alert("form not valid!");
             break;
           case 404:
-            alert("comments not found");
+            return;
             break;
           default:
             alert("something went wrong!try again later...");
@@ -46,9 +47,9 @@ export class CommentListComponent implements OnInit {
 
   createComment(comment: PostComment) {
     this.commentService.createComment(this.postId, comment).subscribe(
-      newcomment => {
-        this.comments.push(newcomment);
-        console.log(this.comments.length);
+      (newComment: PostComment) => {
+        console.log(newComment)
+        this.comments.push(newComment);
       },
       err => {
         switch (err.status) {
