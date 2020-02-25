@@ -1,20 +1,18 @@
-
-
-.photo-displayer{
-    position: absolute;
-    left:50%;
-    top: 10%;
+.photo-displayer {
+  position: absolute;
+  left: 50%;
+  top: 10%;
 }
 
-.container{
-    width: 30%;
+.container {
+  width: 30%;
 }
 
-.content-diplayer{
-    margin-top: 2%;
-    width: auto;
+.content-diplayer {
+  margin-top: 2%;
+  width: auto;
 }
 
-.btn{
-    width: 50%;
+.btn {
+  width: 50%;
 }
