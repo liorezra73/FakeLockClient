@@ -30,5 +30,8 @@ export class CommentModalComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+  closeModal(){
+    this.modalRef.hide();
+  }
  
 }

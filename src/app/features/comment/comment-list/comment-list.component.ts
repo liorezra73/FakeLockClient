@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ICommentService } from "src/app/common/intefaces/comment-service.inteface";
 import { CommentService } from "src/app/common/services/comment.service";
 import { PostComment } from "src/app/common/models/PostComment";
 import { ToastrService } from "ngx-toastr";
+import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { NavigateService } from "src/app/shared/services/navigate.service";
 
 @Component({
   selector: "app-comment-list",
@@ -12,11 +14,18 @@ import { ToastrService } from "ngx-toastr";
 export class CommentListComponent implements OnInit {
   comments: PostComment[] = [];
   commentService: ICommentService;
+  navigateService: INavigateService;
   @Input()
   postId: number;
+  @Output() closeModal = new EventEmitter();
 
-  constructor(private toastr: ToastrService, commentService: CommentService) {
+  constructor(
+    private toastr: ToastrService,
+    commentService: CommentService,
+    navigateService: NavigateService
+  ) {
     this.commentService = commentService;
+    this.navigateService = navigateService;
   }
 
   ngOnInit() {
@@ -30,8 +39,14 @@ export class CommentListComponent implements OnInit {
       },
       err => {
         switch (err.status) {
+          case 401:
+            this.toastr.warning("please login...");
+            this.navigateService.navigate("/home/login");
+            this.closeModal.emit();
+            break;
           default:
             this.toastr.error("something went wrong!try again later...");
+            this.closeModal.emit();
             break;
         }
       }
@@ -48,6 +63,11 @@ export class CommentListComponent implements OnInit {
         switch (err.status) {
           case 400:
             this.toastr.error("form not valid!");
+            break;
+          case 401:
+            this.toastr.warning("please login...");
+            this.closeModal.emit();
+            this.navigateService.navigate("/home/login");
             break;
           case 404:
             this.toastr.error("post is not exist");
@@ -102,6 +122,6 @@ export class CommentListComponent implements OnInit {
   }
 
   scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior:"smooth"});
+    el.scrollIntoView({ behavior: "smooth" });
   }
 }
