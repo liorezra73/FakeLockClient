@@ -24,8 +24,13 @@ export class PostLayoutComponent implements OnInit {
 
   ngOnInit() {}
   onaskLogout() {
-    this.logout();
+    this.toastr
+      .warning("tap here to logout", "Are you sure?")
+      .onTap.subscribe(() => {
+        this.logout();
+      });
   }
+
   logout() {
     this.authService.onLogout();
     this.navigateService.navigate("/home");
