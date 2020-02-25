@@ -17,6 +17,7 @@ export class FormImageInputComponent implements ControlValueAccessor {
   onModelChange: Function = (value: any) => {};
   onModelTouched: Function = () => {};
   @Input() label: string;
+  url: any = '';
 
   constructor() {}
 
@@ -31,5 +32,17 @@ export class FormImageInputComponent implements ControlValueAccessor {
   onPhotoChanged(event) {
     const value = (event.target as HTMLInputElement).files[0];
     this.onModelChange(value);
+  }
+  onSelectFile(event) {
+    console.log(event.target.result)
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+      }
+    }
   }
 }

@@ -42,8 +42,10 @@ export class TagInputComponent implements ControlValueAccessor, OnInit {
   onAddTag(tag: HTMLInputElement) {
     if (/\S/.test(tag.value)) {
       const tags = [...this.ngControl.value, { title: tag.value }];
-      this.onModelChange(tags);
-      tag.value = null;
+      if (tags.length <= 3) {
+        this.onModelChange(tags);
+        tag.value = null;
+      }
     } else {
       alert("cant be empty");
     }

@@ -10,7 +10,6 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./comment-list.component.css"]
 })
 export class CommentListComponent implements OnInit {
-  @ViewChild("commentContent", { static: false }) commentContent: ElementRef;
   comments: PostComment[] = [];
   commentService: ICommentService;
   @Input()
@@ -100,5 +99,9 @@ export class CommentListComponent implements OnInit {
   }
   onSwitchLike(comment) {
     comment.userLiked ? this.onUnLike(comment) : this.onLike(comment);
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior:"smooth"});
   }
 }

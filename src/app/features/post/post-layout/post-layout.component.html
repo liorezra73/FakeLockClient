@@ -4,6 +4,14 @@
   >
   <a class="nav-link" type="button" (click)="onGoFeed()">Feed</a>
   <a class="nav-link" type="button" (click)="onGoPostForm()">Add Post</a>
-  <a class="nav-link navlogout" id="logout" type="button" (click)="onaskLogout()">Logout</a>
+  <a
+    class="nav-link navlogout"
+    id="logout"
+    type="button"
+    (click)="onaskLogout()"
+    >Logout</a
+  >
 </nav>
+<div class="body-content">
 <router-outlet></router-outlet>
+</div>

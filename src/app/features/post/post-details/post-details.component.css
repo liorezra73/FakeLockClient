@@ -1,8 +1,8 @@
 .post-details-display{
     margin: auto;
     display: table;
-    height: 25%;
-    width: 25%;
+    height: 35%;
+    width: 35%;
 }
 
 img{
@@ -46,3 +46,9 @@ i{
     font-weight: bold;
 }
 
+.container{
+    width: auto;
+    height: 700px;
+    border: 1px solid #dbdbdb;
+    background-color: white;
+}

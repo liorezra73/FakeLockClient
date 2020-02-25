@@ -1,6 +1,6 @@
 <div>
   <label>{{ label }}</label>
-  <div>
+  <div class="input-display">
     <input
       #userTag
       class="form-control"
@@ -8,6 +8,7 @@
       type="text"
       [ngbTypeahead]="search"
       [resultTemplate]="rt"
+      placeholder={{placeholder}}
       (selectItem)="onSelectUser($event)"
       [inputFormatter]="formatter"
       [value]="taggedUser"
@@ -16,15 +17,15 @@
     <ng-template #rt let-r="result" let-t="term">
       <ngb-highlight [result]="r.username" [term]="t"></ngb-highlight>
     </ng-template>
-    <div class="container">
-    <span 
-      *ngFor="let userTag of this.taggedUsers; let i = index"
-      (click)="onDeleteUserTagged(i)"
-    >
-      <button id="button" type="button">
-        {{ userTag.username }} <span class="delete-btn">x</span>
-      </button>
-    </span>
   </div>
-  </div>
+</div>
+<div>
+  <span
+    *ngFor="let userTag of this.taggedUsers; let i = index"
+    (click)="onDeleteUserTagged(i)"
+  >
+    <button id="button" type="button">
+      {{ userTag.username }} <span class="delete-btn">x</span>
+    </button>
+  </span>
 </div>

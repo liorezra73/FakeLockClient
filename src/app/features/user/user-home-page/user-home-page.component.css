@@ -16,9 +16,9 @@ h2 {
 .home-body-display {
   display: flex;
   align-items: center;
-  width: 800;
+  width: 800px;
   height: 150px;
-  position: absolute;
+position: absolute;
   left: 20%;
   top: 40%;
 }

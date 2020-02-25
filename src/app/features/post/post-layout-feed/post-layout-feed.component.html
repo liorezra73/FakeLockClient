@@ -1,11 +1,12 @@
-<div class="container">
+<div class="tabs-btns-display">
+  <button class="myButton" type="button" (click)="onGoMainFeed()">Main</button>
+  <button  class="myButton" (click)="onGoMapFeed()">Map</button>
+  </div>
 <app-post-feed-tool-bar></app-post-feed-tool-bar>
-</div>
-<button type="button" (click)="onGoMainFeed()">Main</button>
-<button type="button" (click)="onGoMapFeed()">Map</button>
 
 <div class="posts-displayer">
   <div class="container">
+    <hr>
     <router-outlet></router-outlet>
   </div>
 </div>

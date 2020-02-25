@@ -7,8 +7,7 @@ import {
   Input
 } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { PostComment } from 'src/app/common/models/PostComment';
-
+import { PostComment } from "src/app/common/models/PostComment";
 
 @Component({
   selector: "app-comment-modal",
@@ -31,8 +30,5 @@ export class CommentModalComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
-
-  // onCommentCreate(comment: PostComment) {
-  //   this.onCreateComment.emit({ ...comment });
-  // }
+ 
 }

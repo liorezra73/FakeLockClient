@@ -4,7 +4,7 @@ import {
   ControlValueAccessor,
   NgControl
 } from "@angular/forms";
-import { Observable, timer, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -58,18 +58,6 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelTouched = fn;
   }
 
-  // onAddUserTag(userTag: HTMLInputElement) {
-  //   if (/\S/.test(userTag.value)) {
-  //     debugger;
-  //     const usersTags = [...this.ngControl.value, this.taggedUser.username];
-  //     this.taggedUsers.push(this.taggedUser);
-  //     this.onModelChange(this.taggedUsers);
-  //     userTag.value = null;
-  //   } else {
-  //     alert("cant be empty");
-  //   }
-  // }
-
   onDeleteUserTagged(index: number) {
     this.taggedUsers = this.taggedUsers.filter(
       t => this.taggedUsers.indexOf(t) !== index
@@ -77,27 +65,31 @@ export class UsertagInputComponent implements ControlValueAccessor, OnInit {
     this.onModelChange(this.taggedUsers);
   }
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
+  search = (text$: Observable<string>) => {
+    return text$.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
-      switchMap(term =>
-        this.userService.getUsersByUsername(term).pipe(
+      switchMap(term => {
+        return this.userService.getUsersByUsername(term).pipe(
           catchError(() => {
             return of([]);
           }),
           map(users =>
             users.filter(user => !this.taggedUsers.find(u => u.id === user.id))
           )
-        )
-      )
+        );
+      })
     );
+  };
 
   formatter = (user: User) => user.username;
 
   onSelectUser(user) {
-    this.taggedUsers.push(user.item);
-    this.onModelChange(this.taggedUsers);
-    this.taggedUser = null;
+    console.log("onSelect", this.taggedUsers.length);
+    if (this.taggedUsers.length < 3) {
+      this.taggedUsers.push(user.item);
+      this.onModelChange(this.taggedUsers);
+      this.taggedUser = "";
+    }
   }
 }

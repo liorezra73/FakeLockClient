@@ -1,6 +1,7 @@
 <a (click)="openModal(template)"> <u>comments</u></a>
 
 <ng-template #template>
+
   <div class="modal-header">
     <h4 class="modal-title pull-left">comments</h4>
     <button
@@ -13,6 +14,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <app-comment-list [postId]="postId"></app-comment-list>
+    <app-comment-list [postId]="postId" ></app-comment-list>
   </div>
 </ng-template>

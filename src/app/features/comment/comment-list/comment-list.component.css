@@ -31,3 +31,13 @@ i{
 .red{
     color: red
 }
+
+.new-comment-display {
+    color: rgb(25, 235, 25);
+    position: fixed;
+    font-size: 25pt;
+    font-weight: bold;
+    left: 65.7%;
+    top: 10%
+  }
+  

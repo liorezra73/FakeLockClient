@@ -3,3 +3,19 @@
     font-weight: bolder;
     color: red;
 }
+
+.input-display{
+    display: inline-flex;
+  }
+
+  label{
+      display: block;
+  }
+
+/* .input-merge-tags{
+    display: flex;
+} */
+
+/* .flex-items{
+    display: flex;
+} */
