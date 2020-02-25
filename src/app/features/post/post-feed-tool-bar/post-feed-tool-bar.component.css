@@ -6,13 +6,6 @@
 
 }
 
-
-
-
-/* button {
-  margin-left: 75pt;
-  width: 10%;
-} */
 .radius-form{
   display: contents;
 }
@@ -30,5 +23,6 @@
 
 .form-item{
   margin:3pt;
+  margin-left:auto;
 }
 
