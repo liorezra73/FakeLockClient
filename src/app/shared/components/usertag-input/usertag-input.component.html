@@ -4,7 +4,6 @@
     <input
       #userTag
       class="form-control"
-      id="typeahead-basic"
       type="text"
       [ngbTypeahead]="search"
       [resultTemplate]="rt"
@@ -24,7 +23,7 @@
     *ngFor="let userTag of this.taggedUsers; let i = index"
     (click)="onDeleteUserTagged(i)"
   >
-    <button id="button" type="button">
+    <button  type="button">
       {{ userTag.username }} <span class="delete-btn">x</span>
     </button>
   </span>
