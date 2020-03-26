@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IMarkerService } from "../intefaces/marker.service.interface";
-import { Marker } from "../models/marker";
+import { Marker } from "../models/Marker";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({

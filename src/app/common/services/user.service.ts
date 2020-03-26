@@ -26,8 +26,11 @@ export class UserService implements IUserService {
     return this.authhttp
       .get<User[]>(`${this.usersUrl}?username=${username}`)
       .pipe(
-        map(data => data.map(res => this.dataPipe(res))),
+        map(data => {
+          return data.map(res => this.dataPipe(res))
+        }),
         catchError(err => {
+          console.log(err)
           throw null;
         })
       );

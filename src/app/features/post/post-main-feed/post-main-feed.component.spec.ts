@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostMainFeedComponent } from './post-main-feed.component';
+import { SchemaMetadata, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PostMainFeedComponent', () => {
   let component: PostMainFeedComponent;
@@ -8,7 +9,8 @@ describe('PostMainFeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostMainFeedComponent ]
+      declarations: [ PostMainFeedComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

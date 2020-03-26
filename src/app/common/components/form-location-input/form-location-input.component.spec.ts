@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormLocationInputComponent } from "./FormLocationInputComponent";
+import { FormLocationInputComponent } from "./form-location-input.component";
+import { SchemaMetadata, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FormLocationInputComponent', () => {
   let component: FormLocationInputComponent;
@@ -8,7 +9,8 @@ describe('FormLocationInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormLocationInputComponent ]
+      declarations: [ FormLocationInputComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

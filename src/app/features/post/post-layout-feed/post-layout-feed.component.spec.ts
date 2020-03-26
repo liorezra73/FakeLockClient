@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostLayoutFeedComponent } from './post-layout-feed.component';
+import { SchemaMetadata, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PostLayoutFeedComponent', () => {
   let component: PostLayoutFeedComponent;
@@ -8,7 +9,8 @@ describe('PostLayoutFeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostLayoutFeedComponent ]
+      declarations: [ PostLayoutFeedComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

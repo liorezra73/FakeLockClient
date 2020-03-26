@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, SchemaMetadata } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { CommentFormComponent } from "./comment-form/comment-form.component";
 import { CommentListComponent } from "./comment-list/comment-list.component";
@@ -7,6 +7,7 @@ import { CommentModalComponent } from "./comment-modal/comment-modal.component";
 import { ModalModule } from "ngx-bootstrap";
 import { AppCommonModule } from "src/app/common/common.module";
 import { AppSharedModule } from "src/app/shared/shared.module";
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import { AppSharedModule } from "src/app/shared/shared.module";
     AppCommonModule,
     ReactiveFormsModule,
     FormsModule,
-    AppSharedModule
+    AppSharedModule,
   ],
-  exports: [CommentModalComponent]
+  exports: [CommentModalComponent],
+
 })
 export class CommentModule {}

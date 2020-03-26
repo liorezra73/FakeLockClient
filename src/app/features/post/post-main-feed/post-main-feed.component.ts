@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Post } from "src/app/common/models/post";
+import { Post } from "src/app/common/models/Post";
 import { Router } from "@angular/router";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { PostService } from "src/app/common/services/post-service.service";

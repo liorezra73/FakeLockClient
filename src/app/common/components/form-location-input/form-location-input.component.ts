@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { MapsAPILoader, MouseEvent } from "@agm/core";
 import { MapLocation } from "../../models/MapLocation";
-
+declare var google: any;
 @Component({
   selector: "app-form-location-input",
   templateUrl: "./form-location-input.component.html",
@@ -41,7 +41,7 @@ export class FormLocationInputComponent implements OnInit {
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          let place = autocomplete.getPlace();
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {

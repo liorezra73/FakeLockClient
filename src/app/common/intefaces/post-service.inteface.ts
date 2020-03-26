@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject } from "rxjs";
-import { Post } from "../models/post";
+import { Post } from "../models/Post";
 import { OrderBy } from "../enums/orderBy";
 import { Filter } from '../models/Flter';
 
