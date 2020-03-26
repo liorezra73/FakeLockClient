@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 import { Post } from "../models/Post";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
-import { map } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
 import { OrderBy } from "../enums/orderBy";
 import { Filter } from "../models/Flter";
@@ -99,7 +99,6 @@ export class PostService implements IPostService {
           return p;
         })
       );
-
     });
   }
 
@@ -131,7 +130,11 @@ export class PostService implements IPostService {
     delete post.photo;
     const postJson = JSON.stringify(post);
     formData.append("post", postJson);
-    return this.http.post(this.postUrl, formData);
+    return this.http.post(this.postUrl, formData).pipe(
+      catchError(err => {
+        throw err;
+      })
+    );
   }
   deletePost(id: number): Observable<any> {
     return this.http.delete(`${this.postUrl}/${id}`);

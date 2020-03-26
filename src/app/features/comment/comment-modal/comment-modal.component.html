@@ -14,6 +14,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <app-comment-list [postId]="postId" ></app-comment-list>
+    <app-comment-list [postId]="postId" (closeModal)="closeModal()"></app-comment-list>
   </div>
 </ng-template>

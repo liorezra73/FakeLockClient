@@ -6,6 +6,9 @@ import { Post } from "src/app/common/models/Post";
 import { IPhotoService } from "src/app/common/intefaces/photo.service.interface";
 import { PhotoService } from "src/app/common/services/photo.service";
 import { OrderBy } from "src/app/common/enums/orderBy";
+import { ToastrService } from "ngx-toastr";
+import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
+import { NavigateService } from "src/app/shared/services/navigate.service";
 
 @Component({
   selector: "app-post-details",
@@ -17,26 +20,23 @@ export class PostDetailsComponent implements OnInit {
   post: Post;
   postService: IPostService;
   photoService: IPhotoService;
+  navigateService: INavigateService;
 
   constructor(
-    private router: Router,
+    navigateService: NavigateService,
     private activatedRoute: ActivatedRoute,
     postService: PostService,
-    photoSerice: PhotoService
+    photoSerice: PhotoService,
+    private toastr: ToastrService
   ) {
     this.postService = postService;
     this.photoService = photoSerice;
     this.activatedRoute.params.subscribe(
       res => (this.postId = parseInt(res.postId))
     );
+    this.navigateService = navigateService;
   }
 
-  like() {
-    this.postService.deletePost(10013).subscribe(
-      res => {},
-      err => console.log(err)
-    );
-  }
   ngOnInit() {
     this.getPostById(this.postId);
   }
@@ -48,27 +48,45 @@ export class PostDetailsComponent implements OnInit {
         this.post.photo = this.photoService.getPhotoByPhotoId(
           this.post.photo as string
         );
-        console.log(this.post);
       },
-      err => this.handleError(err)
+      err => {
+        switch (err.status) {
+          case 401:
+            this.toastr.warning("please login...");
+            this.navigateService.navigate("/home/login");
+            break;
+          case 404:
+            this.toastr.warning("page not found...");
+            this.navigateService.navigate("/posts");
+            break;
+          default:
+            this.toastr.warning("somthing went wrong!try again later...");
+            break;
+        }
+      }
     );
   }
 
   onLike() {
     console.log("Like");
-    this.postService.doLike(this.post.id).subscribe(res => {
-      this.post.isLikedByUser = true;
-      this.post.likes++;
-   
-    },err=>this.handleError(err));
+    this.postService.doLike(this.post.id).subscribe(
+      res => {
+        this.post.isLikedByUser = true;
+        this.post.likes++;
+      },
+      err => this.toastr.warning("somthing went wrong!try again later...")
+    );
   }
 
   onUnLike() {
     console.log("unLike");
-    this.postService.unLike(this.post.id).subscribe(res => {
-      this.post.isLikedByUser = false;
-      this.post.likes--;
-    });
+    this.postService.unLike(this.post.id).subscribe(
+      res => {
+        this.post.isLikedByUser = false;
+        this.post.likes--;
+      },
+      err => this.toastr.warning("somthing went wrong!try again later...")
+    );
   }
 
   onSwitchLike() {
@@ -77,29 +95,17 @@ export class PostDetailsComponent implements OnInit {
 
   handleError(error): void {
     switch (error.status) {
-      case 0:
-        alert("Connection error! Redirect to main page.");
-        this.navigateMainByTimer(3000);
+      case 401:
+        this.toastr.warning("please login...");
+        this.navigateService.navigate("/home/login");
         break;
       case 404:
-        alert("No post found! Redirect to main page. ");
-        this.navigateMainByTimer(2000);
+        this.toastr.warning("page not found...");
+        this.navigateService.navigate("/posts");
         break;
-      case 400:
-        alert("Already liked.");
-        break;
-      case 500:
-        alert("Connection error! please try again later.");
       default:
-        alert("Connection error! Redirect to main page");
-        this.navigateMainByTimer(3000);
+        this.toastr.warning("somthing went wrong!try again later...");
         break;
     }
-  }
-
-  navigateMainByTimer(time: number): void {
-    setTimeout(() => {
-      this.router.navigate(["posts/feed/main"]);
-    }, time);
   }
 }

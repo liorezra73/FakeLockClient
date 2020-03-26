@@ -103,6 +103,7 @@ export class PostFormComponent implements OnInit {
               this.toastr.error("form not valid!");
               break;
             case 401:
+              this.toastr.warning("please login...");
               this.navigateService.navigate("/home/login");
               break;
             case 406:

@@ -13,7 +13,11 @@ export class AuthHttpProxyService {
 
   getHeaders(): HttpHeaders {
     const token = localStorage.getItem("token");
-    return new HttpHeaders().set("x-auth-token", token);
+    if (token) {
+      return new HttpHeaders().set("x-auth-token", token);
+    } else {
+      return null;
+    }
   }
 
   get<T>(url: string) {
@@ -34,6 +38,7 @@ export class AuthHttpProxyService {
   }
 
   handelErrors(err: any, caught: Observable<any>): ObservableInput<any> {
+    console.log(err);
     throw err;
   }
 }
