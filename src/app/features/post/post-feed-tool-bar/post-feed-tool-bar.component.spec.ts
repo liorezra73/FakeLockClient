@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostFeedToolBarComponent } from './post-feed-tool-bar.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PostFeedToolBarComponent', () => {
   let component: PostFeedToolBarComponent;
@@ -8,7 +9,8 @@ describe('PostFeedToolBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostFeedToolBarComponent ]
+      declarations: [ PostFeedToolBarComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

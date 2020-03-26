@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MapLocation } from "src/app/common/models/MapLocation";
-import { Marker } from "../../models/marker";
+import { Marker } from "../../models/Marker";
 
 @Component({
   selector: "app-map",
@@ -25,6 +25,7 @@ export class MapComponent implements OnInit {
   constructor() {}
   ngOnInit() {
     this.initializeLocation();
+    console.log()
   }
 
   initializeLocation() {

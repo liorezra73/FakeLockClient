@@ -1,13 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { IFeedService } from "src/app/shared/interfaces/feed.service.interface";
-import { Post } from "src/app/common/models/post";
 import { OrderBy } from "src/app/common/enums/orderBy";
 import { IMarkerService } from "src/app/common/intefaces/marker.service.interface";
 import { MarkerService } from "src/app/common/services/marker.service";
-import { Marker } from "src/app/common/models/marker";
+import { Marker } from "src/app/common/models/Marker";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { PostService } from "src/app/common/services/post-service.service";
-import { LocationService } from "src/app/common/services/location.service";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
 import { ToastrService } from "ngx-toastr";

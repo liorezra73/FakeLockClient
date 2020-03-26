@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { Post } from "../models/post";
+import { Post } from "../models/Post";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
 import { map, catchError } from "rxjs/operators";

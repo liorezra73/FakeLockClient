@@ -1,4 +1,4 @@
-import { Post } from "src/app/common/models/post";
+import { Post } from "src/app/common/models/Post";
 import { OrderBy } from "src/app/common/enums/orderBy";
 import { Filter } from "src/app/common/models/Flter";
 import { Subject } from "rxjs";

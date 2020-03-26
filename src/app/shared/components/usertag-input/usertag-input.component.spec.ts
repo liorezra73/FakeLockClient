@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsertagInputComponent } from './usertag-input.component';
+import { SchemaMetadata, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('UsertagInputComponent', () => {
   let component: UsertagInputComponent;
@@ -8,7 +9,8 @@ describe('UsertagInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsertagInputComponent ]
+      declarations: [ UsertagInputComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

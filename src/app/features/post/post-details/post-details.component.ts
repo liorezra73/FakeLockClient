@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Post } from "src/app/common/models/post";
+import { Post } from "src/app/common/models/Post";
 import { IPhotoService } from "src/app/common/intefaces/photo.service.interface";
 import { PhotoService } from "src/app/common/services/photo.service";
 import { OrderBy } from "src/app/common/enums/orderBy";

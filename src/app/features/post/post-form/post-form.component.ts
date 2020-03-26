@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck } from "@angular/core";
 import { PostService } from "src/app/common/services/post-service.service";
 import { IPostService } from "src/app/common/intefaces/post-service.inteface";
-import { Post } from "src/app/common/models/post";
+import { Post } from "src/app/common/models/Post";
 import {
   FormGroup,
   Validators,
