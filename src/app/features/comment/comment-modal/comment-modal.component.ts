@@ -32,6 +32,7 @@ export class CommentModalComponent implements OnInit {
   }
   closeModal(){
     this.modalRef.hide();
+    // this.modalRef.
   }
  
 }

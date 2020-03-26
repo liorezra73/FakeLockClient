@@ -40,9 +40,9 @@ export class CommentListComponent implements OnInit {
       err => {
         switch (err.status) {
           case 401:
+            this.closeModal.emit();
             this.toastr.warning("please login...");
             this.navigateService.navigate("/home/login");
-            this.closeModal.emit();
             break;
           default:
             this.toastr.error("something went wrong!try again later...");

@@ -44,10 +44,13 @@ export class PostMapFeedComponent implements OnInit {
     this.postService.filterPosts(OrderBy.likes, null);
     this.markersService.markers$.subscribe(
       markers => {
-        this.markers = markers
+        this.markers = markers;
       },
       err => {
         switch (err.status) {
+          case 400:
+            this.toastr.error("form not valid!");
+            break;
           case 404:
             this.markers = [];
             break;
