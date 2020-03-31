@@ -1,19 +1,10 @@
 FROM node:alpine
-
-
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
+RUN apk --no-cache add git 
 ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package*.json ./
+ARG password
+RUN git clone https://liorezra73:${password}@github.com/liorezra73/FakeLockClient.git /usr/src
+WORKDIR /usr/src/FakeLockClient
 RUN npm install
 RUN npm install -g @angular/cli@8.3.23
-
-# add app
-COPY . .
 EXPOSE 4200
-# start app
 CMD ng serve --host 0.0.0.0
