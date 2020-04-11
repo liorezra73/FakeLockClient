@@ -18,7 +18,7 @@ export class CommentModalComponent implements OnInit {
   @Input()
   comments: PostComment[];
   @Input()
-  postId: number;
+  postId: string;
   modalRef: BsModalRef;
   @Output()
   onCreateComment = new EventEmitter<Comment>();

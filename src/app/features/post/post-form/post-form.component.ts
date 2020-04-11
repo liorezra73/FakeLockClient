@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
   FormControl,
-  AbstractControl
+  AbstractControl,
 } from "@angular/forms";
 import { stringValidation } from "src/app/common/validations/formControl.string.validation";
 import { formControlTouchOrDirty } from "src/app/common/validations/formControlTouchOrDirty";
@@ -20,7 +20,7 @@ import { LocationService } from "src/app/common/services/location.service";
 @Component({
   selector: "app-post-form",
   templateUrl: "./post-form.component.html",
-  styleUrls: ["./post-form.component.css"]
+  styleUrls: ["./post-form.component.css"],
 })
 export class PostFormComponent implements OnInit {
   postService: IPostService;
@@ -48,11 +48,11 @@ export class PostFormComponent implements OnInit {
       text: "",
       location: {
         latitude: 0,
-        longtitude: 0
+        longtitude: 0,
       },
       photo: null,
       usersTags: [],
-      tags: []
+      tags: [],
     };
   }
   initializePostForm() {
@@ -64,7 +64,7 @@ export class PostFormComponent implements OnInit {
           Validators.compose([
             Validators.required,
             Validators.min(-90),
-            Validators.max(90)
+            Validators.max(90),
           ])
         ),
         longtitude: new FormControl(
@@ -72,13 +72,13 @@ export class PostFormComponent implements OnInit {
           Validators.compose([
             Validators.required,
             Validators.min(-180),
-            Validators.max(180)
+            Validators.max(180),
           ])
-        )
+        ),
       }),
       photo: new FormControl(this.post.photo, Validators.required),
       tags: new FormControl(this.post.tags),
-      usersTags: new FormControl(this.post.usersTags)
+      usersTags: new FormControl(this.post.usersTags),
     });
   }
 
@@ -90,14 +90,19 @@ export class PostFormComponent implements OnInit {
     if (this.postForm.valid) {
       this.post = this.postForm.value;
       this.postService.createPost({ ...this.post }).subscribe(
-        res => {
-          this.navigateService.navigate(`/posts/${res.Id}`);
+        (res) => {
+          console.log(res);
           this.initializePost();
           this.initializePostForm();
           this.toastr.success("Post created!");
           this.initializeAll();
+          setTimeout(
+            () => this.navigateService.navigate(`/posts/${res}`),
+            1000
+          );
         },
-        err => {
+        (err) => {
+          console.log(err);
           switch (err.status) {
             case 400:
               this.toastr.error("form not valid!");
@@ -121,14 +126,8 @@ export class PostFormComponent implements OnInit {
   }
 
   onGetNewLocation($event: MapLocation) {
-    this.postForm
-      .get("location")
-      .get("latitude")
-      .setValue($event.latitude);
-    this.postForm
-      .get("location")
-      .get("longtitude")
-      .setValue($event.longtitude);
+    this.postForm.get("location").get("latitude").setValue($event.latitude);
+    this.postForm.get("location").get("longtitude").setValue($event.longtitude);
   }
 
   initializeAll(): void {
@@ -137,13 +136,13 @@ export class PostFormComponent implements OnInit {
       (res: MapLocation) => {
         this.post.location = {
           latitude: res.latitude,
-          longtitude: res.longtitude
+          longtitude: res.longtitude,
         };
       },
-      err => {
+      (err) => {
         this.post.location = {
           latitude: 32.0970604,
-          longtitude: 34.826543799999996
+          longtitude: 34.826543799999996,
         };
       },
       () => {

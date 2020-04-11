@@ -7,7 +7,7 @@
       <img src="{{ post.photo }}" />
       <div class="tag-likes-display">
         <div class="tags-display" *ngFor="let tag of post.tags">
-          #{{ tag.Title | lowercase }}
+          #{{ tag | lowercase }}
         </div>
 
         <span class="like-display" (click)="onSwitchLike()">
@@ -20,7 +20,7 @@
         >
       </div>
       <div class="userTags-display" *ngFor="let userTag of post.usersTags">
-        @{{ userTag.Username }}
+        @{{ userTag.username }}
       </div>
       <div>
         <app-comment-modal [postId]="postId"></app-comment-modal>({{

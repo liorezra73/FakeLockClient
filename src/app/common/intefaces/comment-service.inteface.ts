@@ -3,9 +3,9 @@ import { PostComment } from "../models/PostComment";
 
 export interface ICommentService {
   commentUrl: string;
-  getCommentsByPostId(postId: number): Observable<PostComment[]>;
-  createComment(postId: number, comment: PostComment): Observable<any>;
-  deleteComment(postId: number, id: number): Observable<any>;
-  doLike(postId: number, id: number): Observable<any>;
-  unLike(postId: number, id: number): Observable<any>;
+  getCommentsByPostId(postId: string,size:number,toSearchAfter: boolean): Observable<PostComment[]>;
+  createComment(postId: string, comment: PostComment): Observable<any>;
+  deleteComment(postId: string, id: string): Observable<any>;
+  doLike(postId: string, id: string): Observable<any>;
+  unLike(postId: string, id: string): Observable<any>;
 }

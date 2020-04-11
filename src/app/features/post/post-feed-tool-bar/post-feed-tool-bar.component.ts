@@ -67,7 +67,7 @@ export class PostFeedToolBarComponent implements OnInit {
         }),
         distance: new FormControl(
           this.filter.radius.distance,
-          Validators.compose([Validators.min(0), Validators.max(19000000)])
+          Validators.compose([Validators.min(0), Validators.max(19000)])
         )
       }),
       dates: new FormGroup({
@@ -95,7 +95,8 @@ export class PostFeedToolBarComponent implements OnInit {
     if (this.filterForm.valid) {
       this.filter = this.filterForm.value;
       this.filter.radius.distance = this.filter.radius.distance;
-      this.postService.filterPosts(OrderBy.date, { ...this.filter });
+      this.postService.startFilterMode({...this.filter});
+      this.postService.filterPosts(OrderBy.date,8,false);
     } else {
       alert("form not valid!");
     }

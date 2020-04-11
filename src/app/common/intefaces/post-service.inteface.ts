@@ -1,16 +1,21 @@
 import { Observable, BehaviorSubject } from "rxjs";
 import { Post } from "../models/Post";
 import { OrderBy } from "../enums/orderBy";
-import { Filter } from '../models/Flter';
+import { Filter } from "../models/Flter";
 
 export interface IPostService {
   postUrl: string;
   posts$: BehaviorSubject<Post[]>;
-  getPosts(orderBy: OrderBy): void;
-  getPostById(id: number): Observable<Post>;
+  getPostById(id: string): Observable<Post>;
   createPost(post: Post): Observable<any>;
   deletePost(id: number): Observable<any>;
-  doLike(id: number): Observable<any>;
-  unLike(id: number): Observable<any>;
-  filterPosts(orderBy: OrderBy, filter: Filter): void;
+  doLike(id: string): Observable<any>;
+  unLike(id: string): Observable<any>;
+  filterPosts(
+    orderBy: OrderBy,
+    size: number,
+    toSearchAfter: boolean
+  ): void;
+  startFilterMode(filter: Filter): void;
+  endFilterMode(): void;
 }

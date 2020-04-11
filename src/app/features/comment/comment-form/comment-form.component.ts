@@ -1,19 +1,26 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { PostComment } from "src/app/common/models/PostComment";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { CommentService } from "src/app/common/services/comment.service";
+import { ToastrService } from "ngx-toastr";
+import { ICommentService } from "src/app/common/intefaces/comment-service.inteface";
 
 @Component({
   selector: "app-comment-form",
   templateUrl: "./comment-form.component.html",
-  styleUrls: ["./comment-form.component.css"]
+  styleUrls: ["./comment-form.component.css"],
 })
 export class CommentFormComponent implements OnInit {
-  @Output()
-  onSendComment = new EventEmitter<PostComment>();
+  @Output() onAddComment = new EventEmitter<PostComment>();
+  // @Output() onAuthError = new EventEmitter<PostComment>();
   commentForm: FormGroup;
   newComment: PostComment;
+  commentService: ICommentService;
+  @Input() postId: string;
 
-  constructor() {}
+  constructor(commentService: CommentService, private toastr: ToastrService) {
+    this.commentService = commentService;
+  }
   ngOnInit() {
     this.initializeComment();
     this.initializeCommentForm();
@@ -29,16 +36,40 @@ export class CommentFormComponent implements OnInit {
       alert("comment not valid!");
     } else {
       this.newComment = this.commentForm.value;
-      console.log(this.newComment);
-      this.onSendComment.emit(this.newComment);
+      this.CreateComment(this.newComment);
     }
+  }
+
+  CreateComment(comment: PostComment) {
+    this.commentService.createComment(this.postId as string, comment).subscribe(
+      (res: PostComment) => {
+        this.onAddComment.emit(res);
+      },
+      (err) => {
+        switch (err.status) {
+          case 400:
+            this.toastr.error("form not valid!");
+            break;
+          case 401:
+            this.toastr.warning("please login...");
+            // this.onAuthError.emit();
+            break;
+          case 404:
+            this.toastr.error("post is not exist");
+            break;
+          default:
+            this.toastr.error("something went wrong!try again later...");
+            break;
+        }
+      }
+    );
   }
 
   initializeComment(): void {
     this.newComment = {
       content: "",
       usersTags: [],
-      tags: []
+      tags: [],
     };
   }
   initializeCommentForm(): void {
@@ -48,7 +79,7 @@ export class CommentFormComponent implements OnInit {
         Validators.compose([Validators.minLength(3), Validators.maxLength(200)])
       ),
       tags: new FormControl(this.newComment.tags),
-      usersTags: new FormControl(this.newComment.usersTags)
+      usersTags: new FormControl(this.newComment.usersTags),
     });
   }
 }

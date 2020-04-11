@@ -1,15 +1,22 @@
+<strong>total comments:{{ comments.length }}</strong>
 <div *ngIf="postId">
+  <div class="comment-input" #addComment>
+    <app-comment-form
+      [postId]="postId"
+      (onAddComment)="addNewComment($event)"
+    ></app-comment-form>
+  </div>
   <div class="new-comment-display" (click)="scroll(addComment)">
     <i class="fas fa-comment-medical"></i>
   </div>
   <div *ngFor="let comment of comments">
-    <div class="username-display">{{ comment.username }}</div>
+    <div class="username-display">{{ comment.user.username }}</div>
     <span class="date-display">{{ comment.publishDate | date: "short" }}</span>
     <div class="date-likes-displayer"></div>
     <div>{{ comment.content }}</div>
     <div *ngIf="comment.tags">
       <div class="comment-tags-display" *ngFor="let tag of comment.tags">
-        #{{ tag?.Title | lowercase }}
+        #{{ tag | lowercase }}
       </div>
     </div>
     <div *ngIf="comment.usersTags">
@@ -18,7 +25,7 @@
           class="comment-tags-display"
           *ngFor="let userTag of comment.usersTags"
         >
-          @{{ userTag?.Username }}
+          @{{ userTag?.username }}
         </div>
       </div>
     </div>
@@ -30,9 +37,5 @@
     >
     <hr />
   </div>
-  <div class="comment-input" #addComment>
-    <app-comment-form
-      (onSendComment)="createComment($event)"
-    ></app-comment-form>
-  </div>
+  <div (click)="_onAfterSearch()">+</div>
 </div>

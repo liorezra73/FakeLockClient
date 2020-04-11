@@ -38,7 +38,7 @@ export class PostMapFeedComponent implements OnInit {
   }
 
   private _getMarkers(): void {
-    this.postService.filterPosts(OrderBy.likes, null);
+    this.postService.filterPosts(OrderBy.likes,1000,false);
     this.markersService.markers$.subscribe(
       markers => {
         this.markers = markers;

@@ -16,7 +16,7 @@ import { NavigateService } from "src/app/shared/services/navigate.service";
   styleUrls: ["./post-details.component.css"]
 })
 export class PostDetailsComponent implements OnInit {
-  postId: number;
+  postId: string;
   post: Post;
   postService: IPostService;
   photoService: IPhotoService;
@@ -32,7 +32,7 @@ export class PostDetailsComponent implements OnInit {
     this.postService = postService;
     this.photoService = photoSerice;
     this.activatedRoute.params.subscribe(
-      res => (this.postId = parseInt(res.postId))
+      res => (this.postId = res.postId)
     );
     this.navigateService = navigateService;
   }
@@ -41,13 +41,14 @@ export class PostDetailsComponent implements OnInit {
     this.getPostById(this.postId);
   }
 
-  getPostById(postId: number) {
+  getPostById(postId: string) {
     this.postService.getPostById(postId).subscribe(
       post => {
         this.post = post;
         this.post.photo = this.photoService.getPhotoByPhotoId(
           this.post.photo as string
-        );
+          );
+          console.log(this.post)
       },
       err => {
         switch (err.status) {
@@ -69,7 +70,7 @@ export class PostDetailsComponent implements OnInit {
 
   onLike() {
     console.log("Like");
-    this.postService.doLike(this.post.id).subscribe(
+    this.postService.doLike(this.post.id as string).subscribe(
       res => {
         this.post.isLikedByUser = true;
         this.post.likes++;
@@ -80,7 +81,7 @@ export class PostDetailsComponent implements OnInit {
 
   onUnLike() {
     console.log("unLike");
-    this.postService.unLike(this.post.id).subscribe(
+    this.postService.unLike(this.post.id as string).subscribe(
       res => {
         this.post.isLikedByUser = false;
         this.post.likes--;

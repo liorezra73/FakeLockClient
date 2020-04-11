@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 import { Post } from "../models/Post";
 import { IPostService } from "../intefaces/post-service.inteface";
 import { APP_CONFIG } from "./config.service";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, retry, shareReplay } from "rxjs/operators";
 import { AuthHttpProxyService } from "../proxies/auth-http-proxy.service";
 import { OrderBy } from "../enums/orderBy";
 import { Filter } from "../models/Flter";
@@ -13,13 +13,15 @@ import { IMarkerService } from "../intefaces/marker.service.interface";
 import { MarkerService } from "./marker.service";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class PostService implements IPostService {
+
   postUrl: string;
   posts$: BehaviorSubject<Post[]>;
   photoService: IPhotoService;
   markerService: IMarkerService;
+  filter: Filter = null;
 
   constructor(
     private http: AuthHttpProxyService,
@@ -33,41 +35,62 @@ export class PostService implements IPostService {
     this.markerService = markerService;
   }
 
-  filterPosts(orderBy: OrderBy, filter: Filter): void {
+  startFilterMode(filter: Filter) {
+    this.filter = filter;
+  }
+
+  endFilterMode() {
+    this.filter = null;
+  }
+
+  filterPosts(
+    orderBy: OrderBy,
+    size: number = 16,
+    toSearchAfter: boolean = false
+  ): void {
+
     let filterUrl: string = `${this.postUrl}?orderBy=${
       orderBy ? orderBy : "date"
-    }`;
-    if (filter) {
-      console.log(filter);
-      const radiusFilterValid: boolean = !!filter.radius.distance;
+    }&size=${size ? size : 16}`;
+
+    if (toSearchAfter) {
+      const searchAfter = {
+        score: localStorage.getItem("searchAfterScorePosts"),
+        id: localStorage.getItem("searchAfterIdPosts"),
+      };
+      filterUrl += `&searchAfterScore=${searchAfter.score}&searchAfterId=${searchAfter.id}`;
+    }
+
+    if (this.filter) {
+      const radiusFilterValid: boolean = !!this.filter.radius.distance;
 
       const radiusFilter: string = radiusFilterValid
-        ? `&distance=${filter.radius.distance}&latitude=${filter.radius.location.latitude}&longtitude=${filter.radius.location.longtitude}`
+        ? `&distance=${this.filter.radius.distance}&latitude=${this.filter.radius.location.latitude}&longtitude=${this.filter.radius.location.longtitude}`
         : "";
 
-      const stratDateFilter: string = filter.dates.startDate
-        ? `&startDate=${filter.dates.startDate}`
+      const stratDateFilter: string = this.filter.dates.startDate
+        ? `&startDate=${this.filter.dates.startDate}`
         : "";
-      const endDateFilter: string = filter.dates.endDate
-        ? `&endDate=${filter.dates.endDate}`
+      const endDateFilter: string = this.filter.dates.endDate
+        ? `&endDate=${this.filter.dates.endDate}`
         : "";
 
       let tagsFilter: string = "";
-      if (filter.tags.length > 0) {
-        filter.tags.forEach(t => (tagsFilter += `&tags[]=${t.title}`));
+      if (this.filter.tags.length > 0) {
+        this.filter.tags.forEach((t) => (tagsFilter += `&tags[]=${t.title}`));
       }
 
       let usersTagsFilter: string = "";
-      if (filter.usersTags.length > 0) {
-        filter.usersTags.forEach(
-          ut => (usersTagsFilter += `&usersTags[]=${ut.id}`)
+      if (this.filter.usersTags.length > 0) {
+        this.filter.usersTags.forEach(
+          (ut) => (usersTagsFilter += `&usersTags[]=${ut.id}`)
         );
       }
 
       let publisherFilter: string = "";
-      if (filter.publishers.length > 0) {
-        filter.publishers.forEach(
-          p => (publisherFilter += `&publishers[]=${p.id}`)
+      if (this.filter.publishers.length > 0) {
+        this.filter.publishers.forEach(
+          (p) => (publisherFilter += `&publishers[]=${p.id}`)
         );
       }
       filterUrl +=
@@ -78,49 +101,62 @@ export class PostService implements IPostService {
         `${usersTagsFilter}` +
         `${publisherFilter}`;
 
-      console.log(filterUrl);
     }
 
-    this.http.get(filterUrl).subscribe(res => {
-      this.posts$.next(
-        res.map((post: Post) => {
+    this.http.get(filterUrl).subscribe((res) => {
+      if (res.length > 0) {
+        localStorage.setItem(
+          "searchAfterScorePosts",
+          res[res.length - 1].searchAfter.score
+        );
+        localStorage.setItem(
+          "searchAfterIdPosts",
+          res[res.length - 1].searchAfter.id
+        );
+
+        const posts = res.map((post: Post) => {
           const p = this.postsDataPipe({ ...post });
           p.photo = this.photoService.getPhotoByPhotoId(p.photo as string);
           return p;
-        })
-      );
+        });
 
-      this.markerService.markers$.next(
-        res.map((post: Post) => {
-          const p = this.markerService.mapPostToMarker({ ...post });
-          p.photoUrl = this.photoService.getPhotoByPhotoId(
-            p.photoUrl as string
-          );
-          return p;
-        })
-      );
+        if (toSearchAfter) {
+          const currentPosts = this.posts$.value;
+          this.posts$.next([...currentPosts, ...posts]);
+        } else {
+          this.posts$.next(posts);
+        }
+
+        this.markerService.markers$.next(
+          res.map((post: Post) => {
+            const p = this.markerService.mapPostToMarker({ ...post });
+            p.photoUrl = this.photoService.getPhotoByPhotoId(
+              p.photoUrl as string
+            );
+            return p;
+          })
+        );
+      } else {
+        this.posts$.next([]);
+        this.markerService.markers$.next([]);
+      }
     });
   }
 
-  getPosts(orderBy: OrderBy): void {
-    this.http.get<Post[]>(`${this.postUrl}?orderBy=${orderBy}`).pipe(
-      map((res: Post[]) => {
-        this.posts$.next(res.map((post: Post) => this.postsDataPipe(post)));
-      })
-    );
-  }
-  getPostById(id: number): Observable<Post> {
+  getPostById(id: string): Observable<Post> {
     return this.http.get<Post>(`${this.postUrl}/${id}`).pipe(
+      retry(3),
       map((res: Post) => {
         return this.postDataPipe(res);
-      })
+      }),
+      shareReplay()
     );
   }
   createPost(post: Post): Observable<number> {
     const tags: string[] = [],
       usersTags: number[] = [];
-    post.tags.forEach(x => tags.push(x.title));
-    post.usersTags.forEach(x => usersTags.push(x.id));
+    post.tags.forEach((x) => tags.push(x.title));
+    post.usersTags.forEach((x) => usersTags.push(x.id));
     post.tags = tags;
     post.usersTags = usersTags;
     const { photo } = { ...post };
@@ -131,7 +167,7 @@ export class PostService implements IPostService {
     const postJson = JSON.stringify(post);
     formData.append("post", postJson);
     return this.http.post(this.postUrl, formData).pipe(
-      catchError(err => {
+      catchError((err) => {
         throw err;
       })
     );
@@ -140,11 +176,11 @@ export class PostService implements IPostService {
     return this.http.delete(`${this.postUrl}/${id}`);
   }
 
-  doLike(id: number): Observable<any> {
+  doLike(id: string): Observable<any> {
     return this.http.post(`${this.postUrl}/${id}/likes`, null);
   }
 
-  unLike(id: number): Observable<any> {
+  unLike(id: string): Observable<any> {
     return this.http.delete(`${this.postUrl}/${id}/likes`);
   }
 
@@ -154,29 +190,29 @@ export class PostService implements IPostService {
       photo: i.photo,
       location: i.location,
       publishDate: i.publishDate,
-      likes: i.likes
+      likes: i.likes,
     };
   }
 
   private postDataPipe(i): Post {
     return {
-      id: i.Id,
-      text: i.Text,
+      id: i.id,
+      text: i.text,
       location: {
         latitude: i.Location.latitude,
-        longtitude: i.Location.longtitude
+        longtitude: i.Location.longtitude,
       },
-      publishDate: i.PublishDate,
+      publishDate: i.publishDate,
       user: {
-        id: i.user.Id,
-        username: i.user.Username
+        id: i.user.user_id,
+        username: i.user.username,
       },
       tags: i.tags,
       usersTags: i.usersTags,
       likes: i.likes,
-      photo: i.Photo,
+      photo: i.photo,
       isLikedByUser: i.isLikedByUser,
-      commentsCount: i.commentsCount
+      commentsCount: i.commentsCount,
     };
   }
 }

@@ -32,8 +32,7 @@ const routes: Routes = [
       { path: "form", component: PostFormComponent },
       {
         path: ":postId",
-        component: PostDetailsComponent,
-        canActivate: [IdGuard],
+        component: PostDetailsComponent
         // children: [
         //   {
         //     path: "comments",

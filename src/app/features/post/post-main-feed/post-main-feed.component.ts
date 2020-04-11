@@ -11,12 +11,15 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-post-main-feed",
   templateUrl: "./post-main-feed.component.html",
-  styleUrls: ["./post-main-feed.component.css"]
+  styleUrls: ["./post-main-feed.component.css"],
 })
 export class PostMainFeedComponent implements OnInit {
   postService: IPostService;
   navgiateService: INavigateService;
-  posts: Post[];
+  posts: Post[] = [];
+  toSearchAfter = false;
+  allowSearch = true;
+
   constructor(
     postService: PostService,
     private toastr: ToastrService,
@@ -27,26 +30,43 @@ export class PostMainFeedComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.postService.endFilterMode();
     this._getPosts();
   }
 
   private _getPosts(): void {
-    this.postService.filterPosts(OrderBy.date, null);
-    this.postService.posts$.subscribe(
-      posts => {
-        this.posts = posts;
-      },
-      err => {
-        switch (err.status) {
-          case 404:
-            this.posts = [];
-            break;
-          default:
-            this.toastr.error("something went wrong!try again later...");
-            break;
-        }
-      }
-    );
+    if (this.allowSearch) {
+      this.allowSearch = false;
+
+      this.postService.filterPosts(OrderBy.date, 8, this.toSearchAfter);
+      this.postService.posts$.subscribe(
+        (posts) => {
+          if (posts) {
+            if (posts.length > 0) this.posts = posts;
+            else {
+              this.toSearchAfter = false;
+            }
+          }
+        },
+        (err) => {
+          console.log("err");
+          switch (err.status) {
+            case 404:
+              this.posts = [];
+              break;
+            default:
+              this.toastr.error("something went wrong!try again later...");
+              break;
+          }
+        },
+        () => (this.allowSearch = true)
+      );
+    }
+  }
+
+  private _onAfterSearch(): void {
+    this.toSearchAfter = true;
+    this._getPosts();
   }
 
   onPostSelect(postId: number) {

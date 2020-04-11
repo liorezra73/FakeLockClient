@@ -3,7 +3,7 @@ import { MapLocation } from './MapLocation';
 import { Tag } from './Tag';
 
 export interface Post {
-    id?: number;
+    id?: number | string;
     text?: string;
     location: MapLocation;
     photo?: File|string;
