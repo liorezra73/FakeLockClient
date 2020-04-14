@@ -65,6 +65,7 @@ export class PostMainFeedComponent implements OnInit {
   }
 
   private _onAfterSearch(): void {
+    this.allowSearch = true;
     this.toSearchAfter = true;
     this._getPosts();
   }
