@@ -1,41 +1,48 @@
-<strong>total comments:{{ comments.length }}</strong>
-<div *ngIf="postId">
-  <div class="comment-input" #addComment>
-    <app-comment-form
-      [postId]="postId"
-      (onAddComment)="addNewComment($event)"
-    ></app-comment-form>
-  </div>
-  <div class="new-comment-display" (click)="scroll(addComment)">
-    <i class="fas fa-comment-medical"></i>
-  </div>
-  <div *ngFor="let comment of comments">
-    <div class="username-display">{{ comment.user.username }}</div>
-    <span class="date-display">{{ comment.publishDate | date: "short" }}</span>
-    <div class="date-likes-displayer"></div>
-    <div>{{ comment.content }}</div>
-    <div *ngIf="comment.tags">
-      <div class="comment-tags-display" *ngFor="let tag of comment.tags">
-        #{{ tag | lowercase }}
-      </div>
+
+  <strong>comments:{{ comments.length }}</strong>
+  <div *ngIf="postId">
+    <div class="comment-input" #addComment>
+      <app-comment-form
+        [postId]="postId"
+        (onAddComment)="addNewComment($event)"
+      ></app-comment-form>
     </div>
-    <div *ngIf="comment.usersTags">
-      <div *ngIf="comment.usersTags.length > 0">
-        <div
-          class="comment-tags-display"
-          *ngFor="let userTag of comment.usersTags"
-        >
-          @{{ userTag?.username }}
+  
+    <div class="new-comment-display" (click)="scroll(addComment)">
+      <i class="fas fa-comment-medical"></i>
+    </div>
+    <div class="comments-section">
+    <div *ngFor="let comment of comments">
+      <div class="username-display">{{ comment.user.username }}</div>
+      <span class="date-display">{{ comment.publishDate | date: "short" }}</span>
+      <div class="date-likes-displayer"></div>
+      <div>{{ comment.content }}</div>
+      <div *ngIf="comment.tags">
+        <div class="comment-tags-display" *ngFor="let tag of comment.tags">
+          #{{ tag | lowercase }}
         </div>
       </div>
+      <div *ngIf="comment.usersTags">
+        <div *ngIf="comment.usersTags.length > 0">
+          <div
+            class="comment-tags-display"
+            *ngFor="let userTag of comment.usersTags"
+          >
+            @{{ userTag?.username }}
+          </div>
+        </div>
+      </div>
+      
+      <span class="likes-display" (click)="onSwitchLike(comment)">
+        <span *ngIf="comment.userLiked"><i class="fas fa-heart red"></i></span>
+        <span *ngIf="!comment.userLiked"><i class="far fa-heart"></i></span>
+        {{ comment.likes }}</span
+      >
+      <hr />
     </div>
-
-    <span class="likes-display" (click)="onSwitchLike(comment)">
-      <span *ngIf="comment.userLiked"><i class="fas fa-heart red"></i></span>
-      <span *ngIf="!comment.userLiked"><i class="far fa-heart"></i></span>
-      {{ comment.likes }}</span
-    >
-    <hr />
+    <div *ngIf= "comments.length">
+    <div class="load-more-comments" (click)="_onAfterSearch()">Load more..</div>
   </div>
-  <div (click)="_onAfterSearch()">+</div>
-</div>
+  </div>
+  </div>
+  
