@@ -1,4 +1,4 @@
-.forms-displayer {
+/* .forms-displayer {
   display: flex;
   width: 80%;
   margin: auto;
@@ -25,5 +25,67 @@
 
 .form-item{
   margin:3pt;
+} */
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  margin-top: 50px;
+  background-color: transparent;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
 }
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  cursor: pointer;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  background-color: transparent;
+  color: black;
+  top: 0;
+  right: 35px;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+
+.openbtn{
+  position: fixed;
+  left: 0;
+  background-color: transparent;
+  padding: 5px 10px;
+}
+
+.openbtn:hover {
+  background-color: transparent;
+}
+
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+  margin-left: 180px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
 
