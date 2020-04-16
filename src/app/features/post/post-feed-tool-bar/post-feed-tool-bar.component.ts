@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, AfterContentInit } from "@angular/core";
+import { Component, OnInit, DoCheck, AfterContentInit, ViewChild } from "@angular/core";
 import { Filter } from "src/app/common/models/Flter";
 import {
   FormGroup,
@@ -20,7 +20,11 @@ import { MapLocation } from "src/app/common/models/MapLocation";
   templateUrl: "./post-feed-tool-bar.component.html",
   styleUrls: ["./post-feed-tool-bar.component.css"]
 })
+
 export class PostFeedToolBarComponent implements OnInit {
+  @ViewChild("mySidebar", { static: false }) mySidebar;
+  @ViewChild("main", { static: false }) main;
+  @ViewChild("filterBtn", {static: false}) filterBtn;
   filter: Filter;
   filterForm: FormGroup;
   postService: IPostService;
@@ -117,5 +121,19 @@ export class PostFeedToolBarComponent implements OnInit {
         this.initializeFilterForm();
       }
     );
+  }
+
+  openSideBar() {
+    this.mySidebar.nativeElement.style.width = "250px";
+    this.main.nativeElement.style.marginLeft = "250px";
+    this.filterBtn.nativeElement.style.display = "none";
+
+  }
+
+  closeSideBar() {
+    this.mySidebar.nativeElement.style.width = "0px";
+    this.main.nativeElement.style.marginLeft = "180px";
+    this.filterBtn.nativeElement.style.display = "inline";
+
   }
 }
