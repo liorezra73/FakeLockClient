@@ -1,74 +1,83 @@
-<div *ngIf="filterForm" class="main-form">
-  <form
-    [formGroup]="filterForm"
-    (ngSubmit)="onFilter()"
-    class="forms-displayer"
-  >
-    <form formGroupName="radius" class="radius-form">
-      <app-form-number-input
-        class="form-item"
-        formControlName="distance"
-        label="Distance:"
-        placeholder="distance by km"
-      ></app-form-number-input>
+<div #mySidebar id="mySidebar" class="sidebar">
+  <a class="closebtn" (click)="closeSideBar()">x</a>
+  <div *ngIf="filterForm" class="main-form">
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="onFilter()"
+      class="forms-displayer"
+    >
+      <form formGroupName="radius" class="radius-form">
+        <app-form-number-input
+          class="form-item"
+          formControlName="distance"
+          label="Distance:"
+          placeholder="distance by km"
+        ></app-form-number-input>
 
-      <app-form-control-error-show
-        *ngIf="
-          formControlTouchOrDirty(filterForm.get('radius').get('distance'))
-        "
-        [errors]="filterForm.get('radius').get('distance').errors"
-      ></app-form-control-error-show>
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(filterForm.get('radius').get('distance'))
+          "
+          [errors]="filterForm.get('radius').get('distance').errors"
+        ></app-form-control-error-show>
+      </form>
+
+      <form formGroupName="dates" class="dates-form">
+        <app-form-input-date
+          class="form-item"
+          formControlName="startDate"
+          label="Start Date:"
+          placeholder="Start Date"
+        ></app-form-input-date>
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(filterForm.get('dates').get('startDate'))
+          "
+          [errors]="filterForm.get('dates').get('startDate').errors"
+          message="null"
+        ></app-form-control-error-show>
+        <app-form-input-date
+          class="form-item"
+          formControlName="endDate"
+          label="End Date:"
+          placeholder="End Date"
+        ></app-form-input-date>
+        <app-form-control-error-show
+          *ngIf="
+            formControlTouchOrDirty(filterForm.get('dates').get('endDate'))
+          "
+          [errors]="filterForm.get('dates').get('endDate').errors"
+          message="null"
+        ></app-form-control-error-show>
+      </form>
+
+      <p class="tags-form">
+        <app-tag-input
+          class="form-item"
+          label="Tags:"
+          placeholder="Tags"
+          formControlName="tags"
+        ></app-tag-input>
+
+        <app-usertag-input
+          class="form-item"
+          label="Userstags:"
+          placeholder="Username"
+          formControlName="usersTags"
+        ></app-usertag-input>
+
+        <app-usertag-input
+          class="form-item"
+          label="Publishers:"
+          placeholder="Publishers"
+          formControlName="publishers"
+        ></app-usertag-input>
+      </p>
+      <button type="submit" class="btn btn-info">Filter</button>
     </form>
-
-    <form formGroupName="dates" class="dates-form">
-      <app-form-input-date
-        class="form-item"
-        formControlName="startDate"
-        label="Start Date:"
-        placeholder="Start Date"
-      ></app-form-input-date>
-      <app-form-control-error-show
-        *ngIf="
-          formControlTouchOrDirty(filterForm.get('dates').get('startDate'))
-        "
-        [errors]="filterForm.get('dates').get('startDate').errors"
-        message="null"
-      ></app-form-control-error-show>
-      <app-form-input-date
-        class="form-item"
-        formControlName="endDate"
-        label="End Date:"
-        placeholder="End Date"
-      ></app-form-input-date>
-      <app-form-control-error-show
-        *ngIf="formControlTouchOrDirty(filterForm.get('dates').get('endDate'))"
-        [errors]="filterForm.get('dates').get('endDate').errors"
-        message="null"
-      ></app-form-control-error-show>
-    </form>
-
-    <p class="tags-form">
-      <app-tag-input
-        class="form-item"
-        label="Tags:"
-        placeholder="Tags"
-        formControlName="tags"
-      ></app-tag-input>
-
-      <app-usertag-input
-        class="form-item"
-        label="Userstags:"
-        placeholder="Username"
-        formControlName="usersTags"
-      ></app-usertag-input>
-
-      <app-usertag-input
-        class="form-item"
-        label="Publishers:"
-        placeholder="Publishers"
-        formControlName="publishers"
-      ></app-usertag-input>
-    </p>
-    <button type="submit"  class="btn btn-info">Filter</button>
-  </form>
+  </div>
+  <div></div>
+</div>
+<div #main id="main">
+  <button class="openbtn" #filterBtn (click)="openSideBar()">☰ Filters</button>
 </div>
