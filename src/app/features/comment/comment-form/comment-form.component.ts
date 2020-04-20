@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CommentService } from "src/app/common/services/comment.service";
 import { ToastrService } from "ngx-toastr";
 import { ICommentService } from "src/app/common/intefaces/comment-service.inteface";
+import { SocketioService } from 'src/app/common/services/socketio.service';
 
 @Component({
   selector: "app-comment-form",
@@ -18,7 +19,7 @@ export class CommentFormComponent implements OnInit {
   commentService: ICommentService;
   @Input() postId: string;
 
-  constructor(commentService: CommentService, private toastr: ToastrService) {
+  constructor(private socketService: SocketioService,commentService: CommentService, private toastr: ToastrService) {
     this.commentService = commentService;
   }
   ngOnInit() {
@@ -44,6 +45,7 @@ export class CommentFormComponent implements OnInit {
     this.commentService.createComment(this.postId as string, comment).subscribe(
       (res: PostComment) => {
         this.onAddComment.emit(res);
+        this.socketService.emit("comment");
       },
       (err) => {
         switch (err.status) {

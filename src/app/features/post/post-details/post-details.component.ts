@@ -9,11 +9,12 @@ import { OrderBy } from "src/app/common/enums/orderBy";
 import { ToastrService } from "ngx-toastr";
 import { INavigateService } from "src/app/shared/interfaces/navigate.service.interface";
 import { NavigateService } from "src/app/shared/services/navigate.service";
+import { SocketioService } from "src/app/common/services/socketio.service";
 
 @Component({
   selector: "app-post-details",
   templateUrl: "./post-details.component.html",
-  styleUrls: ["./post-details.component.css"]
+  styleUrls: ["./post-details.component.css"],
 })
 export class PostDetailsComponent implements OnInit {
   postId: string;
@@ -21,8 +22,11 @@ export class PostDetailsComponent implements OnInit {
   postService: IPostService;
   photoService: IPhotoService;
   navigateService: INavigateService;
+  likes: number = 0;
+  x;
 
   constructor(
+    private socketService: SocketioService,
     navigateService: NavigateService,
     private activatedRoute: ActivatedRoute,
     postService: PostService,
@@ -31,26 +35,29 @@ export class PostDetailsComponent implements OnInit {
   ) {
     this.postService = postService;
     this.photoService = photoSerice;
-    this.activatedRoute.params.subscribe(
-      res => (this.postId = res.postId)
-    );
+    this.activatedRoute.params.subscribe((res) => (this.postId = res.postId));
     this.navigateService = navigateService;
   }
 
   ngOnInit() {
     this.getPostById(this.postId);
   }
+  // ngafterViewInit() {
+  //   this.socketService.getLikes(this.post);
+  // }
 
   getPostById(postId: string) {
     this.postService.getPostById(postId).subscribe(
-      post => {
+      (post) => {
         this.post = post;
         this.post.photo = this.photoService.getPhotoByPhotoId(
           this.post.photo as string
-          );
-          console.log(this.post)
+        );
+        this.socketService.onLikes("postLikes",this.post);
+        this.socketService.onComments("comments",this.post);
+        
       },
-      err => {
+      (err) => {
         switch (err.status) {
           case 401:
             this.toastr.warning("please login...");
@@ -69,24 +76,24 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onLike() {
-    console.log("Like");
     this.postService.doLike(this.post.id as string).subscribe(
-      res => {
+      (res) => {
         this.post.isLikedByUser = true;
         this.post.likes++;
+        this.socketService.emit("postLike");
       },
-      err => this.toastr.warning("somthing went wrong!try again later...")
+      (err) => this.toastr.warning("somthing went wrong!try again later...")
     );
   }
 
   onUnLike() {
-    console.log("unLike");
     this.postService.unLike(this.post.id as string).subscribe(
-      res => {
+      (res) => {
         this.post.isLikedByUser = false;
         this.post.likes--;
+        this.socketService.emit("postUnLike");
       },
-      err => this.toastr.warning("somthing went wrong!try again later...")
+      (err) => this.toastr.warning("somthing went wrong!try again later...")
     );
   }
 

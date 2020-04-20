@@ -98,7 +98,7 @@ export class PostFormComponent implements OnInit {
           this.initializeAll();
           setTimeout(
             () => this.navigateService.navigate(`/posts/${res}`),
-            1000
+            2000
           );
         },
         (err) => {
