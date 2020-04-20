@@ -3,5 +3,16 @@
   height: 200px;
 }
 
+.load-more-posts{
+  display: block;
+  height: 50px;
+  color: #555e5e;
+  font-size: 13px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 
